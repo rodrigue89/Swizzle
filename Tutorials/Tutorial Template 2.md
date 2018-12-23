@@ -25,6 +25,8 @@ objc Person {
 }
 ```
 
+In this case, the property name is referring to the name of the person. If the object was representing a file, then the property name means something else.
+
 > **Important:** All object names must be capital so that the parser can recognize constructors. That is how it distinguishes between a function and an initializer.
 
 Objects are created using initializers. These look similar to function calls except they have the name of the object as the call name and the properties as parameters.
@@ -33,4 +35,19 @@ Objects are created using initializers. These look similar to function calls exc
 var p = Person("Mary", 12)
 ```
 
+You can access properties on an object using a dot ( `.`) followed by the property name.
+
+```
+print("Person p is named", p.name);
+```
+
+With dot notation you can also set property values.
+
+```
+p.name = "Norton"
+print("p's name is now", p.name);
+```
+
 ## Takeaway
+
+Objects are useful for grouping related things and make code easier to understand by providing context.

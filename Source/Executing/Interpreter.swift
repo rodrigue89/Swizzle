@@ -93,7 +93,6 @@ public class Interpreter: Visitor {
         
         public func call(_ i: Interpreter, _ a: [Statement]) {
             var sep = true
-            //            print("a:", a)
             let args = a.compactMap { i.visit(stmt: $0) }.reduce([String]()) { (acc, next) -> [String] in
                 if let next = next {
                     return acc + next
@@ -318,25 +317,30 @@ public class Interpreter: Visitor {
         logMsg("Getting data from expression.", ui: "Expression: \(expr)")
         let rep = expr.rep
         if let tkn = rep.anyToken {
-            if let object = objects[tkn.lexme], let val = object.values["*value"] {
+            let name = tkn.lexme
+            if let object = objects[name], let val = object.values["*value"] {
                 return [val]
+            } else if let assign = variables[name], let result = assign.value.accept(self) {
+                return result
             }
-            return [tkn.lexme]
+            return [name]
         } else if let literal = rep.literal {
             return [String(describing: literal)]
         } else if rep.call != nil {
             // TODO: Allow function creation with returns
         } else if let access = rep.access {
             return visit(access)
+        } else if let list = rep.list {
+            return list.map { $0.lexme }
         }
         return nil
     }
     public func visit(_ assign: AssignStatement) -> Interpreter.Result {
         let varName = assign.name.lexme
-        logMsg("Visiting assignment named '\(varName)'.", ui: "Statement: \(assign)")
+        logMsg("Visiting assignment setting to '\(varName)'.", ui: "Statement: \(assign)")
         if assign.decl.type == .varDecl && variables[varName] != nil {
             logMsg("Cannot assign to already initilaized.", ui: "Already created value: \(variables[varName]!)")
-            reportError("CCannot create the variable \(varName) because it already exists, did you mean to use 'set' instead?")
+            reportError("Cannot create the variable \(varName) because it already exists, did you mean to use 'set' instead?")
             return nil
         } else if assign.decl.type == .setDecl && variables[varName] == nil {
             logMsg("Cannot assign to nothing.")
@@ -358,6 +362,8 @@ public class Interpreter: Visitor {
                 let object = Object(name: "Float", values: ["*value":num.description], stmt: `init`)
                 objects[varName] = object
             }
+        } else if let access = rep.access {
+            return access.accept(self)
         }
         return nil
     }
