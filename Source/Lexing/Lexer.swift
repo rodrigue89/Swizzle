@@ -161,6 +161,7 @@ public class Lexer {
         consumeUseless()
         switch peek() {
         case "/" where matchNext("/"):
+            consume(2)
             while tryPeek() != "\n" {
                 if isEOF() {
                     break
