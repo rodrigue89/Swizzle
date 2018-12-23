@@ -9,6 +9,7 @@ import Foundation
 
 public enum TokenType {
     case varDecl
+    case setDecl
     case constDecl
     case funcDecl
     case objcDecl

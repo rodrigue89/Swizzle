@@ -328,6 +328,15 @@ public class Interpreter: Visitor {
     public func visit(_ assign: AssignStatement) -> Interpreter.Result {
         let varName = assign.name.lexme
         logMsg("Visiting assignment named '\(varName)'.", ui: "Statement: \(assign)")
+        if assign.decl.type == .varDecl && variables[varName] != nil {
+            logMsg("Cannot assign to already initilaized.", ui: "Already created value: \(variables[varName]!)")
+            reportError("CCannot create the variable \(varName) because it already exists, did you mean to use 'set' instead?")
+            return nil
+        } else if assign.decl.type == .setDecl && variables[varName] == nil {
+            logMsg("Cannot assign to nothing.")
+            reportError("Cannot set to \(varName), did you mean to use 'var' instead?")
+            return nil
+        }
         variables[varName] = assign
         stack.push(varName)
         let rep = assign.value.rep
@@ -470,7 +479,7 @@ public class Interpreter: Visitor {
     
     var frmPfx: String {
         if self.stackTrace {
-            return "Frame #\(_frame):"
+            return "Frame #\(_frame): "
         } else {
             return ""
         }
@@ -479,7 +488,7 @@ public class Interpreter: Visitor {
     func logMsg(_ msg: String, _ trigger: Bool = false, _ c: Int = 1, ui: String? = nil) {
         if stackTrace {
             let end = _onTrigger ? " (caller: frame #\(triggers.dequeue() ?? -1))" : ""
-            let m = "*** \(frmPfx) \(msg)\(end)"
+            let m = "*** \(frmPfx)\(msg)\(end)"
             logs.enqueue(m)
             if let ui = ui {
                 info[_frame] = Debug(trigger: _lastCaller, log: msg, info: ui)

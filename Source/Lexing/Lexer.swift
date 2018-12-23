@@ -233,6 +233,9 @@ public class Lexer {
         case "v" where match("ar"):
             consume(3)
             return Token(type: .varDecl, lexme: "var", literal: nil, line: line)
+        case "s" where match("elf"):
+            consume(4)
+            return Token(type: .this, lexme: "self", literal: nil, line: line)
         case "l" where match("et"):
             consume(3)
             return Token(type: .constDecl, lexme: "let", literal: nil, line: line)
