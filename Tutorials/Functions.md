@@ -1,6 +1,6 @@
 # Tutorial #3: Functions
 
-Remmber that line of code from the previous tutorial?
+Remmber that line of code from the first tutorial?
 
 ```
 print("Hello, world!");
