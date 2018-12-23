@@ -18,6 +18,7 @@ eat(p);
 ## What is it?
 
 Swizzle is a programming language that is all new, yet all fun. Swizzle has a syntax that is similar to other popular programming languages. It is simple to write code and simpler to run it.
+
 Though Swizzle is still in development, I would say it is slightly functional.
 
 ##### Swizzle allows:
