@@ -253,10 +253,16 @@ public class Interpreter: Visitor {
     
     func makeObject(from constr: InitStatement, objcName: String) {
         let name = constr.objectName.lexme
-        logMsg("Constructing an object with type of '\(name)' and storing in variable named '\(objcName)'")
+        logMsg("Constructing an object with type of '\(name)' and storing in variable named '\(objcName)'.")
         let args = constr.args.compactMap { visit($0) }
         let reduced = args.reduce([String]()) { $0 + $1 }
         guard let names = objectDecls[name]?.declarations.map({ $0.name.lexme }) else { return }
+        let given = constr.args.count
+        let expected = names.count
+        if given != expected {
+            logMsg("The entered argument count does not match the expected argument count.", ui: "Given: \(given), Expected: \(expected)")
+            reportError("Expected \(expected) argument\(expected == 1 ? "" : "s") in initializer")
+        }
         let values = Dictionary(keys: names, values: reduced)
         let object = Object(name: name, values: values, stmt: constr)
         objects[objcName] = object

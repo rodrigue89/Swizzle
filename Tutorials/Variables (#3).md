@@ -1,4 +1,4 @@
-# Tutorial #2: Variables
+# Tutorial #3: Variables
 
 Variables are away of labeling data that can be manipulated later on. They can be accessed anywhere in your program. 
 

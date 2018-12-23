@@ -1,4 +1,4 @@
-# Tutorial #3: Functions
+# Tutorial #4: Functions
 
 Remmber that line of code from the first tutorial?
 
@@ -21,6 +21,9 @@ After that, we put the name of the function.
 ```
 func greet
 ```
+
+> **Important:** All function names must start with a lowercased character.. It will be made clearer why lter on.
+
 Then, we put parentheses and brackets:
 
 ```
@@ -72,6 +75,8 @@ print("Hello,", name, #, "!");
 ```
 
 Now, it should run as expected.
+
+**Challenge:** Can you make the function have a second parameter for age and print out something else with that new parameter?
 
 ## Takeaway
 
