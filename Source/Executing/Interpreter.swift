@@ -314,7 +314,7 @@ public class Interpreter: Visitor {
         return nil
     }
     public func visit(_ expr: Expression) -> Interpreter.Result {
-        logMsg("Getting data from expression.", ui: "Expression: \(expr)")
+        logMsg("Getting data from expression.", ui: "Data: \(expr)")
         let rep = expr.rep
         if let tkn = rep.anyToken {
             let name = tkn.lexme
