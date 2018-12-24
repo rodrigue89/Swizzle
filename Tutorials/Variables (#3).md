@@ -19,7 +19,7 @@ print(foo);
 A variable can be changed, or mutated with the `set` keyword.
 
 ```
-set foo = "something else"
+set foo = "something else";
 ```
 
 > If you try to set something that does not exist, or declare something that already exists, you will get an error.
