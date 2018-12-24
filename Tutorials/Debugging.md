@@ -1,6 +1,6 @@
 # Tutorial #x: Debugging.
 
-Sometimes your code just does not work as you want it to. Instead of yelling at the top of your lungs and throwing you computer out the window, we will go through all the things you can do to make your code work again.
+Sometimes your code just does not work as you want it to. Instead of yelling at the top of your lungs and throwing your computer out the window, we will go through all the things you can do to make your code work again.
 
 1. Double-check your code.
 
@@ -8,7 +8,7 @@ Did you make an obvious syntax error? You should fix that, and if the code still
     
 2. Look at the console.
 
-Configure the interpreter for stack trace or add thatto the  `var options: CodeFile.Options` property of the code fiel you are using.
+Configure the interpreter for stack trace or add that to the  `var options: CodeFile.Options` property of the code file you are using.
 
 This is the output of the "eat" program with the stack trace flag provided:
 
@@ -42,7 +42,9 @@ Execution took 0.26 seconds.
 ```
 I want you to take this in: you, the programmer, can actually see what is going on behind the scenes. Is that not amazing?
 
-Look at all the `Frame #X`s. Those tell you what stage the interpeter is witrh executing your program. Another of Swizzle's debugging tools is allowing you to inspect each frame. Here is an example, where `i` is the interpreter:
+> Look at all the `Frame #X`s. Those tell you what stage the interpeter is with in executing your program. 
+
+Another of Swizzle's debugging tools is allowing you to inspect each frame. Here is an example, where `i` is the interpreter:
 
 ```swift
 if let debug = i.debug(frame: 4) {
@@ -57,7 +59,7 @@ Statement: FunctionStatement(name: (type: identifier, value: \'eat\', line: 6), 
 ```
 Useless, right? Actually I think the opposite. This way, you can see what actually made it into your program.  If you see something missing, like for example you had another call inside your function statement, you can go look back at your code to see what was the problem.
 
-Another use of this tool is yo find out what went wrong in your program. I changes the line `eat(p);` to `eat();`. When I ran the code, this is a key thing I noticed:
+Another use of this tool is to find out what went wrong in your program. I changed the line `eat(p);` to `eat();` to see what happens. When I ran the code, this is a key section of the trace I noticed:
 
 ```
 *** Frame #12: Visiting a function call at line 11
@@ -80,4 +82,4 @@ That makes more sense. The function `eat` takes 1 argument, and I did not give i
 
 ## Takeaway
 
-In summary, writing code can be both fun and painful. However, if you have the knoledge and ability to debug, you can take the pain part out of writing code, and just keep the fun part!
+In summary, writing code can be both fun and painful. However, if you have the knowledge and ability to debug, you can take the pain part out of writing code, and just keep the fun part!
