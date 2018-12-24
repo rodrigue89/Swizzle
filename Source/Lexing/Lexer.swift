@@ -39,6 +39,8 @@ public class Lexer {
             if code.indices.contains(index) {
                 str.append(code[index])
                 i += 1
+            } else {
+                break
             }
             if i + 1 == code.count {
                 break
