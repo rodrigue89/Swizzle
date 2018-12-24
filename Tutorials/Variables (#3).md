@@ -1,6 +1,6 @@
 # Tutorial #3: Variables
 
-Variables are away of labeling data that can be manipulated later on. They can be accessed anywhere in your program. 
+Variables are a way of labeling data that can be manipulated later on. They can be accessed anywhere in your program. 
 
 A variable is declared as such:
 
