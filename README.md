@@ -39,6 +39,12 @@ Similar to many langauges, Swizzle requires semicolons to terminate statements. 
 
 Swizzle comes with an interpreter and debugger, and compiler support should come sooner or later. You may have heard that interpreters are very slow and all that, but Swizzle is written in Swift so there is not much of a performance loss. The code example above takes 0.26 seconds to execute, which although is slighty slow is one of the best speeds I have gotton in interpreters. Eventually a bytecode compiler will be built as I mentioned, and speeds are likey going to blow off the roof. Well, not literaly.
 
+## How can I use it?
+
+Using it is simple. Simply clone or download the directory to your computer and add it to your Swift project.
+
+![](https://github.com/SafelySwift/Swizzle/blob/master/Images/Screen%20Shot%202018-12-17%20at%209.20.42%20PM.png)
+
 ## How can I write better code?
 
 Swizzle already outputs helpful error messages and I am working on makeing them more human readable. However we can use the debug tools included in Swizzle.
