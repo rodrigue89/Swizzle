@@ -344,7 +344,7 @@ public class Interpreter: Visitor {
             return nil
         } else if assign.decl.type == .setDecl && variables[varName] == nil {
             logMsg("Cannot assign to nothing.")
-            reportError("Cannot set to \(varName), did you mean to use 'var' instead?")
+            reportError("Cannot set to \(varName) because \(varName) does not exist yet, did you mean to use 'var' instead?")
             return nil
         }
         variables[varName] = assign
