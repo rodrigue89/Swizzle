@@ -35,13 +35,17 @@ public class Lexer {
         var str = ""
         var i = 1
         while i < length {
-            str.append(code[code.index(pos, offsetBy: i)])
-            i += 1
+            let index = code.index(pos, offsetBy: i)
+            if code.indices.contains(index) {
+                str.append(code[index])
+                i += 1
+            }
             if i + 1 == code.count {
                 break
             }
         }
-        if i + 1 < code.count {
+        let index = code.index(pos, offsetBy: i)
+        if code.indices.contains(index) {
             str.append(code[code.index(pos, offsetBy: i)])
         }
         return str
