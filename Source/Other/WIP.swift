@@ -34,7 +34,7 @@ public class IncludedLibraries {
     }
 
     func put(text, temp) {
-        temp.text = text
+        temp.value = text
     }
     func print(temp) {
         print(temp.value)
