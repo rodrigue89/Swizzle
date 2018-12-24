@@ -4,7 +4,7 @@ Sometimes your code just does not work as you want it to. Instead of yelling at 
 
 1. Double-check your code.
 
-Did you make an obvious syntax error? You should fix that, and if the code still does not work, go on to step...
+Did you make an obvious [syntax](https://github.com/SafelySwift/Swizzle/wiki/Syntax) error? You should fix that, and if the code still does not work, go on to step...
     
 2. Look at the console.
 
