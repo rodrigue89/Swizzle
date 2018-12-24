@@ -1,4 +1,4 @@
-# Tutorial #4: Objects
+# Tutorial #5: Objects
 
 In the last tutorial, we designed a function that can greet anyone. What if you wanted to extend the function so it also printed their age? Well, you would have to extend the function like this:
 

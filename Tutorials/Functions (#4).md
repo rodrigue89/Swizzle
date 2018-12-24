@@ -14,7 +14,7 @@ In this tutorial, we will be making a function that says hello to anyone. We wil
 func
 ```
 
-This tells the computer to make a new fuc
+This tells the computer to make a new func
 
 After that, we put the name of the function.
 
@@ -22,7 +22,7 @@ After that, we put the name of the function.
 func greet
 ```
 
-> **Important:** All function names must start with a lowercased character.. It will be made clearer why lter on.
+> **Important:** All function names must start with a lowercased character.. It will be made clearer why later on.
 
 Then, we put parentheses and brackets:
 
