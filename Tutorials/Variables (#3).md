@@ -2,7 +2,7 @@
 
 Variables are away of labeling data that can be manipulated later on. They can be accessed anywhere in your program. 
 
-A variable is decalred as such:
+A variable is declared as such:
 
 ```
 var foo = "bar";
