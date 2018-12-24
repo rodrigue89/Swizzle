@@ -10,3 +10,4 @@ print("Hello, world");
 
 If everything goes right, you should see the text "Hello, world!" appear in your console.
 
+[Next: Variables](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Comments%20(%232).md)
