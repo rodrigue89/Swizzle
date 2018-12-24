@@ -1,0 +1,8 @@
+// This tests objects
+
+objc Foo {
+	decl bar;
+}
+
+var foo = Foo("bar");
+print(foo.bar);

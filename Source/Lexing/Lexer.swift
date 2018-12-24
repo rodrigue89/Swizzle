@@ -37,11 +37,13 @@ public class Lexer {
         while i < length {
             str.append(code[code.index(pos, offsetBy: i)])
             i += 1
-            if isEOF() {
+            if i + 1 == code.count {
                 break
             }
         }
-        str.append(code[code.index(pos, offsetBy: i)])
+        if i + 1 < code.count {
+            str.append(code[code.index(pos, offsetBy: i)])
+        }
         return str
     }
     

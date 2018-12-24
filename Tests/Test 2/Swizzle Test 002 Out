@@ -1,0 +1,5 @@
+Foo: 1  
+Foo: true  
+Foo: ggg  
+----------------------------
+Execution took 0.09 seconds.

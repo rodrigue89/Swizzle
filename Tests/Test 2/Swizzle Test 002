@@ -1,0 +1,9 @@
+// This tests functions
+
+func foo(bar) {
+	print("Foo:", bar);
+}
+
+foo(1);
+foo(true);
+foo("ggg");
