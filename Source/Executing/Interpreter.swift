@@ -337,7 +337,7 @@ public class Interpreter: Visitor {
     }
     public func visit(_ assign: AssignStatement) -> Interpreter.Result {
         let varName = assign.name.lexme
-        logMsg("Visiting assignment setting to '\(varName)'.", ui: "Statement: \(assign)")
+        logMsg("Setting value to the variable '\(varName)'.", ui: "Statement: \(assign)")
         if assign.decl.type == .varDecl && variables[varName] != nil {
             logMsg("Cannot assign to already initilaized.", ui: "Already created value: \(variables[varName]!)")
             reportError("Cannot create the variable \(varName) because it already exists, did you mean to use 'set' instead?")

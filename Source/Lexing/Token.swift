@@ -18,6 +18,10 @@ public enum TokenType {
     case initDecl
     case propertyDecl
     
+    case letDecl
+    case be
+    case typeIs
+    
     case literal
     case null
     case this

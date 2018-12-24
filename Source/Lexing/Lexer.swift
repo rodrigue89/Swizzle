@@ -230,12 +230,15 @@ public class Lexer {
         case "|" where matchNext("|"):
             consume(2)
             return Token(type: .or, lexme: "||", literal: nil, line: line)
+        case "i" where matchNext("s"):
+            consume(2)
+            return Token(type: .typeIs, lexme: "is", literal: nil, line: line)
         case "v" where match("ar"):
             consume(3)
             return Token(type: .varDecl, lexme: "var", literal: nil, line: line)
-        case "s" where match("elf"):
-            consume(4)
-            return Token(type: .this, lexme: "self", literal: nil, line: line)
+        case "s" where match("et"):
+            consume(3)
+            return Token(type: .setDecl, lexme: "set", literal: nil, line: line)
         case "l" where match("et"):
             consume(3)
             return Token(type: .constDecl, lexme: "let", literal: nil, line: line)
@@ -266,6 +269,12 @@ public class Lexer {
         case "i" where match("nit"):
             consume(4)
             return Token(type: .initDecl, lexme: "init", literal: nil, line: line)
+        case "l" where match("et"):
+            consume(3)
+            return Token(type: .letDecl, lexme: "let", literal: nil, line: line)
+        case "b" where matchNext("e"):
+            consume(2)
+            return Token(type: .be, lexme: "be", literal: nil, line: line)
         case "\"":
             return getAndConsumeStringLiteral()
         case _ where _couldBeNumber():
