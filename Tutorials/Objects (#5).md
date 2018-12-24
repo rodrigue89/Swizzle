@@ -25,7 +25,7 @@ objc Person {
 }
 ```
 
-In this case, the property name is referring to the name of the person. If the object was representing a file, then the property name means something else.
+In this case, the property `name` is referring to the name of the person. If the object was representing a file, then the property name means something else.
 
 > **Important:** All object names must be capital so that the parser can recognize constructors. That is how it distinguishes between a function and an initializer.
 
