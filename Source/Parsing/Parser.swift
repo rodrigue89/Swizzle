@@ -247,34 +247,40 @@ public class Parser {
                 let setStmt = SetStatement(object: object, key: key, value: expr)
                 body.append(setStmt)
             } else if segment.count > 2 {
-                guard let callName = expect(.identifier, c: &segment) else { throw Error.expectedIdentifier }
-                var args = [Expression]()
-                guard expect(.leftPar, c: &segment) != nil else { throw Error.expectedStartingGroup }
-                while let tkn = segment.first, tkn.type != .rightPar {
-                    if segment.isEmpty {
-                        throw Error.expectedClosingGroup
+                if let type = expect(.varDecl, c: &segment) {
+                    try _makeAssignStmt(type, Array(segment), &s)
+                } else if let type = expect(.setDecl, c: &segment) {
+                    try _makeAssignStmt(type, Array(segment), &s)
+                } else {
+                    guard let callName = expect(.identifier, c: &segment) else { throw Error.expectedIdentifier }
+                    var args = [Expression]()
+                    guard expect(.leftPar, c: &segment) != nil else { throw Error.expectedStartingGroup }
+                    while let tkn = segment.first, tkn.type != .rightPar {
+                        if segment.isEmpty {
+                            throw Error.expectedClosingGroup
+                        }
+                        if tkn.type == .identifier, segment.dropFirst().first?.type == .dot, let key = segment.dropFirst(2).first {
+                            let access = AccessStatement(object: tkn, key: key)
+                            let expr = Expression(rep: .access(access))
+                            args.append(expr)
+                            segment.removeFirst(3)
+                            continue
+                        }
+                        if argAllowed.contains(tkn.type) {
+                            let expr = Expression(rep: .anyToken(tkn))
+                            args.append(expr)
+                        } else if !argSeps.contains(tkn.type) {
+                            throw Error.unexpectedToken
+                        }
+                        segment.removeFirst()
                     }
-                    if tkn.type == .identifier, segment.dropFirst().first?.type == .dot, let key = segment.dropFirst(2).first {
-                        let access = AccessStatement(object: tkn, key: key)
-                        let expr = Expression(rep: .access(access))
-                        args.append(expr)
-                        segment.removeFirst(3)
-                        continue
+                    if isDebugging {
+                        print("Args", args)
                     }
-                    if argAllowed.contains(tkn.type) {
-                        let expr = Expression(rep: .anyToken(tkn))
-                        args.append(expr)
-                    } else if !argSeps.contains(tkn.type) {
-                        throw Error.unexpectedToken
-                    }
-                    segment.removeFirst()
+                    guard expect(.rightPar, c: &segment) != nil else { throw Error.expectedClosingGroup }
+                    let callStmt = CallStatement(name: callName, args: args)
+                    body.append(callStmt)
                 }
-                if isDebugging {
-                    print("Args", args)
-                }
-                guard expect(.rightPar, c: &segment) != nil else { throw Error.expectedClosingGroup }
-                let callStmt = CallStatement(name: callName, args: args)
-                body.append(callStmt)
             }
         }
         let funcStmt = FunctionStatement(name: name, args: args, body: body)
