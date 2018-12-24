@@ -222,9 +222,11 @@ public class InitStatement: Statement, CustomStringConvertible {
 
 /// A statement representing an assignment
 public class AssignStatement: Statement, CustomStringConvertible {
+    public let decl: Token
     public let name: Token
     public let value: Expression
-    public init(name: Token, expression: Expression) {
+    public init(decl: Token, name: Token, expression: Expression) {
+        self.decl = decl
         self.name = name
         self.value = expression
     }
