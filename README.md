@@ -47,7 +47,7 @@ Using it is simple. Simply clone or download the directory to your computer and 
 
 ## How can I write better code?
 
-Swizzle already outputs helpful error messages and I am working on makeing them more human readable. However we can use the debug tools included in Swizzle.
+Swizzle already outputs helpful error messages and I am working on making them more human readable. However, you already have access to the the debugging tools included in Swizzle.
 
 ### 1. Stack Trace
 
