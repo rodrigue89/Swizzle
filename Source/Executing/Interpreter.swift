@@ -349,7 +349,7 @@ public class Interpreter: Visitor {
             reportError("The function `\(callName)` does not exist.")
             return nil
         }
-        let override = Interpreter._variL == function.args
+        let override = Interpreter._variableLengthParameters == function.args
         let expected = function.args.count
         let given = callArgs.count
         guard given == expected || override else {
