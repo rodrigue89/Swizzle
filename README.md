@@ -28,7 +28,6 @@ Though Swizzle is still in development, I would say it is slightly functional.
 - [Functions](https://github.com/SafelySwift/Swizzle/blob/gh-pages/Tutorials/Functions%20(%234).md)
 - [Objects](https://github.com/SafelySwift/Swizzle/blob/gh-pages/Tutorials/Objects%20(%235).md)
 
-
 ##### Swizzle allows:
 
 - Custom objects
@@ -40,6 +39,8 @@ Though Swizzle is still in development, I would say it is slightly functional.
 - Control flow (if, while, for)
 - Operators
 - Extending
+
+For more, visit the [documentation](https://github.com/SafelySwift/Swizzle/wiki)
 
 Similar to many langauges, Swizzle requires semicolons to terminate statements. Even though this may be annoying, it actually helps make the error messages better so you can write cleaner and safer code.
 
