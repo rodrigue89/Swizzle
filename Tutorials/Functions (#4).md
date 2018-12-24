@@ -64,7 +64,7 @@ func greet(name) {
 greet("Norah");
 ```
 
-But something weird happends. It prints "Hello, Norah !". Why that extra space? Look at the docuemntation for the `print` function:
+But something weird happends. It prints "Hello, Norah !". Why that extra space? Look at the documentation for the `print` function:
 
 > The print function outputs the given arguments to the console seperated by spaces and terminated by a new line.
 
