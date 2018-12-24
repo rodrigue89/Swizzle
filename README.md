@@ -1,4 +1,4 @@
-# Swizzle
+![](https://github.com/SafelySwift/Swizzle/blob/master/Images/Swizzle%20Logo%20Wide.png)
 
 ```
 objc Person {
