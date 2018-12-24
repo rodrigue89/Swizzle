@@ -216,7 +216,7 @@ public class Interpreter: Visitor {
     func configureDefaults() {
         statements.append(IncludedLibraries.Float)
         
-        addFunc("print", Interpreter._variL) { (_, args) in
+        addFunc("print", Interpreter._variableLengthParameters) { (_, args) in
             var result = ""
             for index in args.indices {
                 let val = self.unstringify(args[index])
