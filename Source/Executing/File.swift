@@ -18,7 +18,7 @@ public class CodeFile {
         }
     }
     public init(directory: FileManager.SearchPathDirectory, path: String) throws {
-        guard path.hasSuffix(".sw") else { throw Error(description: "Expected '.sw' as the file type") }
+        guard path.hasSuffix(".swiz") else { throw Error(description: "Expected '.swiz' as the file type") }
         guard let url = FileManager.default.urls(for: directory, in: .userDomainMask).first?.appendingPathComponent(path) else { throw Error(description: "Could not find file at \(path)") }
         self.code = try String(contentsOf: url)
     }
