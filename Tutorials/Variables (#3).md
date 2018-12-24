@@ -36,3 +36,5 @@ Where "my age" is your age.
 ## Takeaway
 
 Variables can be used to store and retrieve data. 
+
+[Previous](https://github.com/SafelySwift/Swizzle/edit/master/Tutorials/Comments%20(%232).md) | [Next]()
