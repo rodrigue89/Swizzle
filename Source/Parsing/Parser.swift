@@ -130,11 +130,10 @@ public class Parser {
         guard expect(.assign, c: &g) != nil else { throw Error.expectedAssignment }
         switch g.count {
         case 1:
-            let access = AccessStatement(object: object, key: key)
-            let expr = Expression(rep: .access(access))
-            let assign = AssignStatement(decl: type, name: varName, expression: expr)
-            assign.line = l
-            s.append(assign)
+            guard let lit = expect(.literal, c: &g) else { throw Error.expectedLiteral }
+            let assignStmt = AssignStatement(decl: type, name: varName, expression: Expression(rep: .literal(lit.literal!)))
+            assignStmt.line = l
+            s.append(assignStmt)
             return
         default:
             if g.count == 3, g.dropFirst().first?.type == .dot, let object = g.first, let key = g.last {
