@@ -11,4 +11,4 @@ Swizzle is in active development. It would be great if you could try it out!
 
 ## Submitting code
 
-If you wish to submit code, create a pull request on the "feature" branch.
+If you wish to submit code, create a pull request on the "requests" branch.
