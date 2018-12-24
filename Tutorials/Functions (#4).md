@@ -7,6 +7,7 @@ print("Hello, world!");
 ```
 
 This line of code is called a `call`. It calls what is called a `function`.
+> That was a lot of calls and calling!
 
 In this tutorial, we will be making a function that says hello to anyone. We will start of with the declaration of a function:
 
