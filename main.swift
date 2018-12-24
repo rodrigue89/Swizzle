@@ -968,13 +968,7 @@ public class Parser {
             if isDebugging {
                 print("parts:", parts, "subsegment:", subsegment)
             }
-//            if parts.count == 2 {
-//                let objcToken = Token(type: .identifier, lexme: parts[0], literal: nil, line: nil)
-//                let keyToken = Token(type: .identifier, lexme: parts[1], literal: nil, line: nil)
-//                let get = AccessStatement(object: objcToken, key: keyToken)
-//                args.append(Expression(rep: .access(get)))
-//            } else
-                if parts.count == 1 {
+            if parts.count == 1 {
                 let expr = Expression(rep: .anyToken(subsegment))
                 args.append(expr)
             }
@@ -1267,7 +1261,6 @@ public class Interpreter: Visitor {
         
         public func call(_ i: Interpreter, _ a: [Statement]) {
             var sep = true
-//            print("a:", a)
             a.first?.accept(i)
             let args = a.compactMap { i.visit(stmt: $0) }.reduce([String]()) { (acc, next) -> [String] in
                 if let next = next {
