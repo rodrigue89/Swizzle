@@ -37,4 +37,4 @@ Where "my age" is your age.
 
 Variables can be used to store and retrieve data. 
 
-[Previous: Comments](https://github.com/SafelySwift/Swizzle/edit/master/Tutorials/Comments%20(%232).md) | [Next: Functions](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Functions%20(%234).md)
+[Previous: Comments](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Comments%20(%232).md) | [Next: Functions](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Functions%20(%234).md)
