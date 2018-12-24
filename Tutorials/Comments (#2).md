@@ -1,6 +1,6 @@
 # Tutorial #2: Comments
 
-The code we wrote in the last tutorial was quite simple. But when you start designing advanced APIs, you need a way to weel docuemnt them. That is where comments come in.
+The code we wrote in the last tutorial was quite simple. But when you start designing advanced APIs, you need a way to document them. That is where comments come in.
 
 ```
 // This is a comment
