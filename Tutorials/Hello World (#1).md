@@ -5,7 +5,7 @@ Today, you will continue a tradition that has been going on since 1972: Hello wo
 What is this tradition? Well, developers often have thier first program in a new programming language be printing "Hello world!" onto the screen. We are going to do this with Swizzle.
 
 ```
-print("Hello, world");
+print("Hello, world!");
 ```
 
 If everything goes right, you should see the text "Hello, world!" appear in your console.
