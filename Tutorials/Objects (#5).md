@@ -51,3 +51,5 @@ print("p's name is now", p.name);
 ## Takeaway
 
 Objects are useful for grouping related things and make code easier to understand by providing context.
+
+[Previous: Functions](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Functions%20(%234).md)
