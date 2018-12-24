@@ -216,7 +216,7 @@ public class Interpreter: Visitor {
     func configureDefaults() {
         statements.append(IncludedLibraries.Float)
         
-        addFunc("print", Interpreter._variableLengthParameters) { (i, args) in
+        addFunc("print", Interpreter._variL) { (_, args) in
             var result = ""
             for index in args.indices {
                 let val = self.unstringify(args[index])
@@ -228,6 +228,62 @@ public class Interpreter: Visitor {
             }
             print(self.frmPfx, result, separator: "", terminator: self.printTerminator)
         }
+        addFunc("formSum", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = self.nowhite(args[0])
+            let a = self.nowhite(args[1])
+            let b = self.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs + rhs
+            self.makeFloat(val: sum, objcName: r)
+        }
+        addFunc("formDif", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = self.nowhite(args[0])
+            let a = self.nowhite(args[1])
+            let b = self.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs - rhs
+            self.makeFloat(val: sum, objcName: r)
+        }
+        addFunc("formProd", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = self.nowhite(args[0])
+            let a = self.nowhite(args[1])
+            let b = self.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs * rhs
+            self.makeFloat(val: sum, objcName: r)
+        }
+        addFunc("formQuo", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = self.nowhite(args[0])
+            let a = self.nowhite(args[1])
+            let b = self.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs / rhs
+            self.makeFloat(val: sum, objcName: r)
+        }
+        addFunc("formRem", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = self.nowhite(args[0])
+            let a = self.nowhite(args[1])
+            let b = self.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs.remainder(dividingBy: rhs)
+            self.makeFloat(val: sum, objcName: r)
+        }
+        
     }
     
     // MARK: Helper functions
