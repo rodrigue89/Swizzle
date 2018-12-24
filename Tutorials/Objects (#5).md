@@ -4,7 +4,7 @@ In the last tutorial, we designed a function that can greet anyone. What if you 
 
 ```
 func greet(name, age) {
-print("Hello,", name, #, "!");
+    print("Hello,", name, #, "!");
     print("You are now", age, #, ".");
 }
 
