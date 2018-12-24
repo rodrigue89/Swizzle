@@ -40,7 +40,7 @@ Though Swizzle is still in development, I would say it is slightly functional.
 - Operators
 - Extending
 
-For more, visit the [documentation](https://github.com/SafelySwift/Swizzle/wiki)
+For more, visit the [documentation](https://github.com/SafelySwift/Swizzle/wiki).
 
 Similar to many langauges, Swizzle requires semicolons to terminate statements. Even though this may be annoying, it actually helps make the error messages better so you can write cleaner and safer code.
 
