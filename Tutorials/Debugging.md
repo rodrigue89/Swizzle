@@ -59,7 +59,7 @@ Statement: FunctionStatement(name: (type: identifier, value: \'eat\', line: 6), 
 ```
 Useless, right? Actually I think the opposite. This way, you can see what actually made it into your program.  If you see something missing, like for example you had another call inside your function statement, you can go look back at your code to see what was the problem.
 
-Another use of this tool is to find out what went wrong in your program. I changed the line `eat(p);` to `eat();` to see what happens. When I ran the code, this is a key section of the trace I noticed:
+Another use of these tools is to find out what went wrong in your program. I changed the line `eat(p);` to `eat();` to see what happens. When I ran the code, this is a key section of the trace I noticed:
 
 ```
 *** Frame #12: Visiting a function call at line 11
@@ -68,7 +68,7 @@ Another use of this tool is to find out what went wrong in your program. I chang
 *** Frame #15: Function 'eat(person:)' was executed.
 ```
 
-I am still a bit confused, so I tried the last step...
+I was still a bit confused, so I tried the last step...
 
 3. Use error handling
 
