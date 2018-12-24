@@ -349,9 +349,10 @@ public class Interpreter: Visitor {
             reportError("The function `\(callName)` does not exist.")
             return nil
         }
+        let override = Interpreter._variableLengthParameters == function.args
         let expected = function.args.count
         let given = callArgs.count
-        guard given == expected else {
+        guard given == expected || override else {
             logMsg("Unexpected arguments to function `\(function).", ui: "Given: \(given), Expected: \(expected)")
             reportError("Expected \(expected) parameters in function call to `\(function)`.")
             return nil
