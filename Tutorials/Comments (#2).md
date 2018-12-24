@@ -19,6 +19,6 @@ Let us say you are writing a program. Then you leave for 6 months and come back.
 
 ## Takeaway
 
-Comments are important when docuemnting code so that you and others know what is going on.
+Comments are important when documenting code so that you and others know what is going on.
 
 [Previous: Hello World](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Hello%20World%20(%231).md) | [Next: Variables](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Variables%20(%233).md)

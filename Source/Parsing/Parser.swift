@@ -123,18 +123,17 @@ public class Parser {
         s.append(objcStmt)
     }
     
-    func _makeAssignStmt(_ g: [Token], _ s: inout [Statement]) throws {
+    func _makeAssignStmt(_ type: Token, _ g: [Token], _ s: inout [Statement]) throws {
         var g = g
         let l = g.first?.line
         guard let varName = expect(.identifier, c: &g) else { throw Error.expectedIdentifier }
         guard expect(.assign, c: &g) != nil else { throw Error.expectedAssignment }
         switch g.count {
         case 1:
-            let access = AccessStatement(object: object, key: key)
-            let expr = Expression(rep: .access(access))
-            let assign = AssignStatement(decl: type, name: varName, expression: expr)
-            assign.line = l
-            s.append(assign)
+            guard let lit = expect(.literal, c: &g) else { throw Error.expectedLiteral }
+            let assignStmt = AssignStatement(decl: type, name: varName, expression: Expression(rep: .literal(lit.literal!)))
+            assignStmt.line = l
+            s.append(assignStmt)
             return
         default:
             if g.count == 3, g.dropFirst().first?.type == .dot, let object = g.first, let key = g.last {
@@ -170,14 +169,14 @@ public class Parser {
             if let char = fncName.lexme.first, let scalar = char.unicodeScalars.first, CharacterSet.uppercaseLetters.contains(scalar) {
                 let constr = InitStatement(objectName: fncName, args: args)
                 let expr = Expression(rep: .constr(constr))
-                let assignStmt = AssignStatement(name: varName, expression: expr)
+                let assignStmt = AssignStatement(decl: type, name: varName, expression: expr)
                 assignStmt.line = l
                 s.append(assignStmt)
                 return
             } else {
                 let call = CallStatement(name: fncName, args: args)
                 let expr = Expression(rep: .call(call))
-                let assignStmt = AssignStatement(name: varName, expression: expr)
+                let assignStmt = AssignStatement(decl: type, name: varName, expression: expr)
                 assignStmt.line = l
                 s.append(assignStmt)
                 return
@@ -376,7 +375,8 @@ public class Parser {
                 }
                 try _makeObjcStmt(group!, &stmts)
                 group = nil
-            } else if current?.type == .varDecl {
+            } else if current?.type == .varDecl || current?.type == .setDecl {
+                let type = current!
                 advance()
                 guard let varName = get(.identifier) else { throw Error.expectedIdentifier }
                 guard group == nil else { throw Error.groupNotClosed }
@@ -392,7 +392,7 @@ public class Parser {
                     }
                     advance()
                 }
-                try _makeAssignStmt(group!, &stmts)
+                try _makeAssignStmt(type, group!, &stmts)
                 group = nil
             } else if current?.type == .identifier {
                 guard let name = get(.identifier) else { throw Error.expectedIdentifier }
