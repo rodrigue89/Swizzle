@@ -8,16 +8,19 @@
 import Foundation
 
 public class CodeFile {
+    /// The source of the file
     let code: String
-    let header: Header?
-    public init(url: URL, headerURL: URL?) throws {
-        self.code = try String(contentsOf: url)
-        if let headerURL = headerURL {
-            let str = try String(contentsOf: headerURL)
-            self.header = Header(headerCode: str)
-        } else {
-            self.header = nil
+    
+    public struct Error: CustomStringConvertible, Swift.Error {
+        public var description: String
+        public var localizedDescription: String {
+            return description
         }
+    }
+    public init(directory: FileManager.SearchPathDirectory, path: String) throws {
+        guard path.hasSuffix(".sw") else { throw Error(description: "Expected '.sw' as the file type") }
+        guard let url = FileManager.default.urls(for: directory, in: .userDomainMask).first?.appendingPathComponent(path) else { throw Error(description: "Could not find file at \(path)") }
+        self.code = try String(contentsOf: url)
     }
     public struct Options: OptionSet {
         public static let debug = Options(rawValue: 1)
@@ -31,7 +34,6 @@ public class CodeFile {
     public var options: Options = [.stackTrace]
     public func run() throws -> Interpreter {
         let i = try Interpreter(code: code, debug: options.contains(.debug), stackTrace: options.contains(.stackTrace))
-        i.header = header
         i.alwaysTraverseDebug = options.contains(.traverseDebug)
         try i.execute()
         return i
