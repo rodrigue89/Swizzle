@@ -16,6 +16,7 @@ extension Dictionary {
     }
 }
 
+// Taken from https://stackoverflow.com/questions/41292671/separating-camelcase-string-into-space-separated-words-in-swift
 extension String {
     func camelCaseToWords() -> String {
         return unicodeScalars.reduce("") {
