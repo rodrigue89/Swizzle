@@ -65,3 +65,8 @@ You can see what and how your program did what it did.
 ### 2. Debug
 
 You can inspect a frame of execution in great detail
+
+## More Info
+
+- My [reddit](https://www.reddit.com/user/SafelySwift) is a great place to chat about ideas
+- The [Crafting Interpreters](http://craftinginterpreters.com) book is really helpful
