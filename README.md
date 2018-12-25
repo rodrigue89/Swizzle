@@ -66,7 +66,7 @@ You can see what and how your program did what it did.
 
 You can inspect a frame of execution in great detail
 
-## Beyond Swzzle
+## Beyond Swizzle
 
 - My [reddit](https://www.reddit.com/user/SafelySwift) is a great place to chat about ideas or discuss coding
 - The [Crafting Interpreters](http://craftinginterpreters.com) book is really helpful
