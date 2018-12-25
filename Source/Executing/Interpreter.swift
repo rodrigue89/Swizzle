@@ -469,6 +469,11 @@ public class Interpreter: Visitor {
     public func visit(_ funct: FunctionStatement) -> [String]? {
         let funcName = funct.name.lexme
         logMsg("Visiting declaration of '\(funcName)(_:)'.", ui: "Statement: \(funct)")
+        guard functions[funcName] == nil else {
+            logMsg("Unable to insert function named '\(funcName)' into hash table because the bucket is full", ui: "Function: \(funct)")
+            reportError("Cannot declare function '\(funcName)' because it already exists")
+            return nil
+        }
         let args = funct.args.map { $0.lexme }
         let argCount = args.count
         let body = funct.body
