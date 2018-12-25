@@ -148,12 +148,12 @@ public class Lexer {
     
     func scanIdentifier() -> Token? {
         var acc = ""
-        while !endOfIdentifier.contains(peek()) {
+        while let p = tryPeek(), !endOfIdentifier.contains(p) {
             if isEOF() {
-                if let c = optionalCurrent() { acc.append(c) }
+                if let c = tryPeek() { acc.append(c) }
                 break
             }
-            acc.append(peek())
+            acc.append(p)
             consume()
         }
         return acc.isEmpty ? nil : Token(type: .identifier, lexme: acc, literal: nil, line: line)
