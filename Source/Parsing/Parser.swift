@@ -13,6 +13,7 @@ public class Parser {
         case expectedStartingBracket
         case expectedClosingBracket
         case expectedIdentifier
+        case unresolvedIdentifier
         case expectedType
         case expectedDeclaration
         case unexpectedToken
@@ -408,6 +409,9 @@ public class Parser {
                         break
                     }
                     advance()
+                }
+                if group?.dropFirst().isEmpty {
+                    throw Error.unresolvedIdentifier
                 }
                 if group?.dropFirst().first?.type == .dot {
                     try _makeSetStmt(group!, &stmts)
