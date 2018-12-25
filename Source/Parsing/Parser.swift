@@ -410,7 +410,7 @@ public class Parser {
                     }
                     advance()
                 }
-                if group?.dropFirst().isEmpty {
+                if group?.dropFirst().isEmpty || dropFirst[1].type == .semicolon {
                     throw Error.unresolvedIdentifier
                 }
                 if group?.dropFirst().first?.type == .dot {
