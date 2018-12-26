@@ -21,13 +21,6 @@ Swizzle is a programming language that is all new, yet all fun. Swizzle has a sy
 
 Though Swizzle is still in development, I would say it is slightly functional.
 
-**Tutorials:**
-- [Hello World](https://github.com/SafelySwift/Swizzle/blob/gh-pages/Tutorials/Hello%20World%20(%231).md)
-- [Comments](https://github.com/SafelySwift/Swizzle/blob/gh-pages/Tutorials/Comments%20(%232).md)
-- [Variables](https://github.com/SafelySwift/Swizzle/blob/gh-pages/Tutorials/Variables%20(%233).md)
-- [Functions](https://github.com/SafelySwift/Swizzle/blob/gh-pages/Tutorials/Functions%20(%234).md)
-- [Objects](https://github.com/SafelySwift/Swizzle/blob/gh-pages/Tutorials/Objects%20(%235).md)
-
 ##### Swizzle allows:
 
 - Custom objects
@@ -41,6 +34,13 @@ Though Swizzle is still in development, I would say it is slightly functional.
 - Extending
 
 For more, visit the [documentation](https://github.com/SafelySwift/Swizzle/wiki).
+
+**Tutorials:**
+- [Hello World](https://github.com/SafelySwift/Swizzle/blob/gh-pages/Tutorials/Hello%20World%20(%231).md)
+- [Comments](https://github.com/SafelySwift/Swizzle/blob/gh-pages/Tutorials/Comments%20(%232).md)
+- [Variables](https://github.com/SafelySwift/Swizzle/blob/gh-pages/Tutorials/Variables%20(%233).md)
+- [Functions](https://github.com/SafelySwift/Swizzle/blob/gh-pages/Tutorials/Functions%20(%234).md)
+- [Objects](https://github.com/SafelySwift/Swizzle/blob/gh-pages/Tutorials/Objects%20(%235).md)
 
 Similar to many langauges, Swizzle requires semicolons to terminate statements. Even though this may be annoying, it actually helps make the error messages better so you can write cleaner and safer code. See [this pull request](https://github.com/SafelySwift/Swizzle/pull/36) if you do not want to use semicolons.
 
