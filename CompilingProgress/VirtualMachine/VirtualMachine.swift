@@ -1,7 +1,9 @@
+import Foundation
+
 public class VirtualMachine {
-    internal var queue = [UInt8]()//ContiguousBuffer<UInt8>(growthFactor: 2)
+    internal var queue = [UInt8]()
     internal var lines = [Int]()
-    internal var stack = [Int32]()//ContiguousBuffer<Int32>(growthFactor: 2)
+    internal var stack = [Int32]()
     public var disassemble = false
     
     public func enqueue(_ byte: UInt8, line: Int) {
