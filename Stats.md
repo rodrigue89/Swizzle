@@ -23,7 +23,7 @@
 
 ## Source: Compiler
 
-## Bytecode
+### Bytecode
 - Lines: 54
 
 ### Virtual Machine
