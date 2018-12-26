@@ -34,15 +34,12 @@ public class ContiguousBuffer<Element> {
         (first + count).pointee = value
         count += 1
     }
-//    public func _destroyLast() -> Element? {
-//        guard count > 0 else { return nil }
-//        let e = last.pointee
-//        if allocated[count, default: false] {
-//            last.deallocate()
-//        }
-//        return e
-//    }
-    
+    public func _removeFirst() {
+        let new = first + 1
+        first.deinitialize(count: 1)
+        first.deallocate()
+        first = new
+    }
     
     deinit {
         first.deinitialize(count: count)
