@@ -40,6 +40,10 @@ public class ContiguousBuffer<Element> {
         first.deallocate()
         first = new
     }
+    public func _removeLast() {
+        last.deinitialize(count: 1)
+        last.deallocate()
+    }
     
     deinit {
         first.deinitialize(count: count)
