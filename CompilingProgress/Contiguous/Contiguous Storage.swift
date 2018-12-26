@@ -37,7 +37,7 @@ public class ContiguousBuffer<Element> {
     public func _removeFirst() {
         let new = first + 1
         first.deinitialize(count: 1)
-        first.deallocate()
+        count -= 1
         first = new
     }
     
