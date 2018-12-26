@@ -2,7 +2,7 @@
 
 > Note: All tests for performance will be done with the 'Hello World' program
 
-## Source
+## Source: Interpreter
 
 - Overall Lines: 1744
 
@@ -20,3 +20,12 @@
 
 ### Total
 - Running: 0.05463504791 seconds
+
+## Source: Compiler
+
+## Bytecode
+- Lines: 54
+
+### Virtual Machine
+- Lines: 117
+- Executing: 0.0156922340393066 seconds
