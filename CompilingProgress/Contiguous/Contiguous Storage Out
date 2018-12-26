@@ -1,42 +1,42 @@
-Testing Reallocation (1) (1):
-Completed 1000 iterations in 0.213398933410645 seconds
+Testing Reallocation (1):
+Completed 1000 iterations in 0.138352990150452 seconds
 ------------------------------------------------------
-Testing Reallocation (1) (2):
-Completed 1000 iterations in 0.226892948150635 seconds
+Testing Reallocation (2):
+Completed 1000 iterations in 0.197000980377197 seconds
 ------------------------------------------------------
-Testing Reallocation (1) (3):
-Completed 1000 iterations in 0.213204979896545 seconds
+Testing Reallocation (3):
+Completed 1000 iterations in 0.288108944892883 seconds
 ------------------------------------------------------
-Testing Reallocation (1) (4):
-Completed 1000 iterations in 0.270164966583252 seconds
+Testing Reallocation (4):
+Completed 1000 iterations in 0.301033020019531 seconds
 ------------------------------------------------------
-Testing Reallocation (1) (5):
-Completed 1000 iterations in 0.394405007362366 seconds
+Testing Reallocation (5):
+Completed 1000 iterations in 0.286027073860168 seconds
 ------------------------------------------------------
-Testing Reallocation (1) (6):
-Completed 1000 iterations in 0.226104021072388 seconds
+Testing Reallocation (6):
+Completed 1000 iterations in 0.200001955032349 seconds
 ------------------------------------------------------
-Testing Reallocation (1) (7):
-Completed 1000 iterations in 0.305120944976807 seconds
+Testing Reallocation (7):
+Completed 1000 iterations in 0.342450976371765 seconds
 ------------------------------------------------------
-Testing Reallocation (1) (8):
-Completed 1000 iterations in 0.306900024414062 seconds
+Testing Reallocation (8):
+Completed 1000 iterations in 0.230838060379028 seconds
 ------------------------------------------------------
-Testing Reallocation (1) (9):
-Completed 1000 iterations in 0.21973192691803 seconds
------------------------------------------------------
-Testing Reallocation (1) (10):
-Completed 1000 iterations in 0.268468022346497 seconds
+Testing Reallocation (9):
+Completed 1000 iterations in 0.287741899490356 seconds
+------------------------------------------------------
+Testing Reallocation (10):
+Completed 1000 iterations in 0.385185956954956 seconds
 ------------------------------------------------------
 Bar Graph
-1:    ■■■■■■■■■■
-2:    ■■■■■■■■■■■
-3:    ■■■■■■■■■■
-4:    ■■■■■■■■■■■■■
-5:    ■■■■■■■■■■■■■■■■■■■
-6:    ■■■■■■■■■■■
-7:    ■■■■■■■■■■■■■■■
-8:    ■■■■■■■■■■■■■■■
-9:    ■■■■■■■■■■
-10:   ■■■■■■■■■■■■■
+1:    ■■■■■■
+2:    ■■■■■■■■■
+3:    ■■■■■■■■■■■■■■
+4:    ■■■■■■■■■■■■■■■
+5:    ■■■■■■■■■■■■■■
+6:    ■■■■■■■■■■
+7:    ■■■■■■■■■■■■■■■■■
+8:    ■■■■■■■■■■■
+9:    ■■■■■■■■■■■■■■
+10:   ■■■■■■■■■■■■■■■■■■■
 -------------------------
