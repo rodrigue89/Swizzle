@@ -50,7 +50,15 @@ Swizzle comes with an interpreter and debugger, and compiler support should come
 
 ## How can I use it?
 
-Using it is simple: just clone or download the directory to your computer and add it to your Swift project.
+### There are 2 ways to use it
+
+1. Use the app to run, edit and make Swizzle files
+
+URL: https://github.com/SafelySwift/SwizzleApp
+
+![](https://github.com/SafelySwift/Swizzle/blob/master/Images/Screen%20Shot%202018-12-26%20at%2011.33.13%20AM.png)
+
+2. Clone or download the directory to your computer and add it to your Swift project.
 
 ![](https://github.com/SafelySwift/Swizzle/blob/master/Images/Screen%20Shot%202018-12-17%20at%209.20.42%20PM.png)
 
