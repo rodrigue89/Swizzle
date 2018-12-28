@@ -41,7 +41,7 @@ public class Tester {
             var longest = 0
             for (i, time) in times.enumerated() {
                 let counter = i + 1
-                let graph = "\(i + 1):\(String(repeating: " ", count: 5 - counter.description.count))" + String(repeating: "■", count: Int(time / maximum * 50))
+                let graph = "\(counter):\(String(repeating: " ", count: 5 - counter.words.count))" + String(repeating: "■", count: Int(time / maximum * 50))
                 longest = max(longest, graph.count)
                 print(graph)
             }
