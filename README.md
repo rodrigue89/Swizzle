@@ -66,13 +66,9 @@ Swizzle comes with an interpreter and debugger, and compiler support should come
 
 Swizzle already outputs helpful error messages and I am working on making them more human readable. However, you already have access to the the debugging tools included in Swizzle.
 
-### 1. Stack Trace
+## Versions
 
-You can see what and how your program did what it did.
-
-### 2. Debug
-
-You can inspect a frame of execution in great detail
+The latest release is [v0.1.0](https://github.com/SafelySwift/Swizzle/releases/tags/v0.1.0). For more information on releases, go [here](https://github.com/SafelySwift/Swizzle/releases)
 
 ## Beyond Swizzle
 
