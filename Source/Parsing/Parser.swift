@@ -7,22 +7,26 @@
 
 import Foundation
 
-public class Parser {
-    public enum Error: Swift.Error {
-        case groupNotClosed
-        case expectedStartingBracket
-        case expectedClosingBracket
-        case expectedIdentifier
-        case unresolvedIdentifier
-        case expectedType
-        case expectedDeclaration
-        case unexpectedToken
-        case expectedSemicolon
-        case expectedAssignment
-        case expectedLiteral
-        case expectedStartingGroup
-        case expectedClosingGroup
-        case anyError
+public final class Parser {
+    public struct Error: Swift.Error {
+        public enum Message {
+            case groupNotClosed
+            case expectedStartingBracket
+            case expectedClosingBracket
+            case expectedIdentifier
+            case unresolvedIdentifier
+            case expectedType
+            case expectedDeclaration
+            case unexpectedToken
+            case expectedSemicolon
+            case expectedAssignment
+            case expectedLiteral
+            case expectedStartingGroup
+            case expectedClosingGroup
+            case anyError
+        }
+        public let msg: Message
+        public let line: Int
     }
     let stream: [Token]
     var pos = 0
@@ -88,6 +92,10 @@ public class Parser {
     
     public var isDebugging = false
     
+    func errorMake(_ msg: Error.Message, _ tkn: Token?) -> Error {
+        return Error(msg: msg, line: tkn?.line ?? -1)
+    }
+    
     func _makeObjcStmt(_ g: [Token], _ s: inout [Statement]) throws {
         let l = g.first?.line
         var g = g
@@ -102,21 +110,21 @@ public class Parser {
             if segment.first?.type == .newLine {
                 segment.removeFirst()
             }
-            guard expect(.propertyDecl, c: &segment) != nil else { throw Error.expectedDeclaration }
+            guard expect(.propertyDecl, c: &segment) != nil else { throw errorMake(.expectedDeclaration, segment.first) }
             if segment.count == 1 {
-                guard segment.first?.type == .identifier else { throw Error.expectedIdentifier }
+                guard segment.first?.type == .identifier else { throw errorMake(.expectedIdentifier, segment.first) }
                 if let declName = segment.first {
                     let decl = DeclarationStatement(name: declName, type: .implied)
                     decls.append(decl)
                 }
             } else if segment.count == 2 {
-                guard segment.first?.type == .identifier else { throw Error.expectedIdentifier }
-                guard segment.dropFirst().first?.type == .identifier else { throw Error.expectedType }
-                guard let type = ObjectType(rawValue: segment[2].lexme) else { throw Error.expectedType }
+                guard segment.first?.type == .identifier else { throw errorMake(.expectedIdentifier, segment.first) }
+                guard segment.dropFirst().first?.type == .identifier else { throw errorMake(.expectedType, segment.dropFirst().first) }
+                guard let type = ObjectType(rawValue: segment[2].lexme) else { throw errorMake(.expectedType, segment[2]) }
                 let decl = DeclarationStatement(name: segment[0], type: type)
                 decls.append(decl)
             } else {
-                throw Error.unexpectedToken
+                throw errorMake(.unexpectedToken, segment.first)
             }
         }
         let objcStmt = ObjectStatement(name: name, declarations: decls)
@@ -127,11 +135,11 @@ public class Parser {
     func _makeAssignStmt(_ type: Token, _ g: [Token], _ s: inout [Statement]) throws {
         var g = g
         let l = g.first?.line
-        guard let varName = expect(.identifier, c: &g) else { throw Error.expectedIdentifier }
-        guard expect(.assign, c: &g) != nil else { throw Error.expectedAssignment }
+        guard let varName = expect(.identifier, c: &g) else { throw errorMake(.expectedIdentifier, g.first) }
+        guard expect(.assign, c: &g) != nil else { throw errorMake(.expectedAssignment, g.first) }
         switch g.count {
         case 1:
-            guard let lit = expect(.literal, c: &g) else { throw Error.expectedLiteral }
+            guard let lit = expect(.literal, c: &g) else { throw errorMake(.expectedLiteral, g.first) }
             let assignStmt = AssignStatement(decl: type, name: varName, expression: Expression(rep: .literal(lit.literal!)))
             assignStmt.line = l
             s.append(assignStmt)
@@ -142,22 +150,22 @@ public class Parser {
                 s.append(access)
                 return
             }
-            guard g.count >= 3 else { throw Error.anyError }
+            guard g.count >= 3 else { throw errorMake(.anyError, g.first) }
             guard let fncName = expect(.identifier, c: &g) else {
-                throw Error.expectedIdentifier
+                throw errorMake(.expectedIdentifier, g.first)
             }
             
-            guard expect(.leftPar, c: &g) != nil else { throw Error.expectedStartingGroup }
+            guard expect(.leftPar, c: &g) != nil else { throw errorMake(.expectedStartingGroup, g.first) }
             var args = [Expression]()
             var onComma = false
             var i = 0
             while g[i].type != .rightPar {
                 let tkn = g[i]
                 if args.isEmpty && tkn.type == .comma {
-                    throw Error.unexpectedToken
+                    throw errorMake(.unexpectedToken, tkn)
                 }
                 if tkn.type == .comma {
-                    guard !onComma else { throw Error.unexpectedToken }
+                    guard !onComma else { throw errorMake(.unexpectedToken, tkn) }
                     onComma = true
                 } else {
                     onComma = false
@@ -182,18 +190,18 @@ public class Parser {
                 s.append(assignStmt)
                 return
             }
-            throw Error.unexpectedToken
+            throw errorMake(.unexpectedToken, nil)
         }
     }
     
     func _makeFuncStmt(_ g: [Token], _ s: inout [Statement]) throws {
         let l = currentLine()
         var g = g
-        guard let name = expect(.identifier, c: &g) else { throw Error.expectedIdentifier }
+        guard let name = expect(.identifier, c: &g) else { throw errorMake(.expectedIdentifier, g.first) }
         if isDebugging {
             print("FunctionStatement named \(name), g:", g)
         }
-        guard expect(.leftPar, c: &g) != nil else { throw Error.expectedStartingGroup }
+        guard expect(.leftPar, c: &g) != nil else { throw errorMake(.expectedStartingGroup, g.first) }
         var args = [Token]()
         var body = [Statement]()
         let allowed: Set<TokenType> = [
@@ -201,7 +209,7 @@ public class Parser {
             ]
         while g.first?.type != .rightPar {
             if g.isEmpty {
-                throw Error.expectedClosingGroup
+                throw errorMake(.expectedClosingGroup, nil)
             }
             if let tkn = g.first {
                 if allowed.contains(tkn.type) {
@@ -217,8 +225,8 @@ public class Parser {
         if isDebugging {
             print("FunctionStatement args:", args)
         }
-        guard expect(.rightPar, c: &g) != nil else { throw Error.expectedClosingGroup }
-        guard expect(.leftBracket, c: &g) != nil else { throw Error.expectedStartingBracket }
+        guard expect(.rightPar, c: &g) != nil else { throw errorMake(.expectedClosingGroup, g.first) }
+        guard expect(.leftBracket, c: &g) != nil else { throw errorMake(.expectedStartingBracket, g.first) }
         let segments = g.dropFirst().split(whereSeparator: { $0.type == .semicolon }).filter{ !$0.isEmpty }
         if isDebugging {
             print("Segments for FunctionStatement named \(name):", segments)
@@ -239,10 +247,10 @@ public class Parser {
             }
             let toCheck = segment.index(after: segment.startIndex)
             if segment.count >= 5, segment[toCheck].type == .dot {
-                guard let object = expect(.identifier, c: &segment) else { throw Error.expectedIdentifier }
-                guard expect(.dot, c: &segment) != nil else { throw Error.unexpectedToken }
-                guard let key = expect(.identifier, c: &segment) else { throw Error.expectedIdentifier }
-                guard expect(.assign, c: &segment) != nil else { throw Error.expectedAssignment }
+                guard let object = expect(.identifier, c: &segment) else { throw errorMake(.expectedIdentifier, segment.first) }
+                guard expect(.dot, c: &segment) != nil else { throw errorMake(.unexpectedToken, segment.first) }
+                guard let key = expect(.identifier, c: &segment) else { throw errorMake(.expectedIdentifier, segment.first) }
+                guard expect(.assign, c: &segment) != nil else { throw errorMake(.expectedAssignment, segment.first) }
                 let expr = Expression(rep: .anyToken(segment[0]))
                 let setStmt = SetStatement(object: object, key: key, value: expr)
                 body.append(setStmt)
@@ -252,12 +260,12 @@ public class Parser {
                 } else if let type = expect(.setDecl, c: &segment) {
                     try _makeAssignStmt(type, Array(segment), &s)
                 } else {
-                    guard let callName = expect(.identifier, c: &segment) else { throw Error.expectedIdentifier }
+                    guard let callName = expect(.identifier, c: &segment) else { throw errorMake(.expectedIdentifier, segment.first) }
                     var args = [Expression]()
-                    guard expect(.leftPar, c: &segment) != nil else { throw Error.expectedStartingGroup }
+                    guard expect(.leftPar, c: &segment) != nil else { throw errorMake(.expectedStartingGroup, segment.first) }
                     while let tkn = segment.first, tkn.type != .rightPar {
                         if segment.isEmpty {
-                            throw Error.expectedClosingGroup
+                            throw errorMake(.expectedClosingGroup, nil)
                         }
                         if tkn.type == .identifier, segment.dropFirst().first?.type == .dot, let key = segment.dropFirst(2).first {
                             let access = AccessStatement(object: tkn, key: key)
@@ -270,14 +278,14 @@ public class Parser {
                             let expr = Expression(rep: .anyToken(tkn))
                             args.append(expr)
                         } else if !argSeps.contains(tkn.type) {
-                            throw Error.unexpectedToken
+                            throw errorMake(.unexpectedToken, tkn)
                         }
                         segment.removeFirst()
                     }
                     if isDebugging {
                         print("Args", args)
                     }
-                    guard expect(.rightPar, c: &segment) != nil else { throw Error.expectedClosingGroup }
+                    guard expect(.rightPar, c: &segment) != nil else { throw errorMake(.expectedClosingGroup, segment.first) }
                     let callStmt = CallStatement(name: callName, args: args)
                     body.append(callStmt)
                 }
@@ -291,9 +299,9 @@ public class Parser {
     func _makeCallStmt(_ g: [Token], _ s: inout [Statement]) throws {
         var g = g
         let l = g.first?.line
-        guard let callName = expect(.identifier, c: &g) else { throw Error.expectedIdentifier }
-        guard expect(.leftPar, c: &g) != nil else { throw Error.expectedStartingGroup }
-        guard g.last?.type == .rightPar else { throw Error.expectedClosingGroup }
+        guard let callName = expect(.identifier, c: &g) else { throw errorMake(.expectedIdentifier, g.first) }
+        guard expect(.leftPar, c: &g) != nil else { throw errorMake(.expectedStartingGroup, g.first) }
+        guard g.last?.type == .rightPar else { throw errorMake(.expectedClosingGroup, g.first) }
         var argSegments = g.dropLast().split(whereSeparator: { $0.type == .comma })
         if isDebugging {
             print("Creating Call:", argSegments)
@@ -340,11 +348,11 @@ public class Parser {
     func _makeSetStmt(_ g: [Token], _ s: inout [Statement]) throws {
         var g = g
         let objcName = g.removeFirst()
-        guard expect(.dot, c: &g) != nil else { throw Error.unexpectedToken }
-        guard let key = expect(.identifier, c: &g) else { throw Error.expectedIdentifier }
-        guard expect(.assign, c: &g) != nil else { throw Error.unexpectedToken }
+        guard expect(.dot, c: &g) != nil else { throw errorMake(.unexpectedToken, g.first) }
+        guard let key = expect(.identifier, c: &g) else { throw errorMake(.expectedIdentifier, g.first) }
+        guard expect(.assign, c: &g) != nil else { throw errorMake(.unexpectedToken, g.first) }
         // FIXME: Allow multiple-token expressions
-        guard let val = g.first else { throw Error.anyError }
+        guard let val = g.first else { throw errorMake(.anyError, nil) }
         let expr = Expression(rep: .anyToken(val))
         SetStatement(object: objcName, key: key, value: expr)
     }
@@ -359,13 +367,13 @@ public class Parser {
             }
             if current?.type == .objcDecl {
                 advance()
-                guard let objcName = get(.identifier) else { throw Error.expectedIdentifier }
-                guard group == nil else { throw Error.groupNotClosed }
+                guard let objcName = get(.identifier) else { throw errorMake(.expectedIdentifier, current) }
+                guard group == nil else { throw errorMake(.groupNotClosed, current) }
                 group = [objcName]
-                guard eat(.leftBracket) else { throw Error.expectedStartingBracket }
+                guard eat(.leftBracket) else { throw errorMake(.expectedStartingBracket, current) }
                 while !eat(.rightBracket) {
                     if isAtEnd() {
-                        throw Error.expectedClosingBracket
+                        throw errorMake(.expectedClosingBracket, current)
                     }
                     if let c = current {
                         group?.append(c)
@@ -379,12 +387,12 @@ public class Parser {
             } else if current?.type == .varDecl || current?.type == .setDecl {
                 let type = current!
                 advance()
-                guard let varName = get(.identifier) else { throw Error.expectedIdentifier }
-                guard group == nil else { throw Error.groupNotClosed }
+                guard let varName = get(.identifier) else { throw errorMake(.expectedIdentifier, current) }
+                guard group == nil else { throw errorMake(.groupNotClosed, current) }
                 group = [varName]
                 while !eat(.semicolon) {
                     if isAtEnd() {
-                        throw Error.expectedSemicolon
+                        throw errorMake(.expectedSemicolon, group?.first ?? current)
                     }
                     if let c = current {
                         group?.append(c)
@@ -396,12 +404,12 @@ public class Parser {
                 try _makeAssignStmt(type, group!, &stmts)
                 group = nil
             } else if current?.type == .identifier {
-                guard let name = get(.identifier) else { throw Error.expectedIdentifier }
-                guard group == nil else { throw Error.groupNotClosed }
+                guard let name = get(.identifier) else { throw errorMake(.expectedIdentifier, group?.first ?? current) }
+                guard group == nil else { throw errorMake(.groupNotClosed, group?.first ?? current) }
                 group = [name]
                 while !eat(.semicolon) {
                     if isAtEnd() {
-                        throw Error.expectedSemicolon
+                        throw errorMake(.expectedSemicolon, group?.first ?? current)
                     }
                     if let c = current {
                         group?.append(c)
@@ -410,8 +418,8 @@ public class Parser {
                     }
                     advance()
                 }
-                if group?.dropFirst().isEmpty || dropFirst[1].type == .semicolon {
-                    throw Error.unresolvedIdentifier
+                if group!.dropFirst().isEmpty || group![2].type == .semicolon {
+                    throw errorMake(.unresolvedIdentifier, group?.first ?? current)
                 }
                 if group?.dropFirst().first?.type == .dot {
                     try _makeSetStmt(group!, &stmts)
@@ -421,13 +429,13 @@ public class Parser {
                 group = nil
             } else if current?.type == .funcDecl {
                 advance()
-                guard let funcName = get(.identifier) else { throw Error.expectedIdentifier }
-                guard group == nil else { throw Error.groupNotClosed }
+                guard let funcName = get(.identifier) else { throw errorMake(.expectedIdentifier, current) }
+                guard group == nil else { throw errorMake(.groupNotClosed, current) }
                 group = [funcName]
-                guard match(.leftPar) else { throw Error.expectedStartingGroup }
+                guard match(.leftPar) else { throw errorMake(.expectedStartingGroup, group?.first ?? current) }
                 while !eat(.rightBracket) {
                     if isAtEnd() {
-                        throw Error.expectedClosingBracket
+                        throw errorMake(.expectedClosingBracket, group?.first ?? current)
                     }
                     if let c = current {
                         group?.append(c)

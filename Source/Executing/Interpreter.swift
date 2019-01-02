@@ -200,8 +200,10 @@ public class Interpreter: Visitor {
             try parser.formStatements(&statements)
         }
         catch {
-            let words = String(describing: error).camelCaseToWords().capitalized
-            throw Error(message: words, line: parser.currentLine())
+            if let error = error as? Parser.Error {
+                let words = String(describing: error.msg).camelCaseToWords().capitalized
+                throw Error(message: words, line: error.line)
+            }
         }
         if debug {
             print("Statements:", statements)
