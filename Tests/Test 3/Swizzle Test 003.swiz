@@ -1,7 +1,7 @@
 // This tests objects
 
 objc Foo {
-	decl bar;
+    decl bar;
 }
 
 var foo = Foo("bar");
