@@ -57,6 +57,8 @@ Swizzle comes with an interpreter and debugger, and compiler support should come
     URL: [https://github.com/SafelySwift/SwizzleApp](https://github.com/SafelySwift/SwizzleApp)
 
     ![](https://github.com/SafelySwift/Swizzle/blob/master/Images/Screen%20Shot%202018-12-26%20at%2011.37.45%20AM.png)
+    
+    Though interpreters are slow, the app handles them with insanely fast speed.
 
 2. Clone or download the directory to your computer and add it to your Swift project.
 
