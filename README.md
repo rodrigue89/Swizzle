@@ -52,7 +52,7 @@ Swizzle comes with an interpreter and debugger, and compiler support should come
 
 ### There are 2 ways to use it
 
-1. Use the app to run, edit and make Swizzle files
+1. Use the app to run, edit and make Swizzle files _[RECOMMENDED]_
 
     URL: [https://github.com/SafelySwift/SwizzleApp](https://github.com/SafelySwift/SwizzleApp)
 
