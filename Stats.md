@@ -8,18 +8,18 @@
 
 ### Lexer
 - Lines: 307
-- Lexing: 0.0256600379943848 seconds
+- Lexing: 0.00145196914672852 seconds
 
 ### Parser
 - Lines: 441
-- Parsing: 0.0107100009918213 seconds
+- Parsing: 0.0031360387802124 seconds
 
 ### Interpreting
 - Lines: 591
-- Executing: 0.0182650089263916
+- Executing: 0.00487792491912842
 
 ### Total
-- Running: 0.05463504791 seconds
+- Running: 0.00946593284 seconds
 
 ## Source: Compiler
 
