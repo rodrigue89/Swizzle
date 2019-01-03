@@ -3,7 +3,6 @@
 > Note: All tests for performance will be done with the 'Hello World' program
 
 ## Source: Interpreter
-
 - Overall Lines: 1744
 
 ### Lexer
@@ -26,6 +25,18 @@
 ### Bytecode
 - Lines: 54
 
+### Intermediate Representation Parser
+- Lines: NaN
+- Parsing: NaN seconds
+
+### Compiler
+- Lines: NaN
+- Compiling: NaN seconds
+
 ### Virtual Machine
 - Lines: 117
-- Executing: 0.0156922340393066 seconds
+- Executing: NaN seconds
+
+### Assembly Language Converter (x86)
+- Lines: NaN
+- Converting: NaN seconds
