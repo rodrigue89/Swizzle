@@ -354,7 +354,8 @@ public final class Parser {
         // FIXME: Allow multiple-token expressions
         guard let val = g.first else { throw errorMake(.anyError, nil) }
         let expr = Expression(rep: .anyToken(val))
-        SetStatement(object: objcName, key: key, value: expr)
+        let setStmt = SetStatement(object: objcName, key: key, value: expr)
+        s.append(setStmt)
     }
     
     public func formStatements(_ stmts: inout [Statement]) throws {

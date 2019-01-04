@@ -286,6 +286,23 @@ public class Interpreter: Visitor {
             self.makeFloat(val: sum, objcName: r)
         }
         
+        addFunc("ast_objc_set", ["object", "key", "value"]) { (_, args) in
+            let object = self.nowhite(args[0])
+            let key = self.nowhite(args[1])
+            let value = self.nowhite(args[2])
+            let set = SetStatement(object: self.asToken(object), key: self.asToken(key), value: Expression(rep: .anyToken(self.asToken(value))))
+            self.visit(set)
+        }
+        addFunc("ast_objc_set2", ["object", "key", "object2", "value2"]) { (_, args) in
+            let object = self.nowhite(args[0])
+            let key = self.nowhite(args[1])
+            let object2 = self.nowhite(args[2])
+            let value2 = self.nowhite(args[3])
+            let access = AccessStatement(object: self.asToken(object2), key: self.asToken(value2))
+            let set = SetStatement(object: self.asToken(object), key: self.asToken(key), value: Expression(rep: .access(access)))
+            self.visit(set)
+        }
+        
     }
     
     // MARK: Helper functions
