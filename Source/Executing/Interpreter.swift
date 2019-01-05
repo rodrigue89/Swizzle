@@ -303,6 +303,44 @@ public class Interpreter: Visitor {
             self.visit(set)
         }
         
+        addFunc("fileManagerDesktopGetString", ["dump", "path"]) { (_, args) in
+            let dump = self.nowhite(args[0])
+            let path = self.nowhite(args[1])
+            do {
+                let url = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
+                let string = try String(contentsOf: url)
+                let assign = AssignStatement(decl: Token(type: .setDecl, lexme: "set", literal: nil, line: nil), name: self.asToken(dump), expression: Expression(rep: .literal(string)))
+                self.visit(assign)
+            }
+            catch {
+                self.reportError(String(describing: error))
+            }
+        }
+        addFunc("fileManagerDocumentGetString", ["dump", "path"]) { (_, args) in
+            let dump = self.nowhite(args[0])
+            let path = self.nowhite(args[1])
+            do {
+                let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
+                let string = try String(contentsOf: url)
+                let assign = AssignStatement(decl: Token(type: .setDecl, lexme: "set", literal: nil, line: nil), name: self.asToken(dump), expression: Expression(rep: .literal(string)))
+                self.visit(assign)
+            }
+            catch {
+                self.reportError(String(describing: error))
+            }
+        }
+        addFunc("fileManagerDocumentWriteString", ["text", "path"]) { (_, args) in
+            let text = self.nowhite(args[0])
+            let path = self.nowhite(args[1])
+            do {
+                let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
+                try text.write(to: url, atomically: false, encoding: .utf8)
+            }
+            catch {
+                self.reportError(String(describing: error))
+            }
+        }
+        
     }
     
     // MARK: Helper functions
