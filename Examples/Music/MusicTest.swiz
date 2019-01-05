@@ -4,7 +4,7 @@ objc Note {
 
 func constrNote(note, name, oct) {
   var f = "";
-  musicGetFrequencyFromLocalized("fl, name, oct);
+  musicGetFrequencyFromLocalized("f", name, oct);
   note.freq = f;
 }
 func play(note, duration, delay) {
