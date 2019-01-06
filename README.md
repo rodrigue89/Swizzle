@@ -64,7 +64,7 @@ Swizzle comes with an interpreter and debugger, and compiler support should come
 
     URL: [https://github.com/SafelySwift/SwizzleApp](https://github.com/SafelySwift/SwizzleApp)
 
-    ![](https://github.com/SafelySwift/Swizzle/blob/master/Images/Screen%20Shot%202018-12-26%20at%2011.37.45%20AM.png)
+    ![](https://github.com/SafelySwift/Swizzle/blob/master/Images/Screen%20Shot%202019-01-06%20at%2012.02.03%20AM.png)
     
     Though interpreters are slow, the app handles them with insanely fast speed.
 
