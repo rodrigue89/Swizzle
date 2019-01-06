@@ -302,15 +302,27 @@ public final class Parser {
         guard let callName = expect(.identifier, c: &g) else { throw errorMake(.expectedIdentifier, g.first) }
         guard expect(.leftPar, c: &g) != nil else { throw errorMake(.expectedStartingGroup, g.first) }
         guard g.last?.type == .rightPar else { throw errorMake(.expectedClosingGroup, g.first) }
-        var argSegments = g.dropLast().split(whereSeparator: { $0.type == .comma })
+        var argSegments = [[Token]]()
+        var currentArgs = [Token]()
+        for tkn in g {
+            if tkn.type == .comma || tkn.type == .rightPar {
+                argSegments.append(currentArgs)
+                currentArgs = []
+            } else {
+                print("Part of Call:", tkn)
+                currentArgs.append(tkn)
+            }
+        }
+        if !currentArgs.isEmpty {
+            argSegments.append(currentArgs)
+        }
         if isDebugging {
             print("Creating Call:", argSegments)
         }
         var args = [Expression]()
         func addStmt(subsegment: Token, args: inout [Expression]) {
-            let parts = subsegment.lexme.components(separatedBy: ".")
             if isDebugging {
-                print("parts:", parts, "subsegment:", subsegment)
+                print("Subsegment:", subsegment)
             }
             //            if parts.count == 2 {
             //                let objcToken = Token(type: .identifier, lexme: parts[0], literal: nil, line: nil)
@@ -318,7 +330,11 @@ public final class Parser {
             //                let get = AccessStatement(object: objcToken, key: keyToken)
             //                args.append(Expression(rep: .access(get)))
             //            } else
-            if parts.count == 1 {
+            switch subsegment.type {
+            case .literal:
+                let expr = Expression(rep: .literal(subsegment.literal!))
+                args.append(expr)
+            default:
                 let expr = Expression(rep: .anyToken(subsegment))
                 args.append(expr)
             }
@@ -326,7 +342,7 @@ public final class Parser {
         for segment in argSegments {
             var segment = segment
             while let subsegment = segment.first {
-                if subsegment.type == .identifier, segment.dropFirst().first?.type == .dot, let key = segment.dropFirst(2).first {
+                if subsegment.type == .identifier, subsegment.lexme.first != "\"", subsegment.lexme.last != "\"", segment.dropFirst().first?.type == .dot, let key = segment.dropFirst(2).first {
                     if subsegment.lexme.isEmpty || key.lexme.isEmpty {
                         continue
                     }
