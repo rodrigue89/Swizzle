@@ -7,6 +7,274 @@
 
 import Foundation
 
+public final class IncludedLibraries {
+    public static let MutableBox = ObjectStatement(
+        name: Token(
+            type: .identifier,
+            lexme: "MutableBox",
+            literal: nil,
+            line: nil
+        ),
+        declarations: [
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "value",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .implied
+            )
+        ]
+    )
+    
+    static var custom = [String:String]()
+    public static func addLibrary(named name: String, code: String) {
+        self.custom[name] = code
+    }
+    
+    public static let Graphic = ObjectStatement(
+        name: Token(
+            type: .identifier,
+            lexme: "Graphic",
+            literal: nil,
+            line: nil
+        ),
+        declarations: [
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "text",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .string
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "size",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            )
+        ]
+    )
+    public static let GraphicCtx = ObjectStatement(
+        name: Token(
+            type: .identifier,
+            lexme: "GraphicCtx",
+            literal: nil,
+            line: nil
+        ),
+        declarations: [
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "text",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .string
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "size",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "x",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "y",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            )
+        ]
+    )
+    public static let NewGraphicCtx = ObjectStatement(
+        name: Token(
+            type: .identifier,
+            lexme: "NewGraphicCtx",
+            literal: nil,
+            line: nil
+        ),
+        declarations: []
+    )
+    public static func importLibrary(_ name: String, _ i: Interpreter) {
+        switch name {
+        case "Graphics":
+            i.statements.insert(Graphic, at: 0)
+            i.statements.insert(GraphicCtx, at: 0)
+            i.statements.insert(NewGraphicCtx, at: 0)
+            i.addFunc("selectColor", ["ctx", "color"]) { (_, args) in
+                let ctxName = i.nowhite(args[0]); let colorName = i.nowhite(args[1])
+                guard let ctx = i.objects[ctxName] else {
+                    i.reportError("Could not locate the graphic context named '\(ctxName)'")
+                    return
+                }
+                guard let color = i.objects[colorName] else {
+                    i.reportError("Could not locate the color named '\(colorName)'")
+                    return
+                }
+                ctx.name = GraphicCtx.name.lexme
+                ctx.values["_hue"] = color.values["hue"]
+                ctx.values["_sat"] = color.values["saturation"]
+                ctx.values["_bri"] = color.values["brightness"]
+                ctx.values["_alp"] = color.values["alpha"]
+            }
+            i.addFunc("drawGraphic", ["ctx", "graphic", "point"]) { (_, args) in
+                let ctxName = i.nowhite(args[0]); let graphicName = i.nowhite(args[1]); let pointName = i.nowhite(args[2])
+                guard let ctx = i.objects[ctxName] else {
+                    i.reportError("Could not locate the graphic context named '\(ctxName)'")
+                    return
+                }
+                guard let graphic = i.objects[graphicName] else {
+                    i.reportError("Could not locate the graphic named '\(graphicName)'")
+                    return
+                }
+                guard let point = i.objects[pointName] else {
+                    i.reportError("Could not locate the point named '\(pointName)'")
+                    return
+                }
+                if let txt = graphic.values["text"] {
+                    ctx.values["_text"] = i.unstringify(txt)
+                }
+                ctx.values["_size"] = graphic.values["size"]
+                ctx.values["_x"] = point.values["x"]
+                ctx.values["_y"] = point.values["y"]
+            }
+        case "MutableBox":
+            i.statements.insert(MutableBox, at: 0)
+            i.addFunc("copyValue", ["dest", "box"]) { (_, args) in
+                let dest = i.nowhite(args[0]); let box = i.nowhite(args[1])
+                i.objects[dest]?.values["value"] = i.objects["box"]?.values["value"]
+            }
+        default:
+            return
+        }
+    }
+}
+
+public final class StdLib {
+    public static let Float = ObjectStatement(
+        name: Token(
+            type: .identifier,
+            lexme: "Float",
+            literal: nil,
+            line: nil
+        ),
+        declarations: [
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "*value",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            )
+        ]
+    )
+    
+    public static let Point = ObjectStatement(
+        name: Token(
+            type: .identifier,
+            lexme: "Point",
+            literal: nil,
+            line: nil
+        ),
+        declarations: [
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "x",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "y",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            )
+        ]
+    )
+    
+    public static let Color = ObjectStatement(
+        name: Token(
+            type: .identifier,
+            lexme: "Color",
+            literal: nil,
+            line: nil
+        ),
+        declarations: [
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "hue",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "saturation",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "brightness",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "alpha",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            )
+        ]
+    )
+    
+    public static func configure(_ i: Interpreter) {
+        i.statements.append(contentsOf: [Float, Point, Color])
+        
+    }
+}
+
+
 public class Interpreter: Visitor {
     // MARK: Visitor result
     public typealias Result = [String]?
@@ -216,7 +484,7 @@ public class Interpreter: Visitor {
     let printTerminator = "\n"
     
     func configureDefaults() {
-        statements.append(IncludedLibraries.Float)
+        StdLib.configure(self)
         
         addFunc("print", Interpreter._variableLengthParameters) { (_, args) in
             var result = ""
@@ -484,7 +752,7 @@ public class Interpreter: Visitor {
             constr.accept(self)
         } else if let lit = rep.literal {
             if let num = lit as? Float {
-                let `init` = InitStatement(objectName: IncludedLibraries.Float.name, args: [Expression(rep: .literal(num))])
+                let `init` = InitStatement(objectName: StdLib.Float.name, args: [Expression(rep: .literal(num))])
                 let object = Object(name: "Float", values: ["*value":num.description], stmt: `init`)
                 objects[varName] = object
             }
