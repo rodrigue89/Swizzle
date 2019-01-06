@@ -463,6 +463,10 @@ public final class Parser {
                 }
                 try _makeFuncStmt(group!, &stmts)
                 group = nil
+            } else if (false /* other case */) {
+                
+            } else {
+                throw errorMake(.unexpectedToken, current)
             }
         }
     }
