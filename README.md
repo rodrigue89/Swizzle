@@ -15,6 +15,11 @@ eat(p);
 ```
 > Some code in Swizzle
 
+- [Overview](https://github.com/SafelySwift/Swizzle/blob/master/README.md#what-is-it?)
+- [How to use it](https://github.com/SafelySwift/Swizzle/blob/master/README.md#how-can-i-use-it?)
+- [Overview](https://github.com/SafelySwift/Swizzle/blob/master/README.md#what-is-it?)
+- [Versions](https://github.com/SafelySwift/Swizzle/blob/master/README.md#versions)
+
 ## What is it?
 
 Swizzle is a programming language that is all new, yet all fun. Swizzle has a syntax that is similar to other popular programming languages. It is simple to write code and simpler to run it.
