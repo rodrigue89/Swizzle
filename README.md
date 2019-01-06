@@ -16,6 +16,7 @@ eat(p);
 > Some code in Swizzle
 
 - [Overview](https://github.com/SafelySwift/Swizzle/blob/master/README.md#what-is-it?)
+- [Overview](https://github.com/SafelySwift/Swizzle/blob/master/README.md#what-is-included)
 - [How to use it](https://github.com/SafelySwift/Swizzle/blob/master/README.md#how-can-i-use-it?)
 - [Overview](https://github.com/SafelySwift/Swizzle/blob/master/README.md#what-is-it?)
 - [Versions](https://github.com/SafelySwift/Swizzle/blob/master/README.md#versions)
