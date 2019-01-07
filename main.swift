@@ -1,6 +1,12 @@
-//: Playground - noun: a place where people can play
+//
+//  Source.swift
+//  Swizzler
+//
+//  Created by Ethan Uppal on 12/25/18.
+//  Copyright © 2018 Ethan Uppal. All rights reserved.
+//
 
-import Foundation
+import Cocoa
 
 public enum TokenType {
     case varDecl
@@ -71,16 +77,18 @@ public struct Token: Equatable, CustomStringConvertible {
     }
 }
 
-public class Lexer {
+public final class Lexer {
     public init(_ code: String) {
         self.code = code
+        self.end = code.endIndex
     }
     let code: String
     lazy var pos = code.startIndex
+    let end: String.Index
     var line = 1
     
     func isEOF() -> Bool {
-        return pos == code.endIndex
+        return pos == end
     }
     
     func peek() -> Character {
@@ -95,12 +103,17 @@ public class Lexer {
         return code[code.index(after: pos)]
     }
     
+    func tryPeekNext() -> Character? {
+        let n = code.index(after: pos)
+        return n < end ? code[n] : nil
+    }
+    
     func peekNext(_ length: Int) -> String {
         var str = ""
         var i = 1
         while i < length {
             let index = code.index(pos, offsetBy: i)
-            if code.indices.contains(index) {
+            if index < end {
                 str.append(code[index])
                 i += 1
             } else {
@@ -111,7 +124,7 @@ public class Lexer {
             }
         }
         let index = code.index(pos, offsetBy: i)
-        if code.indices.contains(index) {
+        if index < end {
             str.append(code[code.index(pos, offsetBy: i)])
         }
         return str
@@ -131,8 +144,8 @@ public class Lexer {
     func getAndConsumeStringLiteral() -> Token {
         var acc = "\""
         consume()
-        while peek() != "\"" {
-            acc.append(peek())
+        while let c = tryPeek(), c != "\"" {
+            acc.append(c)
             consume()
             if isEOF() {
                 break
@@ -145,8 +158,8 @@ public class Lexer {
     
     func getAndConsumeNumberLiteral() -> Token {
         var acc = ""
-        while digits.contains(peek()) {
-            acc.append(peek())
+        while let c = tryPeek(), digits.contains(c) {
+            acc.append(c)
             consume()
             if isEOF() {
                 break
@@ -170,7 +183,7 @@ public class Lexer {
     }
     
     func matchNext(_ character: Character) -> Bool {
-        return peekNext() == character
+        return tryPeekNext() == character
     }
     
     func match(_ string: String) -> Bool {
@@ -178,7 +191,7 @@ public class Lexer {
     }
     
     func read(_ str: String) -> Bool {
-        if peek() == str.first && match(String(str.dropFirst())) {
+        if tryPeek() == str.first && match(String(str.dropFirst())) {
             consume(str.count)
             return true
         }
@@ -203,34 +216,29 @@ public class Lexer {
         "."
     ]
     
-    func optionalCurrent() -> Character? {
-        if pos < code.endIndex {
-            return code[pos]
-        }
-        return nil
-    }
-    
     func scanIdentifier() -> Token? {
         var acc = ""
-        while !endOfIdentifier.contains(peek()) {
+        while let p = tryPeek(), !endOfIdentifier.contains(p) {
             if isEOF() {
-                if let c = optionalCurrent() { acc.append(c) }
+                if let c = tryPeek() { acc.append(c) }
                 break
             }
-            acc.append(peek())
+            acc.append(p)
             consume()
         }
         return acc.isEmpty ? nil : Token(type: .identifier, lexme: acc, literal: nil, line: line)
     }
     
     func _couldBeNumber() -> Bool {
-        return digits.contains(peek())
+        guard let c = tryPeek() else { return false }
+        return digits.contains(c)
     }
     
     let digits = Set<Character>(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."])
     
     func scanToken() -> Token? {
         consumeUseless()
+        if isEOF() { return nil }
         switch peek() {
         case "/" where matchNext("/"):
             consume(2)
@@ -356,7 +364,7 @@ public class Lexer {
         }
     }
     
-    public func formTokens(_ tkns: inout [Token]) -> [Token] {
+    public func formTokens(_ tkns: inout [Token]) {
         self.pos = code.startIndex
         while let next = self.scanToken() {
             tkns.append(next)
@@ -365,7 +373,6 @@ public class Lexer {
             }
         }
         tkns.append(Token.EOF)
-        return tkns
     }
 }
 
@@ -430,7 +437,7 @@ public class Statement {
     }
 }
 
-public class ObjectStatement: Statement, CustomStringConvertible {
+public final class ObjectStatement: Statement, CustomStringConvertible {
     public let name: Token
     public let declarations: [DeclarationStatement]
     public init(name: Token, declarations: [DeclarationStatement]) {
@@ -446,7 +453,7 @@ public class ObjectStatement: Statement, CustomStringConvertible {
     }
 }
 
-public class DeclarationStatement: Statement, CustomStringConvertible {
+public final class DeclarationStatement: Statement, CustomStringConvertible {
     public let name: Token
     public let type: ObjectType
     public init(name: Token, type: ObjectType) {
@@ -461,7 +468,7 @@ public class DeclarationStatement: Statement, CustomStringConvertible {
     }
 }
 
-public class AccessStatement: Statement, CustomStringConvertible {
+public final class AccessStatement: Statement, CustomStringConvertible {
     public let object: Token
     public let key: Token
     public init(object: Token, key: Token) {
@@ -476,7 +483,7 @@ public class AccessStatement: Statement, CustomStringConvertible {
     }
 }
 
-public class CallStatement: Statement, CustomStringConvertible {
+public final class CallStatement: Statement, CustomStringConvertible {
     public let name: Token
     public let args: [Expression]
     public init(name: Token, args: [Expression]) {
@@ -491,7 +498,7 @@ public class CallStatement: Statement, CustomStringConvertible {
     }
 }
 
-public class BinaryExpression: Statement, CustomStringConvertible {
+public final class BinaryExpression: Statement, CustomStringConvertible {
     public let lhs: Expression
     public let op: Token
     public let rhs: Expression
@@ -508,7 +515,7 @@ public class BinaryExpression: Statement, CustomStringConvertible {
     }
 }
 
-public class Expression: Statement, CustomStringConvertible {
+public final class Expression: Statement, CustomStringConvertible {
     public enum Rep {
         case constr(InitStatement)
         case call(CallStatement)
@@ -586,7 +593,7 @@ public class Expression: Statement, CustomStringConvertible {
     }
 }
 
-public class IfStatement: Statement, CustomStringConvertible {
+public final class IfStatement: Statement, CustomStringConvertible {
     public let condition: Expression
     public let ifTrue: [Statement]
     public let ifFalse: [Statement]
@@ -603,7 +610,7 @@ public class IfStatement: Statement, CustomStringConvertible {
     }
 }
 
-public class InitStatement: Statement, CustomStringConvertible {
+public final class InitStatement: Statement, CustomStringConvertible {
     public let objectName: Token
     public let args: [Expression]
     public init(objectName: Token, args: [Expression]) {
@@ -618,7 +625,7 @@ public class InitStatement: Statement, CustomStringConvertible {
     }
 }
 
-public class AssignStatement: Statement, CustomStringConvertible {
+public final class AssignStatement: Statement, CustomStringConvertible {
     public let decl: Token
     public let name: Token
     public let value: Expression
@@ -635,7 +642,7 @@ public class AssignStatement: Statement, CustomStringConvertible {
     }
 }
 
-public class SetStatement: Statement, CustomStringConvertible {
+public final class SetStatement: Statement, CustomStringConvertible {
     public let object: Token
     public let key: Token
     public let value: Expression
@@ -652,7 +659,7 @@ public class SetStatement: Statement, CustomStringConvertible {
     }
 }
 
-public class FunctionStatement: Statement, CustomStringConvertible {
+public final class FunctionStatement: Statement, CustomStringConvertible {
     public let name: Token
     public let args: [Token]
     public let body: [Statement]
@@ -669,21 +676,26 @@ public class FunctionStatement: Statement, CustomStringConvertible {
     }
 }
 
-public class Parser {
-    public enum Error: Swift.Error {
-        case groupNotClosed
-        case expectedStartingBracket
-        case expectedClosingBracket
-        case expectedIdentifier
-        case expectedType
-        case expectedDeclaration
-        case unexpectedToken
-        case expectedSemicolon
-        case expectedAssignment
-        case expectedLiteral
-        case expectedStartingGroup
-        case expectedClosingGroup
-        case anyError
+public final class Parser {
+    public struct Error: Swift.Error {
+        public enum Message {
+            case groupNotClosed
+            case expectedStartingBracket
+            case expectedClosingBracket
+            case expectedIdentifier
+            case unresolvedIdentifier
+            case expectedType
+            case expectedDeclaration
+            case unexpectedToken
+            case expectedSemicolon
+            case expectedAssignment
+            case expectedLiteral
+            case expectedStartingGroup
+            case expectedClosingGroup
+            case anyError
+        }
+        public let msg: Message
+        public let line: Int
     }
     let stream: [Token]
     var pos = 0
@@ -749,6 +761,10 @@ public class Parser {
     
     public var isDebugging = false
     
+    func errorMake(_ msg: Error.Message, _ tkn: Token?) -> Error {
+        return Error(msg: msg, line: tkn?.line ?? -1)
+    }
+    
     func _makeObjcStmt(_ g: [Token], _ s: inout [Statement]) throws {
         let l = g.first?.line
         var g = g
@@ -763,21 +779,21 @@ public class Parser {
             if segment.first?.type == .newLine {
                 segment.removeFirst()
             }
-            guard expect(.propertyDecl, c: &segment) != nil else { throw Error.expectedDeclaration }
+            guard expect(.propertyDecl, c: &segment) != nil else { throw errorMake(.expectedDeclaration, segment.first) }
             if segment.count == 1 {
-                guard segment.first?.type == .identifier else { throw Error.expectedIdentifier }
+                guard segment.first?.type == .identifier else { throw errorMake(.expectedIdentifier, segment.first) }
                 if let declName = segment.first {
                     let decl = DeclarationStatement(name: declName, type: .implied)
                     decls.append(decl)
                 }
             } else if segment.count == 2 {
-                guard segment.first?.type == .identifier else { throw Error.expectedIdentifier }
-                guard segment.dropFirst().first?.type == .identifier else { throw Error.expectedType }
-                guard let type = ObjectType(rawValue: segment[2].lexme) else { throw Error.expectedType }
+                guard segment.first?.type == .identifier else { throw errorMake(.expectedIdentifier, segment.first) }
+                guard segment.dropFirst().first?.type == .identifier else { throw errorMake(.expectedType, segment.dropFirst().first) }
+                guard let type = ObjectType(rawValue: segment[2].lexme) else { throw errorMake(.expectedType, segment[2]) }
                 let decl = DeclarationStatement(name: segment[0], type: type)
                 decls.append(decl)
             } else {
-                throw Error.unexpectedToken
+                throw errorMake(.unexpectedToken, segment.first)
             }
         }
         let objcStmt = ObjectStatement(name: name, declarations: decls)
@@ -788,11 +804,11 @@ public class Parser {
     func _makeAssignStmt(_ type: Token, _ g: [Token], _ s: inout [Statement]) throws {
         var g = g
         let l = g.first?.line
-        guard let varName = expect(.identifier, c: &g) else { throw Error.expectedIdentifier }
-        guard expect(.assign, c: &g) != nil else { throw Error.expectedAssignment }
+        guard let varName = expect(.identifier, c: &g) else { throw errorMake(.expectedIdentifier, g.first) }
+        guard expect(.assign, c: &g) != nil else { throw errorMake(.expectedAssignment, g.first) }
         switch g.count {
         case 1:
-            guard let lit = expect(.literal, c: &g) else { throw Error.expectedLiteral }
+            guard let lit = expect(.literal, c: &g) else { throw errorMake(.expectedLiteral, g.first) }
             let assignStmt = AssignStatement(decl: type, name: varName, expression: Expression(rep: .literal(lit.literal!)))
             assignStmt.line = l
             s.append(assignStmt)
@@ -800,28 +816,25 @@ public class Parser {
         default:
             if g.count == 3, g.dropFirst().first?.type == .dot, let object = g.first, let key = g.last {
                 let access = AccessStatement(object: object, key: key)
-                let expr = Expression(rep: .access(access))
-                let assign = AssignStatement(decl: type, name: varName, expression: expr)
-                assign.line = l
-                s.append(assign)
+                s.append(access)
                 return
             }
-            guard g.count >= 3 else { throw Error.anyError }
+            guard g.count >= 3 else { throw errorMake(.anyError, g.first) }
             guard let fncName = expect(.identifier, c: &g) else {
-                throw Error.expectedIdentifier
+                throw errorMake(.expectedIdentifier, g.first)
             }
             
-            guard expect(.leftPar, c: &g) != nil else { throw Error.expectedStartingGroup }
+            guard expect(.leftPar, c: &g) != nil else { throw errorMake(.expectedStartingGroup, g.first) }
             var args = [Expression]()
             var onComma = false
             var i = 0
             while g[i].type != .rightPar {
                 let tkn = g[i]
                 if args.isEmpty && tkn.type == .comma {
-                    throw Error.unexpectedToken
+                    throw errorMake(.unexpectedToken, tkn)
                 }
                 if tkn.type == .comma {
-                    guard !onComma else { throw Error.unexpectedToken }
+                    guard !onComma else { throw errorMake(.unexpectedToken, tkn) }
                     onComma = true
                 } else {
                     onComma = false
@@ -834,38 +847,38 @@ public class Parser {
             if let char = fncName.lexme.first, let scalar = char.unicodeScalars.first, CharacterSet.uppercaseLetters.contains(scalar) {
                 let constr = InitStatement(objectName: fncName, args: args)
                 let expr = Expression(rep: .constr(constr))
-                let assignStmt = AssignStatement(decl: Token(type: .varDecl, lexme: "var", literal: nil, line: nil), name: varName, expression: expr)
+                let assignStmt = AssignStatement(decl: type, name: varName, expression: expr)
                 assignStmt.line = l
                 s.append(assignStmt)
                 return
             } else {
                 let call = CallStatement(name: fncName, args: args)
                 let expr = Expression(rep: .call(call))
-                let assignStmt = AssignStatement(decl: Token(type: .varDecl, lexme: "var", literal: nil, line: nil), name: varName, expression: expr)
+                let assignStmt = AssignStatement(decl: type, name: varName, expression: expr)
                 assignStmt.line = l
                 s.append(assignStmt)
                 return
             }
-            throw Error.unexpectedToken
+            throw errorMake(.unexpectedToken, nil)
         }
     }
     
     func _makeFuncStmt(_ g: [Token], _ s: inout [Statement]) throws {
         let l = currentLine()
         var g = g
-        guard let name = expect(.identifier, c: &g) else { throw Error.expectedIdentifier }
+        guard let name = expect(.identifier, c: &g) else { throw errorMake(.expectedIdentifier, g.first) }
         if isDebugging {
             print("FunctionStatement named \(name), g:", g)
         }
-        guard expect(.leftPar, c: &g) != nil else { throw Error.expectedStartingGroup }
+        guard expect(.leftPar, c: &g) != nil else { throw errorMake(.expectedStartingGroup, g.first) }
         var args = [Token]()
         var body = [Statement]()
         let allowed: Set<TokenType> = [
             .identifier,
-        ]
+            ]
         while g.first?.type != .rightPar {
             if g.isEmpty {
-                throw Error.expectedClosingGroup
+                throw errorMake(.expectedClosingGroup, nil)
             }
             if let tkn = g.first {
                 if allowed.contains(tkn.type) {
@@ -881,8 +894,8 @@ public class Parser {
         if isDebugging {
             print("FunctionStatement args:", args)
         }
-        guard expect(.rightPar, c: &g) != nil else { throw Error.expectedClosingGroup }
-        guard expect(.leftBracket, c: &g) != nil else { throw Error.expectedStartingBracket }
+        guard expect(.rightPar, c: &g) != nil else { throw errorMake(.expectedClosingGroup, g.first) }
+        guard expect(.leftBracket, c: &g) != nil else { throw errorMake(.expectedStartingBracket, g.first) }
         let segments = g.dropFirst().split(whereSeparator: { $0.type == .semicolon }).filter{ !$0.isEmpty }
         if isDebugging {
             print("Segments for FunctionStatement named \(name):", segments)
@@ -903,10 +916,10 @@ public class Parser {
             }
             let toCheck = segment.index(after: segment.startIndex)
             if segment.count >= 5, segment[toCheck].type == .dot {
-                guard let object = expect(.identifier, c: &segment) else { throw Error.expectedIdentifier }
-                guard expect(.dot, c: &segment) != nil else { throw Error.unexpectedToken }
-                guard let key = expect(.identifier, c: &segment) else { throw Error.expectedIdentifier }
-                guard expect(.assign, c: &segment) != nil else { throw Error.expectedAssignment }
+                guard let object = expect(.identifier, c: &segment) else { throw errorMake(.expectedIdentifier, segment.first) }
+                guard expect(.dot, c: &segment) != nil else { throw errorMake(.unexpectedToken, segment.first) }
+                guard let key = expect(.identifier, c: &segment) else { throw errorMake(.expectedIdentifier, segment.first) }
+                guard expect(.assign, c: &segment) != nil else { throw errorMake(.expectedAssignment, segment.first) }
                 let expr = Expression(rep: .anyToken(segment[0]))
                 let setStmt = SetStatement(object: object, key: key, value: expr)
                 body.append(setStmt)
@@ -916,12 +929,12 @@ public class Parser {
                 } else if let type = expect(.setDecl, c: &segment) {
                     try _makeAssignStmt(type, Array(segment), &s)
                 } else {
-                    guard let callName = expect(.identifier, c: &segment) else { throw Error.expectedIdentifier }
+                    guard let callName = expect(.identifier, c: &segment) else { throw errorMake(.expectedIdentifier, segment.first) }
                     var args = [Expression]()
-                    guard expect(.leftPar, c: &segment) != nil else { throw Error.expectedStartingGroup }
+                    guard expect(.leftPar, c: &segment) != nil else { throw errorMake(.expectedStartingGroup, segment.first) }
                     while let tkn = segment.first, tkn.type != .rightPar {
                         if segment.isEmpty {
-                            throw Error.expectedClosingGroup
+                            throw errorMake(.expectedClosingGroup, nil)
                         }
                         if tkn.type == .identifier, segment.dropFirst().first?.type == .dot, let key = segment.dropFirst(2).first {
                             let access = AccessStatement(object: tkn, key: key)
@@ -934,14 +947,14 @@ public class Parser {
                             let expr = Expression(rep: .anyToken(tkn))
                             args.append(expr)
                         } else if !argSeps.contains(tkn.type) {
-                            throw Error.unexpectedToken
+                            throw errorMake(.unexpectedToken, tkn)
                         }
                         segment.removeFirst()
                     }
                     if isDebugging {
                         print("Args", args)
                     }
-                    guard expect(.rightPar, c: &segment) != nil else { throw Error.expectedClosingGroup }
+                    guard expect(.rightPar, c: &segment) != nil else { throw errorMake(.expectedClosingGroup, segment.first) }
                     let callStmt = CallStatement(name: callName, args: args)
                     body.append(callStmt)
                 }
@@ -955,20 +968,43 @@ public class Parser {
     func _makeCallStmt(_ g: [Token], _ s: inout [Statement]) throws {
         var g = g
         let l = g.first?.line
-        guard let callName = expect(.identifier, c: &g) else { throw Error.expectedIdentifier }
-        guard expect(.leftPar, c: &g) != nil else { throw Error.expectedStartingGroup }
-        guard g.last?.type == .rightPar else { throw Error.expectedClosingGroup }
-        var argSegments = g.dropLast().split(whereSeparator: { $0.type == .comma })
+        guard let callName = expect(.identifier, c: &g) else { throw errorMake(.expectedIdentifier, g.first) }
+        guard expect(.leftPar, c: &g) != nil else { throw errorMake(.expectedStartingGroup, g.first) }
+        guard g.last?.type == .rightPar else { throw errorMake(.expectedClosingGroup, g.first) }
+        print(g)
+        var argSegments = [[Token]]()
+        var currentArgs = [Token]()
+        for tkn in g {
+            if tkn.type == .comma || tkn.type == .rightPar {
+                argSegments.append(currentArgs)
+                currentArgs = []
+            } else {
+                print("Part of Call:", tkn)
+                currentArgs.append(tkn)
+            }
+        }
+        if !currentArgs.isEmpty {
+            argSegments.append(currentArgs)
+        }
         if isDebugging {
             print("Creating Call:", argSegments)
         }
         var args = [Expression]()
         func addStmt(subsegment: Token, args: inout [Expression]) {
-            let parts = subsegment.lexme.components(separatedBy: ".")
             if isDebugging {
-                print("parts:", parts, "subsegment:", subsegment)
+                print("subsegment:", subsegment)
             }
-            if parts.count == 1 {
+            //            if parts.count == 2 {
+            //                let objcToken = Token(type: .identifier, lexme: parts[0], literal: nil, line: nil)
+            //                let keyToken = Token(type: .identifier, lexme: parts[1], literal: nil, line: nil)
+            //                let get = AccessStatement(object: objcToken, key: keyToken)
+            //                args.append(Expression(rep: .access(get)))
+            //            } else
+            switch subsegment.type {
+            case .literal:
+                let expr = Expression(rep: .literal(subsegment.literal!))
+                args.append(expr)
+            default:
                 let expr = Expression(rep: .anyToken(subsegment))
                 args.append(expr)
             }
@@ -976,7 +1012,8 @@ public class Parser {
         for segment in argSegments {
             var segment = segment
             while let subsegment = segment.first {
-                if subsegment.type == .identifier, segment.dropFirst().first?.type == .dot, let key = segment.dropFirst(2).first {
+                print("subseg:", subsegment)
+                if subsegment.type == .identifier, subsegment.lexme.first != "\"", subsegment.lexme.last != "\"", segment.dropFirst().first?.type == .dot, let key = segment.dropFirst(2).first {
                     if subsegment.lexme.isEmpty || key.lexme.isEmpty {
                         continue
                     }
@@ -990,6 +1027,7 @@ public class Parser {
                 segment.removeFirst()
             }
         }
+        print("final args for", callName, ":", args)
         let call = CallStatement(name: callName, args: args)
         call.line = l
         s.append(call)
@@ -998,14 +1036,14 @@ public class Parser {
     func _makeSetStmt(_ g: [Token], _ s: inout [Statement]) throws {
         var g = g
         let objcName = g.removeFirst()
-        guard expect(.dot, c: &g) != nil else { throw Error.unexpectedToken }
-        guard let key = expect(.identifier, c: &g) else { throw Error.expectedIdentifier }
-        guard expect(.assign, c: &g) != nil else { throw Error.unexpectedToken }
+        guard expect(.dot, c: &g) != nil else { throw errorMake(.unexpectedToken, g.first) }
+        guard let key = expect(.identifier, c: &g) else { throw errorMake(.expectedIdentifier, g.first) }
+        guard expect(.assign, c: &g) != nil else { throw errorMake(.unexpectedToken, g.first) }
         // FIXME: Allow multiple-token expressions
-        guard let val = g.first else { throw Error.anyError }
+        guard let val = g.first else { throw errorMake(.anyError, nil) }
         let expr = Expression(rep: .anyToken(val))
-        let set = SetStatement(object: objcName, key: key, value: expr)
-        s.append(set)
+        let setStmt = SetStatement(object: objcName, key: key, value: expr)
+        s.append(setStmt)
     }
     
     public func formStatements(_ stmts: inout [Statement]) throws {
@@ -1014,17 +1052,17 @@ public class Parser {
         while !isAtEnd() {
             skipBlankLines()
             if isDebugging {
-                print("Testing what statement matches:", current!)
+                print("Testing statement against:", current!)
             }
             if current?.type == .objcDecl {
                 advance()
-                guard let objcName = get(.identifier) else { throw Error.expectedIdentifier }
-                guard group == nil else { throw Error.groupNotClosed }
+                guard let objcName = get(.identifier) else { throw errorMake(.expectedIdentifier, current) }
+                guard group == nil else { throw errorMake(.groupNotClosed, current) }
                 group = [objcName]
-                guard eat(.leftBracket) else { throw Error.expectedStartingBracket }
+                guard eat(.leftBracket) else { throw errorMake(.expectedStartingBracket, current) }
                 while !eat(.rightBracket) {
                     if isAtEnd() {
-                        throw Error.expectedClosingBracket
+                        throw errorMake(.expectedClosingBracket, current)
                     }
                     if let c = current {
                         group?.append(c)
@@ -1036,14 +1074,14 @@ public class Parser {
                 try _makeObjcStmt(group!, &stmts)
                 group = nil
             } else if current?.type == .varDecl || current?.type == .setDecl {
-                let t = current!
+                let type = current!
                 advance()
-                guard let varName = get(.identifier) else { throw Error.expectedIdentifier }
-                guard group == nil else { throw Error.groupNotClosed }
+                guard let varName = get(.identifier) else { throw errorMake(.expectedIdentifier, current) }
+                guard group == nil else { throw errorMake(.groupNotClosed, current) }
                 group = [varName]
                 while !eat(.semicolon) {
                     if isAtEnd() {
-                        throw Error.expectedSemicolon
+                        throw errorMake(.expectedSemicolon, group?.first ?? current)
                     }
                     if let c = current {
                         group?.append(c)
@@ -1052,15 +1090,15 @@ public class Parser {
                     }
                     advance()
                 }
-                try _makeAssignStmt(t, group!, &stmts)
+                try _makeAssignStmt(type, group!, &stmts)
                 group = nil
             } else if current?.type == .identifier {
-                guard let name = get(.identifier) else { throw Error.expectedIdentifier }
-                guard group == nil else { throw Error.groupNotClosed }
+                guard let name = get(.identifier) else { throw errorMake(.expectedIdentifier, group?.first ?? current) }
+                guard group == nil else { throw errorMake(.groupNotClosed, group?.first ?? current) }
                 group = [name]
                 while !eat(.semicolon) {
                     if isAtEnd() {
-                        throw Error.expectedSemicolon
+                        throw errorMake(.expectedSemicolon, group?.first ?? current)
                     }
                     if let c = current {
                         group?.append(c)
@@ -1069,8 +1107,10 @@ public class Parser {
                     }
                     advance()
                 }
-                let second = group?.dropFirst().first
-                if second?.type == .dot {
+                if group!.dropFirst().isEmpty || group![2].type == .semicolon {
+                    throw errorMake(.unresolvedIdentifier, group?.first ?? current)
+                }
+                if group?.dropFirst().first?.type == .dot {
                     try _makeSetStmt(group!, &stmts)
                 } else {
                     try _makeCallStmt(group!, &stmts)
@@ -1078,13 +1118,13 @@ public class Parser {
                 group = nil
             } else if current?.type == .funcDecl {
                 advance()
-                guard let funcName = get(.identifier) else { throw Error.expectedIdentifier }
-                guard group == nil else { throw Error.groupNotClosed }
+                guard let funcName = get(.identifier) else { throw errorMake(.expectedIdentifier, current) }
+                guard group == nil else { throw errorMake(.groupNotClosed, current) }
                 group = [funcName]
-                guard match(.leftPar) else { throw Error.expectedStartingGroup }
+                guard match(.leftPar) else { throw errorMake(.expectedStartingGroup, group?.first ?? current) }
                 while !eat(.rightBracket) {
                     if isAtEnd() {
-                        throw Error.expectedClosingBracket
+                        throw errorMake(.expectedClosingBracket, group?.first ?? current)
                     }
                     if let c = current {
                         group?.append(c)
@@ -1127,15 +1167,7 @@ extension Statement {
         return self as? S
     }
 }
-
-public struct ImportStatement {
-    public let file: String
-    public func code() -> String? {
-        return IncludedLibraries.standardLibrary[file]
-    }
-}
-
-public class IncludedLibraries {
+public final class IncludedLibraries {
     public static let Float = ObjectStatement(name: Token(type: .identifier, lexme: "Float", literal: nil, line: nil), declarations: [DeclarationStatement(name: Token(type: .identifier, lexme: "*value", literal: nil, line: nil), type: .float)])
     public static let MutableBoxFile = """
     objc MutableBox {
@@ -1168,22 +1200,29 @@ public class IncludedLibraries {
     ]
 }
 
-public class Header {
-    public var imports = [ImportStatement]()
-    public init?(headerCode: String) {
-        for line in headerCode.components(separatedBy: "\n") {
-            let components = line.components(separatedBy: " ")
-            guard components.count == 2, components.last?.last == ";" else { return nil }
-            guard components[0] == "import" else { return nil }
-            let importStmt = ImportStatement(file: String(components[1].dropLast()))
-            imports.append(importStmt)
-        }
-    }
-}
-
-public class Interpreter: Visitor {
+public final class Interpreter: Visitor {
+    // MARK: Visitor result
     public typealias Result = [String]?
     
+    // MARK: Error
+    public struct Error: Swift.Error, CustomStringConvertible {
+        public let message: String
+        public let line: Int
+        public var description: String {
+            if line == -1 {
+                return "\(message) (line: unknown)"
+            }
+            if line == -2 {
+                return "\(message)"
+            }
+            return "\(message) (line: \(line))"
+        }
+        public var localizedDescription: String {
+            return description
+        }
+    }
+    
+    // MARK: Helper types
     struct Stack<Element>: Sequence {
         var flat = [Element]()
         mutating func push(_ newElement: Element) {
@@ -1228,22 +1267,8 @@ public class Interpreter: Visitor {
             return storage.first
         }
     }
-    public struct Error: Swift.Error, CustomStringConvertible {
-        public let message: String
-        public let line: Int
-        public var description: String {
-            if line == -1 {
-                return "\(message) (line: unknown)"
-            }
-            if line == -2 {
-                return "\(message)"
-            }
-            return "\(message) (line: \(line))"
-        }
-        public var localizedDescription: String {
-            return description
-        }
-    }
+    
+    // MARK: A function
     public struct Function {
         public let name: String
         public let args: [String]
@@ -1252,7 +1277,7 @@ public class Interpreter: Visitor {
         func _argDes() -> String {
             if args.isEmpty {
                 return "()"
-            } else if args == Interpreter._variL {
+            } else if args == Interpreter._variableLengthParameters {
                 return "(...)"
             } else {
                 return "(\(args.map { "\($0):" }.joined()))"
@@ -1261,7 +1286,6 @@ public class Interpreter: Visitor {
         
         public func call(_ i: Interpreter, _ a: [Statement]) {
             var sep = true
-            a.first?.accept(i)
             let args = a.compactMap { i.visit(stmt: $0) }.reduce([String]()) { (acc, next) -> [String] in
                 if let next = next {
                     return acc + next
@@ -1302,26 +1326,33 @@ public class Interpreter: Visitor {
             i.logMsg("Function '\(name)\(_argDes())' was executed.")
         }
     }
-    public struct Object: CustomStringConvertible {
+    
+    // MARK: An object
+    public final class Object: CustomStringConvertible {
         public let name: String
         public var values: [String:String]
         let stmt: InitStatement
+        public init(name: String, values: [String:String], stmt: InitStatement) {
+            self.name = name
+            self.values = values
+            self.stmt = stmt
+        }
         public var description: String {
             return "\(name)(\(values.map({ "\($0.key): \($0.value)" }).joined(separator: ", ")))"
         }
         
     }
     
-    static let _variL = ["*VARIABLE_LENGTH"]
+    static let _variableLengthParameters = ["*VARIABLE_LENGTH"]
     
     let code: String
     var statements = [Statement]()
     public var stackTrace: Bool
     public var alwaysTraverseDebug: Bool = false
-    public var header: Header?
     
-    public init(code: String, debug: Bool = false, stackTrace: Bool) throws {
+    public init(code: String, debug: Bool = false, stackTrace: Bool, stream: Streaming? = nil) throws {
         self.formatter = NumberFormatter()
+        self.stream = stream
         formatter.numberStyle = .ordinal
         
         self.code = code
@@ -1329,34 +1360,58 @@ public class Interpreter: Visitor {
         configureDefaults()
         let lexer = Lexer(code)
         var tokens = [Token]()
+        let ls = CFAbsoluteTimeGetCurrent()
         lexer.formTokens(&tokens)
+        let le = CFAbsoluteTimeGetCurrent()
         if debug {
-            print("Tokens:", tokens)
+            let tokenString = String(describing: tokens)
+            print("Tokens (\(le - ls) seconds):", tokenString)
+            stream?.write(tokenString)
         }
         let parser = Parser(stream: tokens)
         parser.isDebugging = debug
+        let ps = CFAbsoluteTimeGetCurrent()
         do {
             try parser.formStatements(&statements)
         }
         catch {
-            let words = String(describing: error).camelCaseToWords().capitalized
-            throw Error(message: words, line: parser.currentLine())
+            if let error = error as? Parser.Error {
+                let words = String(describing: error.msg).camelCaseToWords().capitalized
+                throw Error(message: words, line: error.line)
+            }
         }
+        let pe = CFAbsoluteTimeGetCurrent()
         if debug {
-            print("Statements:", statements)
+            let str = String(describing: statements)
+            print("Statements (\(pe - ps) seconds):", str)
+            stream?.write(str)
+            stream?.write("")
         }
     }
     
-    
+    init(_stmts: [Statement], _stackTrace: Bool) {
+        self.code = ""
+        self.statements = _stmts
+        self.stackTrace = _stackTrace
+        
+        self.formatter = NumberFormatter()
+        formatter.numberStyle = .ordinal
+        
+        configureDefaults()
+    }
     
     // MARK: Standard Library
     let printSeperator = ""
     let printTerminator = "\n"
     
+    private func asToken(_ str: String) -> Token {
+        return Token(type: .identifier, lexme: str, literal: nil, line: nil)
+    }
+    
     func configureDefaults() {
         statements.append(IncludedLibraries.Float)
         
-        addFunc("print", Interpreter._variL) { (i, args) in
+        addFunc("print", Interpreter._variableLengthParameters) { (_, args) in
             var result = ""
             for index in args.indices {
                 let val = self.unstringify(args[index])
@@ -1366,11 +1421,120 @@ public class Interpreter: Visitor {
                     result += val + self.printSeperator
                 }
             }
-            print(self.frmPfx, result, separator: "", terminator: self.printTerminator)
+            let final = self.frmPfx + result
+            self.stream?.write(Transfers.shouldTraceExec ? final : result)
+            print(final, terminator: self.printTerminator)
         }
-        //        addFunc("blahblah") { (i, args) in
-        //            print("B%^&TRCedu7r6&u5r5u7%E&%euv75eVUY")
-        //        }
+        addFunc("formSum", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = self.nowhite(args[0])
+            let a = self.nowhite(args[1])
+            let b = self.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs + rhs
+            self.makeFloat(val: sum, objcName: r)
+        }
+        addFunc("formDif", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = self.nowhite(args[0])
+            let a = self.nowhite(args[1])
+            let b = self.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs - rhs
+            self.makeFloat(val: sum, objcName: r)
+        }
+        addFunc("formProd", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = self.nowhite(args[0])
+            let a = self.nowhite(args[1])
+            let b = self.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs * rhs
+            self.makeFloat(val: sum, objcName: r)
+        }
+        addFunc("formQuo", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = self.nowhite(args[0])
+            let a = self.nowhite(args[1])
+            let b = self.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs / rhs
+            self.makeFloat(val: sum, objcName: r)
+        }
+        addFunc("formRem", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = self.nowhite(args[0])
+            let a = self.nowhite(args[1])
+            let b = self.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs.remainder(dividingBy: rhs)
+            self.makeFloat(val: sum, objcName: r)
+        }
+        
+        addFunc("ast_objc_set", ["object", "key", "value"]) { (_, args) in
+            let object = self.nowhite(args[0])
+            let key = self.nowhite(args[1])
+            let value = self.nowhite(args[2])
+            let set = SetStatement(object: self.asToken(object), key: self.asToken(key), value: Expression(rep: .anyToken(self.asToken(value))))
+            self.visit(set)
+        }
+        addFunc("ast_objc_set2", ["object", "key", "object2", "value2"]) { (_, args) in
+            let object = self.nowhite(args[0])
+            let key = self.nowhite(args[1])
+            let object2 = self.nowhite(args[2])
+            let value2 = self.nowhite(args[3])
+            let access = AccessStatement(object: self.asToken(object2), key: self.asToken(value2))
+            let set = SetStatement(object: self.asToken(object), key: self.asToken(key), value: Expression(rep: .access(access)))
+            self.visit(set)
+        }
+        
+        addFunc("fileManagerDesktopGetString", ["dump", "path"]) { (_, args) in
+            let dump = self.nowhite(args[0])
+            let path = self.nowhite(args[1])
+            do {
+                let url = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
+                let string = try String(contentsOf: url)
+                let assign = AssignStatement(decl: Token(type: .setDecl, lexme: "set", literal: nil, line: nil), name: self.asToken(dump), expression: Expression(rep: .literal(string)))
+                self.visit(assign)
+            }
+            catch {
+                self.reportError(String(describing: error))
+            }
+        }
+        addFunc("fileManagerDocumentGetString", ["dump", "path"]) { (_, args) in
+            let dump = self.nowhite(args[0])
+            let path = self.nowhite(args[1])
+            do {
+                let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
+                let string = try String(contentsOf: url)
+                let assign = AssignStatement(decl: Token(type: .setDecl, lexme: "set", literal: nil, line: nil), name: self.asToken(dump), expression: Expression(rep: .literal(string)))
+                self.visit(assign)
+            }
+            catch {
+                self.reportError(String(describing: error))
+            }
+        }
+        addFunc("fileManagerDocumentWriteString", ["text", "path"]) { (_, args) in
+            let text = self.nowhite(args[0])
+            let path = self.nowhite(args[1])
+            do {
+                let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
+                try text.write(to: url, atomically: false, encoding: .utf8)
+            }
+            catch {
+                self.reportError(String(describing: error))
+            }
+        }
     }
     
     func addFunc(_ name: String, _ args: [String], _ block: @escaping (Interpreter, [String]) -> ()) {
@@ -1409,6 +1573,11 @@ public class Interpreter: Visitor {
         objects[objcName] = object
     }
     
+    func makeFloat(val: Float, objcName: String) {
+        let constr = InitStatement(objectName: IncludedLibraries.Float.name, args: [Expression(rep: .literal(val))])
+        makeObject(from: constr, objcName: objcName)
+    }
+    
     var objectDecls = [String:ObjectStatement]()
     var objects = [String:Object]()
     var variables = [String:AssignStatement]()
@@ -1420,8 +1589,22 @@ public class Interpreter: Visitor {
         let end = call.line != nil ? " at line \(call.line!)" : ""
         let callName = call.name.lexme
         let callArgs = call.args
+        print("Call args:", callArgs)
+        guard let function = functions[callName] else {
+            logMsg("Unknown function call to `\(callName)`\(end).", ui: "Statement: \(call)")
+            reportError("The function `\(callName)` does not exist.")
+            return nil
+        }
+        let override = Interpreter._variableLengthParameters == function.args
+        let expected = function.args.count
+        let given = callArgs.count
+        guard given == expected || override else {
+            logMsg("Unexpected arguments to function `\(function).", ui: "Given: \(given), Expected: \(expected)")
+            reportError("Expected \(expected) parameters in function call to `\(function)`.")
+            return nil
+        }
         logMsg("Visiting a function call\(end)", true, ui: "Call: \(callName) with args: \(callArgs).")
-        _ = functions[callName]?.call(self, callArgs) != nil
+        _ = function.call(self, callArgs)
         
         return nil
     }
@@ -1453,7 +1636,7 @@ public class Interpreter: Visitor {
             if let object = objects[name], let val = object.values["*value"] {
                 return [val]
             } else if let assign = variables[name], let result = assign.value.accept(self) {
-//                print("expr visit access rep:", assign.value.rep)
+                //                print("expr visit access rep:", assign.value.rep)
                 return result
             }
             return [name]
@@ -1502,7 +1685,12 @@ public class Interpreter: Visitor {
     }
     public func visit(_ set: SetStatement) -> Interpreter.Result {
         logMsg("Setting and editing an object.")
-        objects[set.object.lexme]?.values[set.key.lexme] = visit(set.value)?.first
+        guard let object = objects[set.object.lexme] else {
+            reportError("Cannot assign to variable because variable does not exist.")
+            return nil
+        }
+        
+        object.values[set.key.lexme] = visit(set.value)?.first
         return nil
     }
     public func visit(_ binary: BinaryExpression) -> Interpreter.Result {
@@ -1586,11 +1774,16 @@ public class Interpreter: Visitor {
     public func visit(_ funct: FunctionStatement) -> [String]? {
         let funcName = funct.name.lexme
         logMsg("Visiting declaration of '\(funcName)(_:)'.", ui: "Statement: \(funct)")
+        guard functions[funcName] == nil else {
+            logMsg("Unable to insert function named '\(funcName)' into hash table because the bucket is full", ui: "Function: \(funct)")
+            reportError("Cannot declare function '\(funcName)' because it already exists")
+            return nil
+        }
         let args = funct.args.map { $0.lexme }
         let argCount = args.count
         let body = funct.body
         let function = Function(name: funcName, args: args) { [unowned self] (i, a) in
-            guard argCount == a.count && !(args == Interpreter._variL) else {
+            guard argCount == a.count && !(args == Interpreter._variableLengthParameters) else {
                 if self.stackTrace {
                     self.logMsg("Incorrect number of arguments. Expected \(argCount), given: \(a.count).", ui: "Input arguments: \(a), required arguments: \(args).")
                     self.logMsg("Arguments are not variable length.", ui: "Only varible length functions can have variable amounts of input arguments.")
@@ -1603,51 +1796,44 @@ public class Interpreter: Visitor {
                     var i = 0
                     var ua = 0
                     var newArgs = [Expression]()
-//                    print("Orig args:", call.args)
                     call.args.forEach { (expr) in
-                            if let n = expr.rep.anyToken?.lexme {
-                                if ua < a.endIndex,  n == args[ua] {
-                                    let result = Token(type: TokenType.literal, lexme: a[ua], literal: nil, line: nil)
-                                    let newExpr = Expression(rep: .anyToken(result))
-                                    self.visit(newExpr)
-                                    newArgs.append(newExpr)
-                                    ua += 1
-                                } else {
-                                    newArgs.append(expr)
-                                }
-                                
-                            } else if let access = expr.rep.access {
-                                access
-                                guard let index = args.index(where: { $0 == access.object.lexme }) else {
-                                    self.reportError("Unresolved identifier '\(access.key.lexme)'")
-                                    return
-                                    
-                                }
-                                
-                                /*guard */let objcName = self.nowhite(a[index])/*.rep.anyToken?.lexme else {
-                                    self.reportError("Unknown object")
-                                    return
-                                }*/
-                                
-                                guard let val = self.objects[objcName]?.values[access.key.lexme] else {
-                                    self.reportError("Unknown property '\(access.key.lexme)'")
-                                    return
-                                }
-                                let result = Token(type: .literal, lexme: val, literal: val, line: nil)
+                        if let n = expr.rep.anyToken?.lexme {
+                            if ua < a.endIndex,  n == args[ua] {
+                                let result = Token(type: TokenType.literal, lexme: a[ua], literal: nil, line: nil)
                                 let newExpr = Expression(rep: .anyToken(result))
                                 self.visit(newExpr)
                                 newArgs.append(newExpr)
                                 ua += 1
+                            } else {
+                                newArgs.append(expr)
+                            }
+                            
+                        } else if let access = expr.rep.access {
+                            guard let index = args.index(where: { $0 == access.object.lexme }) else {
+                                self.reportError("Unresolved identifier '\(access.key.lexme)'")
+                                return
+                                
+                            }
+                            
+                            let objcName = self.nowhite(a[index])
+                            
+                            guard let val = self.objects[objcName]?.values[access.key.lexme] else {
+                                self.reportError("Unknown property '\(access.key.lexme)'")
+                                return
+                            }
+                            let result = Token(type: .literal, lexme: val, literal: val, line: nil)
+                            let newExpr = Expression(rep: .anyToken(result))
+                            self.visit(newExpr)
+                            newArgs.append(newExpr)
+                            ua += 1
                         }
                         i += 1
                     }
-//                    print("New Args for \(funcName):", newArgs)
                     let newCall = CallStatement(name: call.name, args: newArgs)
                     self.visit(newCall)
                 } else if let cond = statement as? IfStatement {
-                    
+                    cond.accept(self)
                 }
-//                self.visit(stmt: statement)
             }
         }
         functions[funcName] = function
@@ -1656,7 +1842,7 @@ public class Interpreter: Visitor {
     
     public typealias FunctionTupleInput = (interpreter: Interpreter, args: [String])
     public func registerExternalFunction(name: String, block: @escaping (FunctionTupleInput) -> ()) {
-        addFunc(name, Interpreter._variL, block)
+        addFunc(name, Interpreter._variableLengthParameters, block)
     }
     
     var error: String?
@@ -1669,52 +1855,41 @@ public class Interpreter: Visitor {
         if stackTrace {
             print("\nTrace:")
             print("------")
+            if  Transfers.shouldTraceExec {
+                stream?.write("\nTrace:")
+                stream?.write("------")
+            }
             while let msg = logs.dequeue() {
                 print(msg)
+                if Transfers.shouldTraceExec {
+                    stream?.write(msg)
+                }
             }
             if alwaysTraverseDebug {
-                traverseStackTrace {
-                    $0.printToConsole()
-                }
+                traverseStackTrace { $0.printToConsole() }
             }
         }
     }
     
     let formatter: NumberFormatter
     
-    public func execute() throws {
+    public func execute() throws -> CFAbsoluteTime {
         _resetST()
-        if let importStmts = self.header?.imports {
-            for stmt in importStmts {
-                logMsg("Importing \"\(stmt.file)\"")
-                if let code = stmt.code() {
-                    let l = Lexer(code)
-                    var t = [Token]()
-                    l.formTokens(&t)
-                    var p = Parser(stream: t)
-                    var s = [Statement]()
-                    try p.formStatements(&s)
-                    for stmt in s {
-                        self.visit(stmt: stmt)
-                        if error != nil {
-                            throw Error(message: "Error importing file", line: -2)
-                        }
-                    }
-                }
-            }
-        }
         error = nil
+        let start = CFAbsoluteTimeGetCurrent()
         var i = 0
         for statement in statements {
             logMsg("\(formatter.string(from: i + 1 as NSNumber) ?? (i == statements.count ? "Last" : i == 0 ? "First" : "Next")) iteration: \(type(of: statement))")
-            self.visit(stmt: statement)
+            statement.accept(self)
             if let error = error {
                 logAll()
                 throw Error(message: error, line: -2)
             }
             i += 1
         }
+        let end = CFAbsoluteTimeGetCurrent()
         logAll()
+        return end - start
     }
     
     public struct Debug {
@@ -1728,8 +1903,15 @@ public class Interpreter: Visitor {
         }
         
         public var printInfo = false
-        public func printToConsole() {
-            var des = "Debug("
+        internal // testing
+        func _edit(_ body: (inout Debug) -> ()) -> Debug {
+            var copy = self
+            body(&copy)
+            return copy
+        }
+        
+        public func printToConsole() -> String {
+            var des = ""
             if let trigger = trigger {
                 des += "[caller = frame #\(trigger)] "
             }
@@ -1737,8 +1919,8 @@ public class Interpreter: Visitor {
             if let info = info, printInfo {
                 des += ", info: \"\(info)\""
             }
-            des.append(")")
-            print(des)
+            print("Debug(\(des)")
+            return des
         }
     }
     
@@ -1748,6 +1930,8 @@ public class Interpreter: Visitor {
     public func traverseStackTrace(by body: @escaping (Debug) -> ()) {
         print("\nDebug:")
         print("------")
+        stream?.write("\nDebug")
+        stream?.write("------")
         for (_, debug) in info.sorted(by: { $0.key < $1.key }) {
             body(debug)
         }
@@ -1755,61 +1939,10 @@ public class Interpreter: Visitor {
     public func clearDebug() {
         info.removeAll()
     }
-}
-
-public class CodeFile {
-    let code: String
     
-    public struct Error: CustomStringConvertible, Swift.Error {
-        public var description: String
-        public var localizedDescription: String {
-            return description
-        }
-    }
-    public init(directory: FileManager.SearchPathDirectory, path: String) throws {
-        guard path.hasSuffix(".sw") else { throw Error(description: "Expected '.sw' as the file type") }
-        guard let url = FileManager.default.urls(for: directory, in: .userDomainMask).first?.appendingPathComponent(path) else { throw Error(description: "Could not find file at \(path)") }
-        self.code = try String(contentsOf: url)
-    }
-    public struct Options: OptionSet {
-        public static let debug = Options(rawValue: 1)
-        public static let stackTrace = Options(rawValue: 2)
-        public static let traverseDebug = Options(rawValue: 4)
-        public let rawValue: Int
-        public init(rawValue: Int) {
-            self.rawValue = rawValue
-        }
-    }
-    public var options: Options = [.stackTrace]
-    public func run() throws -> Interpreter {
-        let i = try Interpreter(code: code, debug: options.contains(.debug), stackTrace: options.contains(.stackTrace))
-        i.alwaysTraverseDebug = options.contains(.traverseDebug)
-        try i.execute()
-        return i
-    }
+    weak var stream: Streaming?
 }
 
-let code = """
-print("Hello, world");
-"""
-
-do {
-    let i = try Interpreter(code: code, debug: false, stackTrace: true)
-    do {
-        try i.execute()
-    }
-    catch {
-        print(error)
-    }
-    
+public protocol Streaming: class, TextOutputStream {
+    func write(_ string: String)
 }
-catch {
-    print(error)
-}
-
-
-
-
-
-
-
