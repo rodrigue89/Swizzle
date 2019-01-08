@@ -22,7 +22,7 @@ func eat(person) {
 - [How to use it](https://github.com/SafelySwift/Swizzle/blob/master/README.md#how-can-i-use-it)
 - [Versions](https://github.com/SafelySwift/Swizzle/blob/master/README.md#versions)
 - [Documentation](https://github.com/SafelySwift/Swizzle/wiki)
-- [Analytics](https://codebeat.co/projects/github-com-safelyswift-swizzle-master/report_classes/swift-StdLib/complexity_issues)
+- [Analytics](https://codebeat.co/projects/github-com-safelyswift-swizzle-master)
 
 ## What is it?
 
