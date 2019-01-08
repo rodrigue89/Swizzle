@@ -172,7 +172,7 @@ public final class IncludedLibraries {
 }
 
 public final class StdLib {
-    public static let Float = ObjectStatement(
+    public static let StdFloat = ObjectStatement(
         name: Token(
             type: .identifier,
             lexme: "Float",
@@ -268,9 +268,177 @@ public final class StdLib {
         ]
     )
     
+    public static let Vector4 = ObjectStatement(
+        name: Token(
+            type: .identifier,
+            lexme: "Vector4",
+            literal: nil,
+            line: nil
+        ),
+        declarations: [
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "w",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "x",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "y",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "z",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            )
+        ]
+    )
+    
     public static func configure(_ i: Interpreter) {
-        i.statements.append(contentsOf: [Float, Point, Color])
+        i.statements.append(contentsOf: [StdFloat, Point, Color])
+        addFunc("print", Interpreter._variableLengthParameters) { (_, args) in
+            var result = ""
+            for index in args.indices {
+                let val = self.unstringify(args[index])
+                if index + 1 == args.endIndex {
+                    result += val
+                } else {
+                    result += val + self.printSeperator
+                }
+            }
+            print(self.frmPfx, result, separator: "", terminator: self.printTerminator)
+        }
+        addFunc("formSum", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = self.nowhite(args[0])
+            let a = self.nowhite(args[1])
+            let b = self.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs + rhs
+            self.makeFloat(val: sum, objcName: r)
+        }
+        addFunc("formDif", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = self.nowhite(args[0])
+            let a = self.nowhite(args[1])
+            let b = self.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs - rhs
+            self.makeFloat(val: sum, objcName: r)
+        }
+        addFunc("formProd", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = self.nowhite(args[0])
+            let a = self.nowhite(args[1])
+            let b = self.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs * rhs
+            self.makeFloat(val: sum, objcName: r)
+        }
+        addFunc("formQuo", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = self.nowhite(args[0])
+            let a = self.nowhite(args[1])
+            let b = self.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs / rhs
+            self.makeFloat(val: sum, objcName: r)
+        }
+        addFunc("formRem", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = self.nowhite(args[0])
+            let a = self.nowhite(args[1])
+            let b = self.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs.remainder(dividingBy: rhs)
+            self.makeFloat(val: sum, objcName: r)
+        }
         
+        addFunc("ast_objc_set", ["object", "key", "value"]) { (_, args) in
+            let object = self.nowhite(args[0])
+            let key = self.nowhite(args[1])
+            let value = self.nowhite(args[2])
+            let set = SetStatement(object: self.asToken(object), key: self.asToken(key), value: Expression(rep: .anyToken(self.asToken(value))))
+            self.visit(set)
+        }
+        addFunc("ast_objc_set2", ["object", "key", "object2", "value2"]) { (_, args) in
+            let object = self.nowhite(args[0])
+            let key = self.nowhite(args[1])
+            let object2 = self.nowhite(args[2])
+            let value2 = self.nowhite(args[3])
+            let access = AccessStatement(object: self.asToken(object2), key: self.asToken(value2))
+            let set = SetStatement(object: self.asToken(object), key: self.asToken(key), value: Expression(rep: .access(access)))
+            self.visit(set)
+        }
+        
+        addFunc("fileManagerDesktopGetString", ["dump", "path"]) { (_, args) in
+            let dump = self.nowhite(args[0])
+            let path = self.nowhite(args[1])
+            do {
+                let url = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
+                let string = try String(contentsOf: url)
+                let assign = AssignStatement(decl: Token(type: .setDecl, lexme: "set", literal: nil, line: nil), name: self.asToken(dump), expression: Expression(rep: .literal(string)))
+                self.visit(assign)
+            }
+            catch {
+                self.reportError(String(describing: error))
+            }
+        }
+        addFunc("fileManagerDocumentGetString", ["dump", "path"]) { (_, args) in
+            let dump = self.nowhite(args[0])
+            let path = self.nowhite(args[1])
+            do {
+                let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
+                let string = try String(contentsOf: url)
+                let assign = AssignStatement(decl: Token(type: .setDecl, lexme: "set", literal: nil, line: nil), name: self.asToken(dump), expression: Expression(rep: .literal(string)))
+                self.visit(assign)
+            }
+            catch {
+                self.reportError(String(describing: error))
+            }
+        }
+        addFunc("fileManagerDocumentWriteString", ["text", "path"]) { (_, args) in
+            let text = self.nowhite(args[0])
+            let path = self.nowhite(args[1])
+            do {
+                let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
+                try text.write(to: url, atomically: false, encoding: .utf8)
+            }
+            catch {
+                self.reportError(String(describing: error))
+            }
+        }
     }
 }
 
@@ -485,130 +653,6 @@ public class Interpreter: Visitor {
     
     func configureDefaults() {
         StdLib.configure(self)
-        
-        addFunc("print", Interpreter._variableLengthParameters) { (_, args) in
-            var result = ""
-            for index in args.indices {
-                let val = self.unstringify(args[index])
-                if index + 1 == args.endIndex {
-                    result += val
-                } else {
-                    result += val + self.printSeperator
-                }
-            }
-            print(self.frmPfx, result, separator: "", terminator: self.printTerminator)
-        }
-        addFunc("formSum", ["r", "lhs", "rhs"]) { (_, args) in
-            let r = self.nowhite(args[0])
-            let a = self.nowhite(args[1])
-            let b = self.nowhite(args[2])
-            guard let lhs = Float(a), let rhs = Float(b) else {
-                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
-                return
-            }
-            let sum = lhs + rhs
-            self.makeFloat(val: sum, objcName: r)
-        }
-        addFunc("formDif", ["r", "lhs", "rhs"]) { (_, args) in
-            let r = self.nowhite(args[0])
-            let a = self.nowhite(args[1])
-            let b = self.nowhite(args[2])
-            guard let lhs = Float(a), let rhs = Float(b) else {
-                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
-                return
-            }
-            let sum = lhs - rhs
-            self.makeFloat(val: sum, objcName: r)
-        }
-        addFunc("formProd", ["r", "lhs", "rhs"]) { (_, args) in
-            let r = self.nowhite(args[0])
-            let a = self.nowhite(args[1])
-            let b = self.nowhite(args[2])
-            guard let lhs = Float(a), let rhs = Float(b) else {
-                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
-                return
-            }
-            let sum = lhs * rhs
-            self.makeFloat(val: sum, objcName: r)
-        }
-        addFunc("formQuo", ["r", "lhs", "rhs"]) { (_, args) in
-            let r = self.nowhite(args[0])
-            let a = self.nowhite(args[1])
-            let b = self.nowhite(args[2])
-            guard let lhs = Float(a), let rhs = Float(b) else {
-                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
-                return
-            }
-            let sum = lhs / rhs
-            self.makeFloat(val: sum, objcName: r)
-        }
-        addFunc("formRem", ["r", "lhs", "rhs"]) { (_, args) in
-            let r = self.nowhite(args[0])
-            let a = self.nowhite(args[1])
-            let b = self.nowhite(args[2])
-            guard let lhs = Float(a), let rhs = Float(b) else {
-                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
-                return
-            }
-            let sum = lhs.remainder(dividingBy: rhs)
-            self.makeFloat(val: sum, objcName: r)
-        }
-        
-        addFunc("ast_objc_set", ["object", "key", "value"]) { (_, args) in
-            let object = self.nowhite(args[0])
-            let key = self.nowhite(args[1])
-            let value = self.nowhite(args[2])
-            let set = SetStatement(object: self.asToken(object), key: self.asToken(key), value: Expression(rep: .anyToken(self.asToken(value))))
-            self.visit(set)
-        }
-        addFunc("ast_objc_set2", ["object", "key", "object2", "value2"]) { (_, args) in
-            let object = self.nowhite(args[0])
-            let key = self.nowhite(args[1])
-            let object2 = self.nowhite(args[2])
-            let value2 = self.nowhite(args[3])
-            let access = AccessStatement(object: self.asToken(object2), key: self.asToken(value2))
-            let set = SetStatement(object: self.asToken(object), key: self.asToken(key), value: Expression(rep: .access(access)))
-            self.visit(set)
-        }
-        
-        addFunc("fileManagerDesktopGetString", ["dump", "path"]) { (_, args) in
-            let dump = self.nowhite(args[0])
-            let path = self.nowhite(args[1])
-            do {
-                let url = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
-                let string = try String(contentsOf: url)
-                let assign = AssignStatement(decl: Token(type: .setDecl, lexme: "set", literal: nil, line: nil), name: self.asToken(dump), expression: Expression(rep: .literal(string)))
-                self.visit(assign)
-            }
-            catch {
-                self.reportError(String(describing: error))
-            }
-        }
-        addFunc("fileManagerDocumentGetString", ["dump", "path"]) { (_, args) in
-            let dump = self.nowhite(args[0])
-            let path = self.nowhite(args[1])
-            do {
-                let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
-                let string = try String(contentsOf: url)
-                let assign = AssignStatement(decl: Token(type: .setDecl, lexme: "set", literal: nil, line: nil), name: self.asToken(dump), expression: Expression(rep: .literal(string)))
-                self.visit(assign)
-            }
-            catch {
-                self.reportError(String(describing: error))
-            }
-        }
-        addFunc("fileManagerDocumentWriteString", ["text", "path"]) { (_, args) in
-            let text = self.nowhite(args[0])
-            let path = self.nowhite(args[1])
-            do {
-                let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
-                try text.write(to: url, atomically: false, encoding: .utf8)
-            }
-            catch {
-                self.reportError(String(describing: error))
-            }
-        }
-        
     }
     
     // MARK: Helper functions
@@ -752,7 +796,7 @@ public class Interpreter: Visitor {
             constr.accept(self)
         } else if let lit = rep.literal {
             if let num = lit as? Float {
-                let `init` = InitStatement(objectName: StdLib.Float.name, args: [Expression(rep: .literal(num))])
+                let `init` = InitStatement(objectName: StdLib.StdFloat.name, args: [Expression(rep: .literal(num))])
                 let object = Object(name: "Float", values: ["*value":num.description], stmt: `init`)
                 objects[varName] = object
             }
