@@ -6,12 +6,12 @@ objc Person {
     decl age;
 }
 
-func eat(person) {
-    print("Eating", person.name, "cause why not?");
-}
+var vec = Vector4(1, 2, 3, 4);
+swizzle4(vec);
 
-var p = Person("Tim", 99);
-eat(p);
+func eat(person) {
+    print("Eating", person.name, #, ". They were only", person.age, "years old.");
+}
 ```
 > Some code in Swizzle
 
