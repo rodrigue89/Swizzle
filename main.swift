@@ -1,8 +1,8 @@
 //
-//  Source.swift
+//  main.swift
 //  Swizzler
 //
-//  Created by Ethan Uppal on 12/25/18.
+//  Updated by Ethan Uppal on 1/7/19.
 //  Copyright © 2018 Ethan Uppal. All rights reserved.
 //
 
@@ -971,28 +971,15 @@ public final class Parser {
         guard let callName = expect(.identifier, c: &g) else { throw errorMake(.expectedIdentifier, g.first) }
         guard expect(.leftPar, c: &g) != nil else { throw errorMake(.expectedStartingGroup, g.first) }
         guard g.last?.type == .rightPar else { throw errorMake(.expectedClosingGroup, g.first) }
-        print(g)
-        var argSegments = [[Token]]()
-        var currentArgs = [Token]()
-        for tkn in g {
-            if tkn.type == .comma || tkn.type == .rightPar {
-                argSegments.append(currentArgs)
-                currentArgs = []
-            } else {
-                print("Part of Call:", tkn)
-                currentArgs.append(tkn)
-            }
-        }
-        if !currentArgs.isEmpty {
-            argSegments.append(currentArgs)
-        }
+        var argSegments = g.dropLast().split(whereSeparator: { $0.type == .comma })
         if isDebugging {
             print("Creating Call:", argSegments)
         }
         var args = [Expression]()
         func addStmt(subsegment: Token, args: inout [Expression]) {
+            let parts = subsegment.lexme.components(separatedBy: ".")
             if isDebugging {
-                print("subsegment:", subsegment)
+                print("parts:", parts, "subsegment:", subsegment)
             }
             //            if parts.count == 2 {
             //                let objcToken = Token(type: .identifier, lexme: parts[0], literal: nil, line: nil)
@@ -1000,11 +987,7 @@ public final class Parser {
             //                let get = AccessStatement(object: objcToken, key: keyToken)
             //                args.append(Expression(rep: .access(get)))
             //            } else
-            switch subsegment.type {
-            case .literal:
-                let expr = Expression(rep: .literal(subsegment.literal!))
-                args.append(expr)
-            default:
+            if parts.count == 1 {
                 let expr = Expression(rep: .anyToken(subsegment))
                 args.append(expr)
             }
@@ -1012,8 +995,7 @@ public final class Parser {
         for segment in argSegments {
             var segment = segment
             while let subsegment = segment.first {
-                print("subseg:", subsegment)
-                if subsegment.type == .identifier, subsegment.lexme.first != "\"", subsegment.lexme.last != "\"", segment.dropFirst().first?.type == .dot, let key = segment.dropFirst(2).first {
+                if subsegment.type == .identifier, segment.dropFirst().first?.type == .dot, let key = segment.dropFirst(2).first {
                     if subsegment.lexme.isEmpty || key.lexme.isEmpty {
                         continue
                     }
@@ -1027,7 +1009,6 @@ public final class Parser {
                 segment.removeFirst()
             }
         }
-        print("final args for", callName, ":", args)
         let call = CallStatement(name: callName, args: args)
         call.line = l
         s.append(call)
@@ -1135,6 +1116,10 @@ public final class Parser {
                 }
                 try _makeFuncStmt(group!, &stmts)
                 group = nil
+            } else if (false /* other case */) {
+                
+            } else {
+                throw errorMake(.unexpectedToken, current)
             }
         }
     }
@@ -1167,37 +1152,477 @@ extension Statement {
         return self as? S
     }
 }
+
 public final class IncludedLibraries {
-    public static let Float = ObjectStatement(name: Token(type: .identifier, lexme: "Float", literal: nil, line: nil), declarations: [DeclarationStatement(name: Token(type: .identifier, lexme: "*value", literal: nil, line: nil), type: .float)])
-    public static let MutableBoxFile = """
-    objc MutableBox {
-        decl value;
-    }
-
-    func setValue(box, value) {
-        box = value;
-    }
-    func copyValue(box, dest) {
-        dest.value = box.value;
-    }
-    """
-    public static let TempTextFile = """
-    objc TempText {
-        decl String value;
-    }
-
-    func put(text, temp) {
-        temp.value = text
-    }
-    func log(temp) {
-        print(temp.value)
-    }
-    """
+    public static let MutableBox = ObjectStatement(
+        name: Token(
+            type: .identifier,
+            lexme: "MutableBox",
+            literal: nil,
+            line: nil
+        ),
+        declarations: [
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "value",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .implied
+            )
+        ]
+    )
     
-    public static let standardLibrary: [String:String] = [
-        "MutableBox":MutableBoxFile,
-        "TempText":TempTextFile
-    ]
+    static var custom = [String:String]()
+    public static func addLibrary(named name: String, code: String) {
+        self.custom[name] = code
+    }
+    
+    public static let Graphic = ObjectStatement(
+        name: Token(
+            type: .identifier,
+            lexme: "Graphic",
+            literal: nil,
+            line: nil
+        ),
+        declarations: [
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "text",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .string
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "size",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            )
+        ]
+    )
+    public static let GraphicCtx = ObjectStatement(
+        name: Token(
+            type: .identifier,
+            lexme: "GraphicCtx",
+            literal: nil,
+            line: nil
+        ),
+        declarations: [
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "text",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .string
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "size",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "x",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "y",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            )
+        ]
+    )
+    public static let NewGraphicCtx = ObjectStatement(
+        name: Token(
+            type: .identifier,
+            lexme: "NewGraphicCtx",
+            literal: nil,
+            line: nil
+        ),
+        declarations: []
+    )
+    public static func importLibrary(_ name: String, _ i: Interpreter) {
+        switch name {
+        case "Graphics":
+            i.statements.insert(Graphic, at: 0)
+            i.statements.insert(GraphicCtx, at: 0)
+            i.statements.insert(NewGraphicCtx, at: 0)
+            i.addFunc("selectColor", ["ctx", "color"]) { (_, args) in
+                let ctxName = i.nowhite(args[0]); let colorName = i.nowhite(args[1])
+                guard let ctx = i.objects[ctxName] else {
+                    i.reportError("Could not locate the graphic context named '\(ctxName)'")
+                    return
+                }
+                guard let color = i.objects[colorName] else {
+                    i.reportError("Could not locate the color named '\(colorName)'")
+                    return
+                }
+                ctx.name = GraphicCtx.name.lexme
+                ctx.values["_hue"] = color.values["hue"]
+                ctx.values["_sat"] = color.values["saturation"]
+                ctx.values["_bri"] = color.values["brightness"]
+                ctx.values["_alp"] = color.values["alpha"]
+            }
+            i.addFunc("drawGraphic", ["ctx", "graphic", "point"]) { (_, args) in
+                let ctxName = i.nowhite(args[0]); let graphicName = i.nowhite(args[1]); let pointName = i.nowhite(args[2])
+                guard let ctx = i.objects[ctxName] else {
+                    i.reportError("Could not locate the graphic context named '\(ctxName)'")
+                    return
+                }
+                guard let graphic = i.objects[graphicName] else {
+                    i.reportError("Could not locate the graphic named '\(graphicName)'")
+                    return
+                }
+                guard let point = i.objects[pointName] else {
+                    i.reportError("Could not locate the point named '\(pointName)'")
+                    return
+                }
+                if let txt = graphic.values["text"] {
+                    ctx.values["_text"] = i.unstringify(txt)
+                }
+                ctx.values["_size"] = graphic.values["size"]
+                ctx.values["_x"] = point.values["x"]
+                ctx.values["_y"] = point.values["y"]
+            }
+        case "MutableBox":
+            i.statements.insert(MutableBox, at: 0)
+            i.addFunc("copyValue", ["dest", "box"]) { (_, args) in
+                let dest = i.nowhite(args[0]); let box = i.nowhite(args[1])
+                i.objects[dest]?.values["value"] = i.objects["box"]?.values["value"]
+            }
+        default:
+            return
+        }
+    }
+}
+
+// MARK: Standard Library
+public final class StdLib {
+    public static let StdFloat = ObjectStatement(
+        name: Token(
+            type: .identifier,
+            lexme: "Float",
+            literal: nil,
+            line: nil
+        ),
+        declarations: [
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "*value",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            )
+        ]
+    )
+    
+    public static let Point = ObjectStatement(
+        name: Token(
+            type: .identifier,
+            lexme: "Point",
+            literal: nil,
+            line: nil
+        ),
+        declarations: [
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "x",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "y",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            )
+        ]
+    )
+    
+    public static let Color = ObjectStatement(
+        name: Token(
+            type: .identifier,
+            lexme: "Color",
+            literal: nil,
+            line: nil
+        ),
+        declarations: [
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "hue",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "saturation",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "brightness",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "alpha",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            )
+        ]
+    )
+    
+    public static let Vector4 = ObjectStatement(
+        name: Token(
+            type: .identifier,
+            lexme: "Vector4",
+            literal: nil,
+            line: nil
+        ),
+        declarations: [
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "w",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "x",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "y",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            ),
+            DeclarationStatement(
+                name: Token(
+                    type: .identifier,
+                    lexme: "z",
+                    literal: nil,
+                    line: nil
+                ),
+                type: .float
+            )
+        ]
+    )
+    
+    public static func configure(_ i: Interpreter) {
+        i.statements.append(contentsOf: [StdFloat, Point, Color, Vector4])
+        // MARK: Basic Functions
+        i.addFunc("print", Interpreter._variableLengthParameters) { (_, args) in
+            var result = ""
+            for index in args.indices {
+                let val = i.unstringify(args[index])
+                if index + 1 == args.endIndex {
+                    result += val
+                } else {
+                    result += val + i.printSeperator
+                }
+            }
+            let final = i.frmPfx + result
+            i.stream?.write(Transfers.shouldTraceExec ? final : result)
+            print(final, terminator: i.printTerminator)
+        }
+        i.addFunc("formSum", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = i.nowhite(args[0])
+            let a = i.nowhite(args[1])
+            let b = i.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                i.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs + rhs
+            i.makeFloat(val: sum, objcName: r)
+        }
+        i.addFunc("formDif", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = i.nowhite(args[0])
+            let a = i.nowhite(args[1])
+            let b = i.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                i.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs - rhs
+            i.makeFloat(val: sum, objcName: r)
+        }
+        i.addFunc("formProd", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = i.nowhite(args[0])
+            let a = i.nowhite(args[1])
+            let b = i.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                i.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs * rhs
+            i.makeFloat(val: sum, objcName: r)
+        }
+        i.addFunc("formQuo", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = i.nowhite(args[0])
+            let a = i.nowhite(args[1])
+            let b = i.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                i.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs / rhs
+            i.makeFloat(val: sum, objcName: r)
+        }
+        i.addFunc("formRem", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = i.nowhite(args[0])
+            let a = i.nowhite(args[1])
+            let b = i.nowhite(args[2])
+            guard let lhs = Float(a), let rhs = Float(b) else {
+                i.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                return
+            }
+            let sum = lhs.remainder(dividingBy: rhs)
+            i.makeFloat(val: sum, objcName: r)
+        }
+        
+        // MARK: Debug Functions
+        i.addFunc("ast_objc_set", ["object", "key", "value"]) { (_, args) in
+            let object = i.nowhite(args[0])
+            let key = i.nowhite(args[1])
+            let value = i.nowhite(args[2])
+            let set = SetStatement(object: i.asToken(object), key: i.asToken(key), value: Expression(rep: .anyToken(i.asToken(value))))
+            i.visit(set)
+        }
+        i.addFunc("ast_objc_set2", ["object", "key", "object2", "value2"]) { (_, args) in
+            let object = i.nowhite(args[0])
+            let key = i.nowhite(args[1])
+            let object2 = i.nowhite(args[2])
+            let value2 = i.nowhite(args[3])
+            let access = AccessStatement(object: i.asToken(object2), key: i.asToken(value2))
+            let set = SetStatement(object: i.asToken(object), key: i.asToken(key), value: Expression(rep: .access(access)))
+            i.visit(set)
+        }
+        
+        // MARK: File Functions
+        i.addFunc("fileManagerDesktopGetString", ["dump", "path"]) { (_, args) in
+            let dump = i.nowhite(args[0])
+            let path = i.nowhite(args[1])
+            do {
+                let url = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
+                let string = try String(contentsOf: url)
+                let assign = AssignStatement(decl: Token(type: .setDecl, lexme: "set", literal: nil, line: nil), name: i.asToken(dump), expression: Expression(rep: .literal(string)))
+                i.visit(assign)
+            }
+            catch {
+                i.reportError(String(describing: error))
+            }
+        }
+        i.addFunc("fileManagerDocumentGetString", ["dump", "path"]) { (_, args) in
+            let dump = i.nowhite(args[0])
+            let path = i.nowhite(args[1])
+            do {
+                let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
+                let string = try String(contentsOf: url)
+                let assign = AssignStatement(decl: Token(type: .setDecl, lexme: "set", literal: nil, line: nil), name: i.asToken(dump), expression: Expression(rep: .literal(string)))
+                i.visit(assign)
+            }
+            catch {
+                i.reportError(String(describing: error))
+            }
+        }
+        i.addFunc("fileManagerDocumentWriteString", ["text", "path"]) { (_, args) in
+            let text = i.nowhite(args[0])
+            let path = i.nowhite(args[1])
+            do {
+                let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
+                try text.write(to: url, atomically: false, encoding: .utf8)
+            }
+            catch {
+                i.reportError(String(describing: error))
+            }
+        }
+        
+        // MARK: Vector Functions
+        i.addFunc("swizzle4", ["vector", "newLayout"]) { (_, args) in
+            let vector4Name = i.nowhite(args[0])
+            let newLayout = i.nowhite(args[1])
+            guard let vector = i.objects[vector4Name], vector.name == StdLib.Vector4.name.lexme else {
+                i.reportError("Cannot convert value of type *Any to type Vector4 in call to 'swizzle4(vector: \(vector4Name), newLayout: \(newLayout)'")
+                return
+            }
+            let layout = newLayout.prefix(4)
+            guard layout.count == 4 else {
+                i.reportError("Expected a string with a length of 4 characters in call to 'swizzle4(vector: \(vector4Name), newLayout: \(newLayout)'")
+                return
+            }
+            let originalValues = vector.values
+            for character in layout {
+                switch character {
+                case "w":
+                    vector.values["w"] = originalValues["w"]
+                case "x":
+                    vector.values["x"] = originalValues["x"]
+                case "y":
+                    vector.values["y"] = originalValues["y"]
+                case "z":
+                    vector.values["z"] = originalValues["z"]
+                default:
+                    i.reportError("Unexpcted character in layout string, please only use 'w', 'x', 'y', or 'z'")
+                    return
+                }
+            }
+        }
+    }
 }
 
 public final class Interpreter: Visitor {
@@ -1329,7 +1754,7 @@ public final class Interpreter: Visitor {
     
     // MARK: An object
     public final class Object: CustomStringConvertible {
-        public let name: String
+        public var name: String
         public var values: [String:String]
         let stmt: InitStatement
         public init(name: String, values: [String:String], stmt: InitStatement) {
@@ -1404,137 +1829,12 @@ public final class Interpreter: Visitor {
     let printSeperator = ""
     let printTerminator = "\n"
     
-    private func asToken(_ str: String) -> Token {
+    internal func asToken(_ str: String) -> Token {
         return Token(type: .identifier, lexme: str, literal: nil, line: nil)
     }
     
     func configureDefaults() {
-        statements.append(IncludedLibraries.Float)
-        
-        addFunc("print", Interpreter._variableLengthParameters) { (_, args) in
-            var result = ""
-            for index in args.indices {
-                let val = self.unstringify(args[index])
-                if index + 1 == args.endIndex {
-                    result += val
-                } else {
-                    result += val + self.printSeperator
-                }
-            }
-            let final = self.frmPfx + result
-            self.stream?.write(Transfers.shouldTraceExec ? final : result)
-            print(final, terminator: self.printTerminator)
-        }
-        addFunc("formSum", ["r", "lhs", "rhs"]) { (_, args) in
-            let r = self.nowhite(args[0])
-            let a = self.nowhite(args[1])
-            let b = self.nowhite(args[2])
-            guard let lhs = Float(a), let rhs = Float(b) else {
-                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
-                return
-            }
-            let sum = lhs + rhs
-            self.makeFloat(val: sum, objcName: r)
-        }
-        addFunc("formDif", ["r", "lhs", "rhs"]) { (_, args) in
-            let r = self.nowhite(args[0])
-            let a = self.nowhite(args[1])
-            let b = self.nowhite(args[2])
-            guard let lhs = Float(a), let rhs = Float(b) else {
-                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
-                return
-            }
-            let sum = lhs - rhs
-            self.makeFloat(val: sum, objcName: r)
-        }
-        addFunc("formProd", ["r", "lhs", "rhs"]) { (_, args) in
-            let r = self.nowhite(args[0])
-            let a = self.nowhite(args[1])
-            let b = self.nowhite(args[2])
-            guard let lhs = Float(a), let rhs = Float(b) else {
-                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
-                return
-            }
-            let sum = lhs * rhs
-            self.makeFloat(val: sum, objcName: r)
-        }
-        addFunc("formQuo", ["r", "lhs", "rhs"]) { (_, args) in
-            let r = self.nowhite(args[0])
-            let a = self.nowhite(args[1])
-            let b = self.nowhite(args[2])
-            guard let lhs = Float(a), let rhs = Float(b) else {
-                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
-                return
-            }
-            let sum = lhs / rhs
-            self.makeFloat(val: sum, objcName: r)
-        }
-        addFunc("formRem", ["r", "lhs", "rhs"]) { (_, args) in
-            let r = self.nowhite(args[0])
-            let a = self.nowhite(args[1])
-            let b = self.nowhite(args[2])
-            guard let lhs = Float(a), let rhs = Float(b) else {
-                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
-                return
-            }
-            let sum = lhs.remainder(dividingBy: rhs)
-            self.makeFloat(val: sum, objcName: r)
-        }
-        
-        addFunc("ast_objc_set", ["object", "key", "value"]) { (_, args) in
-            let object = self.nowhite(args[0])
-            let key = self.nowhite(args[1])
-            let value = self.nowhite(args[2])
-            let set = SetStatement(object: self.asToken(object), key: self.asToken(key), value: Expression(rep: .anyToken(self.asToken(value))))
-            self.visit(set)
-        }
-        addFunc("ast_objc_set2", ["object", "key", "object2", "value2"]) { (_, args) in
-            let object = self.nowhite(args[0])
-            let key = self.nowhite(args[1])
-            let object2 = self.nowhite(args[2])
-            let value2 = self.nowhite(args[3])
-            let access = AccessStatement(object: self.asToken(object2), key: self.asToken(value2))
-            let set = SetStatement(object: self.asToken(object), key: self.asToken(key), value: Expression(rep: .access(access)))
-            self.visit(set)
-        }
-        
-        addFunc("fileManagerDesktopGetString", ["dump", "path"]) { (_, args) in
-            let dump = self.nowhite(args[0])
-            let path = self.nowhite(args[1])
-            do {
-                let url = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
-                let string = try String(contentsOf: url)
-                let assign = AssignStatement(decl: Token(type: .setDecl, lexme: "set", literal: nil, line: nil), name: self.asToken(dump), expression: Expression(rep: .literal(string)))
-                self.visit(assign)
-            }
-            catch {
-                self.reportError(String(describing: error))
-            }
-        }
-        addFunc("fileManagerDocumentGetString", ["dump", "path"]) { (_, args) in
-            let dump = self.nowhite(args[0])
-            let path = self.nowhite(args[1])
-            do {
-                let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
-                let string = try String(contentsOf: url)
-                let assign = AssignStatement(decl: Token(type: .setDecl, lexme: "set", literal: nil, line: nil), name: self.asToken(dump), expression: Expression(rep: .literal(string)))
-                self.visit(assign)
-            }
-            catch {
-                self.reportError(String(describing: error))
-            }
-        }
-        addFunc("fileManagerDocumentWriteString", ["text", "path"]) { (_, args) in
-            let text = self.nowhite(args[0])
-            let path = self.nowhite(args[1])
-            do {
-                let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
-                try text.write(to: url, atomically: false, encoding: .utf8)
-            }
-            catch {
-                self.reportError(String(describing: error))
-            }
-        }
+        StdLib.configure(self)
     }
     
     func addFunc(_ name: String, _ args: [String], _ block: @escaping (Interpreter, [String]) -> ()) {
@@ -1574,7 +1874,7 @@ public final class Interpreter: Visitor {
     }
     
     func makeFloat(val: Float, objcName: String) {
-        let constr = InitStatement(objectName: IncludedLibraries.Float.name, args: [Expression(rep: .literal(val))])
+        let constr = InitStatement(objectName: StdLib.StdFloat.name, args: [Expression(rep: .literal(val))])
         makeObject(from: constr, objcName: objcName)
     }
     
@@ -1674,7 +1974,7 @@ public final class Interpreter: Visitor {
             constr.accept(self)
         } else if let lit = rep.literal {
             if let num = lit as? Float {
-                let `init` = InitStatement(objectName: IncludedLibraries.Float.name, args: [Expression(rep: .literal(num))])
+                let `init` = InitStatement(objectName: StdLib.StdFloat.name, args: [Expression(rep: .literal(num))])
                 let object = Object(name: "Float", values: ["*value":num.description], stmt: `init`)
                 objects[varName] = object
             }
