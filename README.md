@@ -89,3 +89,8 @@ The latest release is [v0.2.1](https://github.com/SafelySwift/Swizzle/releases/t
 ## Requirements
 
 You will need Xcode 9 or higher, and Swift 4 or higher.
+
+## Analytics
+
+- GPA: 2.87
+- Lines: 1745
