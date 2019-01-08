@@ -22,6 +22,7 @@ eat(p);
 - [How to use it](https://github.com/SafelySwift/Swizzle/blob/master/README.md#how-can-i-use-it)
 - [Versions](https://github.com/SafelySwift/Swizzle/blob/master/README.md#versions)
 - [Documentation](https://github.com/SafelySwift/Swizzle/wiki)
+- [Analytics](https://github.com/SafelySwift/Swizzle/blob/master/Analysis%20Report.pdf)
 
 ## What is it?
 
