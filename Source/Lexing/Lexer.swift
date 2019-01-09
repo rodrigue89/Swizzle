@@ -7,16 +7,18 @@
 
 import Foundation
 
-public class Lexer {
+public final class Lexer {
     public init(_ code: String) {
         self.code = code
+        self.end = code.endIndex
     }
     let code: String
     lazy var pos = code.startIndex
+    let end: String.Index
     var line = 1
     
     func isEOF() -> Bool {
-        return pos == code.endIndex
+        return pos == end
     }
     
     func peek() -> Character {
@@ -31,12 +33,17 @@ public class Lexer {
         return code[code.index(after: pos)]
     }
     
+    func tryPeekNext() -> Character? {
+        let n = code.index(after: pos)
+        return n < end ? code[n] : nil
+    }
+    
     func peekNext(_ length: Int) -> String {
         var str = ""
         var i = 1
         while i < length {
             let index = code.index(pos, offsetBy: i)
-            if code.indices.contains(index) {
+            if index < end {
                 str.append(code[index])
                 i += 1
             } else {
@@ -47,7 +54,7 @@ public class Lexer {
             }
         }
         let index = code.index(pos, offsetBy: i)
-        if code.indices.contains(index) {
+        if index < end {
             str.append(code[code.index(pos, offsetBy: i)])
         }
         return str
@@ -67,8 +74,8 @@ public class Lexer {
     func getAndConsumeStringLiteral() -> Token {
         var acc = "\""
         consume()
-        while peek() != "\"" {
-            acc.append(peek())
+        while let c = tryPeek(), c != "\"" {
+            acc.append(c)
             consume()
             if isEOF() {
                 break
@@ -81,8 +88,8 @@ public class Lexer {
     
     func getAndConsumeNumberLiteral() -> Token {
         var acc = ""
-        while digits.contains(peek()) {
-            acc.append(peek())
+        while let c = tryPeek(), digits.contains(c) {
+            acc.append(c)
             consume()
             if isEOF() {
                 break
@@ -106,7 +113,7 @@ public class Lexer {
     }
     
     func matchNext(_ character: Character) -> Bool {
-        return peekNext() == character
+        return tryPeekNext() == character
     }
     
     func match(_ string: String) -> Bool {
@@ -114,7 +121,7 @@ public class Lexer {
     }
     
     func read(_ str: String) -> Bool {
-        if peek() == str.first && match(String(str.dropFirst())) {
+        if tryPeek() == str.first && match(String(str.dropFirst())) {
             consume(str.count)
             return true
         }
@@ -139,13 +146,6 @@ public class Lexer {
         "."
     ]
     
-    func optionalCurrent() -> Character? {
-        if pos < code.endIndex {
-            return code[pos]
-        }
-        return nil
-    }
-    
     func scanIdentifier() -> Token? {
         var acc = ""
         while let p = tryPeek(), !endOfIdentifier.contains(p) {
@@ -160,13 +160,15 @@ public class Lexer {
     }
     
     func _couldBeNumber() -> Bool {
-        return digits.contains(peek())
+        guard let c = tryPeek() else { return false }
+        return digits.contains(c)
     }
     
     let digits = Set<Character>(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."])
     
     func scanToken() -> Token? {
         consumeUseless()
+        if isEOF() { return nil }
         switch peek() {
         case "/" where matchNext("/"):
             consume(2)
@@ -205,7 +207,7 @@ public class Lexer {
         case "-":
             consume()
             return Token(type: .minus, lexme: "-", literal: nil, line: line)
-        case "_":
+        case "_" where matchNext(" ") || matchNext(","):
             consume()
             return Token(type: .underscore, lexme: "_", literal: nil, line: line)
         case "(":
@@ -247,24 +249,30 @@ public class Lexer {
         case "s" where match("et"):
             consume(3)
             return Token(type: .setDecl, lexme: "set", literal: nil, line: line)
-        case "l" where match("et"):
-            consume(3)
-            return Token(type: .constDecl, lexme: "let", literal: nil, line: line)
+        case "c" where match("onst"):
+            consume(5)
+            return Token(type: .constDecl, lexme: "const", literal: nil, line: line)
         case "f" where match("unc"):
             consume(4)
             return Token(type: .funcDecl, lexme: "func", literal: nil, line: line)
+        case "i" where match("mpl"):
+            consume(4)
+            fatalError("WIP")
         case "o" where match("bjc"):
             consume(4)
             return Token(type: .objcDecl, lexme: "objc", literal: nil, line: line)
         case "i" where matchNext("f"):
             consume(2)
             return Token(type: .ifDecl, lexme: "if", literal: nil, line: line)
+        case "e" where match("lse"):
+            consume(4)
+            return Token(type: .elseDecl, lexme: "else", literal: nil, line: line)
         case "t" where match("rue"):
             consume(4)
-            return Token(type: .literal, lexme: "true", literal: nil, line: line)
+            return Token(type: .literal, lexme: "true", literal: true, line: line)
         case "f" where match("alse"):
             consume(5)
-            return Token(type: .literal, lexme: "false", literal: nil, line: line)
+            return Token(type: .literal, lexme: "false", literal: false, line: line)
         case "n" where match("il"):
             consume(3)
             return Token(type: .null, lexme: "nil", literal: nil, line: line)
@@ -274,7 +282,7 @@ public class Lexer {
         case "s" where match("elf"):
             consume(4)
             return Token(type: .this, lexme: "self", literal: nil, line: line)
-        case "i" where match("nit"):
+        case "n" where match("ew"):
             consume(4)
             return Token(type: .initDecl, lexme: "init", literal: nil, line: line)
         case "l" where match("et"):
@@ -292,7 +300,7 @@ public class Lexer {
         }
     }
     
-    public func formTokens(_ tkns: inout [Token]) -> [Token] {
+    public func formTokens(_ tkns: inout [Token]) {
         self.pos = code.startIndex
         while let next = self.scanToken() {
             tkns.append(next)
@@ -301,6 +309,5 @@ public class Lexer {
             }
         }
         tkns.append(Token.EOF)
-        return tkns
     }
 }

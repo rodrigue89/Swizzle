@@ -34,7 +34,7 @@ public class ObjectStatement: Statement, CustomStringConvertible {
 
 /// The type of something
 public enum ObjectType: String {
-    case implied = "*Any"
+    case implied = "Any"
     case float = "Float"
     case string = "String"
     case bool = "Bool"
