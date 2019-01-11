@@ -73,9 +73,9 @@ Swizzle comes with an interpreter and debugger, and compiler support should come
 
   ![](https://github.com/SafelySwift/Swizzle/blob/master/Images/Screen%20Shot%202018-12-17%20at%209.20.42%20PM.png)
 
-## How can I write better code?
+## Contributing
 
-Swizzle already outputs helpful error messages and I am working on making them more human readable. However, you already have access to the the debugging tools included in Swizzle.
+Swizzle is not perfect. Or rather only as perfect as the people who help. If you want to make Swizzle a better languahe, see [the contributing guidelines](https://github.com/SafelySwift/Swizzle/blob/master/CONTRIBUTING.md)!
 
 ## Versions
 
