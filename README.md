@@ -51,11 +51,11 @@ For more, visit the [documentation](https://github.com/SafelySwift/Swizzle/wiki)
 - [Functions](https://github.com/SafelySwift/Swizzle/blob/gh-pages/Tutorials/Functions%20(%234).md)
 - [Objects](https://github.com/SafelySwift/Swizzle/blob/gh-pages/Tutorials/Objects%20(%235).md)
 
-Similar to many langauges, Swizzle requires semicolons to terminate statements. Even though this may be annoying, it actually helps make the error messages better so you can write cleaner and safer code. See [this pull request](https://github.com/SafelySwift/Swizzle/pull/36) if you do not want to use semicolons.
+Similar to many languages, Swizzle requires semicolons to terminate statements. Even though this may be annoying, it actually helps make the error messages better so you can write cleaner and safer code. See [this pull request](https://github.com/SafelySwift/Swizzle/pull/36) if you do not want to use semicolons.
 
 ## What is included?
 
-Swizzle comes with an interpreter and debugger, and compiler support should come sooner or later. You may have heard that interpreters are very slow and all that, but Swizzle is written in Swift so there is not much of a performance loss. The code example above takes 1 millisecond to execute, which although is slighty slow is one of the best speeds I have gotton in interpreters. Eventually a bytecode compiler will be built as I mentioned, and speeds are likey going to blow off the roof. Well, not literally.
+Swizzle comes with an interpreter and debugger, and compiler support should come sooner or later. You may have heard that interpreters are very slow and all that, but Swizzle is written in Swift so there is not much of a performance loss. The code example above takes 1 millisecond to execute, which although is slightly slow is one of the best speeds I have gotten in interpreters. Eventually a bytecode compiler will be built as I mentioned, and speeds are likely going to blow off the roof. Well, not literally.
 
 ## How can I use it?
 
@@ -94,3 +94,7 @@ You will need Xcode 9 or higher, and Swift 4 or higher.
 
 - GPA: 2.87
 - Lines: 1745
+
+## License 
+
+Swizzle is released under the [MIT License](https://github.com/SafelySwift/Swizzle/blob/master/LICENSE)
