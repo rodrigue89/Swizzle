@@ -79,7 +79,10 @@ Swizzle already outputs helpful error messages and I am working on making them m
 
 ## Versions
 
-The latest release is [v0.3](https://github.com/SafelySwift/Swizzle/releases/tag/v0.3.0). For more information on releases, go [here](https://github.com/SafelySwift/Swizzle/releases)
+The latest feature release is [v0.3](https://github.com/SafelySwift/Swizzle/releases/tag/v0.3.0).
+The latest small release is [v0.3.1](https://github.com/SafelySwift/Swizzle/releases/tag/v0.3.1).
+
+For more information on releases, go [here](https://github.com/SafelySwift/Swizzle/releases).
 
 ## Beyond Swizzle
 
