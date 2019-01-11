@@ -75,7 +75,7 @@ Swizzle comes with an interpreter and debugger, and compiler support should come
 
 ## Contributing
 
-Swizzle is not perfect. Or rather only as perfect as the people who help. If you want to make Swizzle a better languahe, see [the contributing guidelines](https://github.com/SafelySwift/Swizzle/blob/master/CONTRIBUTING.md)!
+Swizzle is not perfect. Or rather only as perfect as the people who help. If you want to make Swizzle a better language or want to see a feature added/report a bug, see [the contributing guidelines](https://github.com/SafelySwift/Swizzle/blob/master/CONTRIBUTING.md)!
 
 ## Versions
 
