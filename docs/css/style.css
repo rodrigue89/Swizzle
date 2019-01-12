@@ -12,7 +12,8 @@ code {
   font-family: "Menlo Regular", Menlo, Courier, Monaco;
 
 a {
-  color: #ffa33c;
+  text-color: #ffa33c;
+  text-decoration: none;
 }
 
 center {
