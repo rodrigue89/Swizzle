@@ -19,8 +19,10 @@ a {
 center {
   text-align: center;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 25%;
+  margin-right: 25%;
+  left: 25%;
+  right: 25%;
 }
   
 logo {
