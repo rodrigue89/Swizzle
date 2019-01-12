@@ -25,3 +25,7 @@ center {
 logo {
   width: 100%;
 }
+  
+pre {
+  background-color: #fdfdfd;
+}
