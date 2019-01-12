@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/SafelySwift/Swizzle/master/Images/Swizzle%20Logo%20Wide.png)
+![](https://raw.githubusercontent.com/SafelySwift/Swizzle/master/Images/Swizzle%20Logo%20Wide.png) 
 
 ```
 objc Person {
