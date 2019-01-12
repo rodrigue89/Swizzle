@@ -10,3 +10,10 @@ h1, h2, h3, h4, h5, h6, p, code {
 a {
   color: #ffff00;
 }
+
+center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
