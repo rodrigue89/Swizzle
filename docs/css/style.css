@@ -16,7 +16,7 @@ a {
 }
 
 center {
-  margin: auto;
-  width: 50%;
-  padding: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
