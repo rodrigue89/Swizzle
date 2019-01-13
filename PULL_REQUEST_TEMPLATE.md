@@ -1,3 +1,5 @@
+> NOTE: If you are submitting a pull request related to adding a new feature, see the [feature request template](https://github.com/SafelySwift/Swizzle/blob/master/.github/ISSUE_TEMPLATE/feature_request.md) instead.
+
 # What I changed
 
 A brief overview of what changes I made to Swizzle
