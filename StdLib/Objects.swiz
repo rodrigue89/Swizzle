@@ -40,3 +40,9 @@ objc Color {
 // print(color.x);
 // print(color.y);
 // print(color.z);
+objc Vector4 {
+  decl Float w;
+  decl Float x;
+  decl Float y;
+  decl Float z;
+}
