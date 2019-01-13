@@ -53,7 +53,7 @@ greet();
 
 But wait, you say. What if I want to greet Bob? Well, we will have to change the function. What about saying hello to Norah? We will have to change the function again! That is not very helpful :). We need a way to fix it, so that the function can greet anyone.
 
-#### Parameters
+### Parameters
 
 Go back to the `greet` function. Inside the parentheses, put the word `name`. Then, change the inside code to look like this:
 
