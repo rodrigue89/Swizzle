@@ -680,7 +680,20 @@ public class Interpreter: Visitor {
         logMsg("Constructing an object with type of '\(name)' and storing in variable named '\(objcName)'.")
         let args = constr.args.compactMap { visit($0) }
         let reduced = args.reduce([String]()) { $0 + $1 }
-        guard let names = objectDecls[name]?.declarations.map({ $0.name.lexme }) else { return }
+        if name == StdLib.Array.name.lexme {
+            var vals = [String:String]()
+            var i = 0
+            for arg in reduced {
+                vals[i.description] = arg
+                i += 1
+            }
+            vals["count"] = i.description
+            let obj = Object(name: name, values: vals, stmt: StdLib.Array)
+            objects[objcName] = obj
+            return
+        }
+        guard let objectStmt = objectDecls[name] else { return }
+        let names = objectStmt.declarations.map({ $0.name.lexme })
         let given = constr.args.count
         let expected = names.count
         if given != expected {
@@ -688,7 +701,7 @@ public class Interpreter: Visitor {
             reportError("Expected \(expected) argument\(expected == 1 ? "" : "s") in initializer")
         }
         let values = Dictionary(keys: names, values: reduced)
-        let object = Object(name: name, values: values, stmt: constr)
+        let object = Object(name: name, values: values, stmt: objectStmt)
         objects[objcName] = object
     }
     
