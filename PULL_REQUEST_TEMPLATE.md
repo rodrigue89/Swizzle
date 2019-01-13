@@ -1,6 +1,6 @@
 # What I changed
 
-A brief overview of what chnages I made to Swizzle
+A brief overview of what changes I made to Swizzle
 
 # Affected files
 
