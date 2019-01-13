@@ -25,7 +25,7 @@ objc Point {
 
 objc Color {
   decl Float hue;
-  decl Float sauturation;
+  decl Float saturation;
   decl Float brightness;
   decl Float alpha
 }
