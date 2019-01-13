@@ -101,3 +101,9 @@ You will need Xcode 9 or higher, and Swift 4 or higher.
 ## License 
 
 Swizzle is released under the [MIT License](https://github.com/SafelySwift/Swizzle/blob/master/LICENSE)
+
+## Code of Conduct
+
+We will not tolerate unacceptable behavior. If you feel that someone has made an action that is not appropreiate, be sure to contact me at [safelyswift@gmail.com](mailto:safelyswift@gmail.com).
+
+Read the [full document](https://github.com/SafelySwift/Swizzle/blob/master/CODE_OF_CONDUCT.md) for more details.
