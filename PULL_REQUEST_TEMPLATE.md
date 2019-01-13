@@ -16,6 +16,6 @@ A brief overview of what changes I made to Swizzle
 
 Average improvement: +-seconds
 
-# Effects of API
+# Effects on API
 
 e.g. "Users now cannot call the `swizzle4` method with only 2 parameters, which would break a lot of code"
