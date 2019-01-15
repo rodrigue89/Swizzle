@@ -1,18 +1,18 @@
 html, body {
-  background-color: #000000;
+  background-color: #ffffff;
 }
 
 h1, h2, h3, h4, h5, h6, p, li {
-  color: #ffffff;
+  color: #000000;
   font-family: "Helvetica Heue", Helvetica;
 }
 
 code {
-  color: #ffffff;
+  color: #000000;
   font-family: "Menlo Regular", Menlo, Courier, Monaco;
 
 a {
-  text-color: #ffa33c;
+  text-color: #0000fd;
   text-decoration: none;
 }
 
