@@ -2,14 +2,14 @@
 
 ```
 objc Person {
-    decl name;
-    decl age;
+    ref name: String;
+    red age: Float;
 }
 
 var vec = Vector4(1, 2, 3, 4);
 swizzle4(vec);
 
-func eat(person) {
+func eat(person: Person) {
     print("Eating", person.name, #, ". They were only", person.age, "years old.");
 }
 ```
