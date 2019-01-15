@@ -32,7 +32,7 @@ In this case, the property `name` is referring to the name of the person. If the
 Objects are created using initializers. These look similar to function calls except they have the name of the object as the call name and the properties as parameters.
 
 ```
-var p = Person("Mary", 12)
+var p = Person("Mary", 12);
 ```
 
 You can access properties on an object using a dot ( `.`) followed by the property name.
