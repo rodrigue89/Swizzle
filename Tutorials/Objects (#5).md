@@ -16,18 +16,16 @@ greet("Jamil", 10);
 
 But we have to use 2 parameters, What if I told you there was a way to do the exact same thing with just 1 parameter. That is where objects come in.
 
-A object defines a set of properties. It allows you to group related things together. Here is an example of an object:
+A object defines a set of references to other objects called properties. It allows you to group related things together. Here is an example of an object:
 
 ```
 objc Person {
-    decl name;
-    decl age;
+    ref name: String;
+    ref age: String;
 }
 ```
 
 In this case, the property `name` is referring to the name of the person. If the object was representing a file, then the property name means something else.
-
-> **Important:** All object names must be capital so that the parser can recognize constructors. That is how it distinguishes between a function and an initializer.
 
 Objects are created using initializers. These look similar to function calls except they have the name of the object as the call name and the properties as parameters.
 
@@ -44,7 +42,7 @@ print("Person p is named", p.name);
 With dot notation you can also set property values.
 
 ```
-p.name = "Norton"
+p.name = "Norton";
 print("p's name is now", p.name);
 ```
 
