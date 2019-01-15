@@ -30,7 +30,7 @@ Variables in Swizzle use *Type Inference*. Take the first example:
 var foo = "bar";
 ```
 
-`foo` is inferred to ahve the type `String`.
+`foo` is inferred to have the type `String`.
 
 You can explicitly say what type a variable has to give clarity:
 
