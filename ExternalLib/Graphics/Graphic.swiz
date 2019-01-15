@@ -1,4 +1,35 @@
+objc _GraphicStorage {
+  private ref font: String;
+  method configure(_g: Graphic) {
+    _g._meta = self;
+  }
+  method _setFont(f: String) {
+    self.font = f;
+  }
+  method _fontIsAvaliable(f: String) -> Bool {
+    if f == "system" {
+      return true;
+    } else if f == "system.bold" {
+      return true;
+    } else if f == "system.italic" {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
 objc Graphic {
-  decl String text;
-  decl Float size;
+  ref text: String;
+  ref size: Float;
+  internal _meta: _GraphicStorage;
+}
+
+func _graphics_useFont(font: String, meta: _GraphicStorage) {
+  if meta::_fontIsAvaliable(font) {
+    meta._setFont(font);
+  }
+}
+func setGraphicFont(graphic: Graphic, fontName: String) {
+  _graphics_useFont(fontName, graphic._meta)
 }
