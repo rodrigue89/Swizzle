@@ -59,4 +59,4 @@ func greet(person: Person) {
 
 Objects are useful for grouping related things and make code easier to understand by providing context.
 
-[Previous: Functions](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Functions%20(%234).md)
+[Previous: Functions](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Functions%20(%234).md) | [Next: Protocols](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Protocols%20(%236).md)
