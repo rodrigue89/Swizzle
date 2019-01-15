@@ -10,6 +10,7 @@ h1, h2, h3, h4, h5, h6, p, li {
 code {
   color: #000000;
   font-family: "Menlo Regular", Menlo, Courier, Monaco;
+  overflow: scroll;
 }
 
 blockquote {
@@ -41,5 +42,5 @@ logo {
 }
   
 pre {
-  background-color: #707070;
+  background-color: #909090;
 }
