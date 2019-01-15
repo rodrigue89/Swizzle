@@ -16,12 +16,12 @@ greet("Jamil", 10);
 
 But we have to use 2 parameters, What if I told you there was a way to do the exact same thing with just 1 parameter. That is where objects come in.
 
-A object defines a set of references to other objects called properties. It allows you to group related things together. Here is an example of an object:
+A object defines a set of properties. It allows you to group related things together. Here is an example of an object:
 
 ```
 objc Person {
-    ref name: String;
-    ref age: String;
+    decl name;
+    decl age;
 }
 ```
 
@@ -44,7 +44,7 @@ print("Person p is named", p.name);
 With dot notation you can also set property values.
 
 ```
-p.name = "Norton";
+p.name = "Norton"
 print("p's name is now", p.name);
 ```
 
