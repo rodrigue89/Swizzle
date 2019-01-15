@@ -21,4 +21,4 @@ Let us say you are writing a program. Then you leave for 6 months and come back.
 
 Comments are important when documenting code so that you and others know what is going on.
 
-[Previous: Hello World](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Hello%20World%20(%231).md) | [Next: Variables](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Variables%20(%233).md)
+[Previous: Hello World](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Hello%20World%20(%231).md) | [Next: Variables](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Variables%20(%233).md)
