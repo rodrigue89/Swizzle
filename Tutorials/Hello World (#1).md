@@ -10,4 +10,4 @@ print("Hello, world!");
 
 If everything goes right, you should see the text "Hello, world!" appear in your console.
 
-[Next: Comments](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Comments%20(%232).md)
+[Next: Comments](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Comments%20(%232).md)
