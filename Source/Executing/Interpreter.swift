@@ -1,6 +1,6 @@
 //
 //  Interpreter.swift
-//  
+//
 //
 //  Created by Ethan Uppal on 12/23/18.
 //
@@ -163,7 +163,7 @@ public final class IncludedLibraries {
             i.statements.insert(MutableBox, at: 0)
             i.addFunc("copyValue", ["dest", "box"]) { (_, args) in
                 let dest = i.nowhite(args[0]); let box = i.nowhite(args[1])
-                i.objects[dest]?.values["value"] = i.objects["box"]?.values["value"]
+                i.objects[dest]?.values["value"] = i.objects[box]?.values["value"]
             }
         default:
             return
@@ -315,135 +315,181 @@ public final class StdLib {
         ]
     )
     
+    public static let Array = ObjectStatement(
+        name: Token(
+            type: .identifier,
+            lexme: "Array",
+            literal: nil,
+            line: nil
+        ),
+        declarations: []
+    )
+    
     public static func configure(_ i: Interpreter) {
-        i.statements.append(contentsOf: [StdFloat, Point, Color])
-        addFunc("print", Interpreter._variableLengthParameters) { (_, args) in
+        i.statements.append(contentsOf: [StdFloat, Point, Color, Vector4, Array])
+        // MARK: Basic Functions
+        i.addFunc("print", Interpreter._variableLengthParameters) { (_, args) in
             var result = ""
             for index in args.indices {
-                let val = self.unstringify(args[index])
+                let val = i.unstringify(args[index])
                 if index + 1 == args.endIndex {
                     result += val
                 } else {
-                    result += val + self.printSeperator
+                    result += val + i.printSeperator
                 }
             }
-            print(self.frmPfx, result, separator: "", terminator: self.printTerminator)
+            let final = i.frmPfx + result
+            i.stream?.write(final)
+            print(final, terminator: i.printTerminator)
         }
-        addFunc("formSum", ["r", "lhs", "rhs"]) { (_, args) in
-            let r = self.nowhite(args[0])
-            let a = self.nowhite(args[1])
-            let b = self.nowhite(args[2])
+        i.addFunc("formSum", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = i.nowhite(args[0])
+            let a = i.nowhite(args[1])
+            let b = i.nowhite(args[2])
             guard let lhs = Float(a), let rhs = Float(b) else {
-                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                i.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
                 return
             }
             let sum = lhs + rhs
-            self.makeFloat(val: sum, objcName: r)
+            i.makeFloat(val: sum, objcName: r)
         }
-        addFunc("formDif", ["r", "lhs", "rhs"]) { (_, args) in
-            let r = self.nowhite(args[0])
-            let a = self.nowhite(args[1])
-            let b = self.nowhite(args[2])
+        i.addFunc("formDif", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = i.nowhite(args[0])
+            let a = i.nowhite(args[1])
+            let b = i.nowhite(args[2])
             guard let lhs = Float(a), let rhs = Float(b) else {
-                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                i.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
                 return
             }
             let sum = lhs - rhs
-            self.makeFloat(val: sum, objcName: r)
+            i.makeFloat(val: sum, objcName: r)
         }
-        addFunc("formProd", ["r", "lhs", "rhs"]) { (_, args) in
-            let r = self.nowhite(args[0])
-            let a = self.nowhite(args[1])
-            let b = self.nowhite(args[2])
+        i.addFunc("formProd", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = i.nowhite(args[0])
+            let a = i.nowhite(args[1])
+            let b = i.nowhite(args[2])
             guard let lhs = Float(a), let rhs = Float(b) else {
-                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                i.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
                 return
             }
             let sum = lhs * rhs
-            self.makeFloat(val: sum, objcName: r)
+            i.makeFloat(val: sum, objcName: r)
         }
-        addFunc("formQuo", ["r", "lhs", "rhs"]) { (_, args) in
-            let r = self.nowhite(args[0])
-            let a = self.nowhite(args[1])
-            let b = self.nowhite(args[2])
+        i.addFunc("formQuo", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = i.nowhite(args[0])
+            let a = i.nowhite(args[1])
+            let b = i.nowhite(args[2])
             guard let lhs = Float(a), let rhs = Float(b) else {
-                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                i.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
                 return
             }
             let sum = lhs / rhs
-            self.makeFloat(val: sum, objcName: r)
+            i.makeFloat(val: sum, objcName: r)
         }
-        addFunc("formRem", ["r", "lhs", "rhs"]) { (_, args) in
-            let r = self.nowhite(args[0])
-            let a = self.nowhite(args[1])
-            let b = self.nowhite(args[2])
+        i.addFunc("formRem", ["r", "lhs", "rhs"]) { (_, args) in
+            let r = i.nowhite(args[0])
+            let a = i.nowhite(args[1])
+            let b = i.nowhite(args[2])
             guard let lhs = Float(a), let rhs = Float(b) else {
-                self.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
+                i.reportError("Cannot convert value of type *Any to type Float in call to `formSum(lhs: \(a), rhs: \(b))`")
                 return
             }
             let sum = lhs.remainder(dividingBy: rhs)
-            self.makeFloat(val: sum, objcName: r)
+            i.makeFloat(val: sum, objcName: r)
         }
         
-        addFunc("ast_objc_set", ["object", "key", "value"]) { (_, args) in
-            let object = self.nowhite(args[0])
-            let key = self.nowhite(args[1])
-            let value = self.nowhite(args[2])
-            let set = SetStatement(object: self.asToken(object), key: self.asToken(key), value: Expression(rep: .anyToken(self.asToken(value))))
-            self.visit(set)
+        // MARK: Debug Functions
+        i.addFunc("ast_objc_set", ["object", "key", "value"]) { (_, args) in
+            let object = i.nowhite(args[0])
+            let key = i.nowhite(args[1])
+            let value = i.nowhite(args[2])
+            let set = SetStatement(object: i.asToken(object), key: i.asToken(key), value: Expression(rep: .anyToken(i.asToken(value))))
+            i.visit(set)
         }
-        addFunc("ast_objc_set2", ["object", "key", "object2", "value2"]) { (_, args) in
-            let object = self.nowhite(args[0])
-            let key = self.nowhite(args[1])
-            let object2 = self.nowhite(args[2])
-            let value2 = self.nowhite(args[3])
-            let access = AccessStatement(object: self.asToken(object2), key: self.asToken(value2))
-            let set = SetStatement(object: self.asToken(object), key: self.asToken(key), value: Expression(rep: .access(access)))
-            self.visit(set)
+        i.addFunc("ast_objc_set2", ["object", "key", "object2", "value2"]) { (_, args) in
+            let object = i.nowhite(args[0])
+            let key = i.nowhite(args[1])
+            let object2 = i.nowhite(args[2])
+            let value2 = i.nowhite(args[3])
+            let access = AccessStatement(object: i.asToken(object2), key: i.asToken(value2))
+            let set = SetStatement(object: i.asToken(object), key: i.asToken(key), value: Expression(rep: .access(access)))
+            i.visit(set)
         }
         
-        addFunc("fileManagerDesktopGetString", ["dump", "path"]) { (_, args) in
-            let dump = self.nowhite(args[0])
-            let path = self.nowhite(args[1])
+        // MARK: File Functions
+        i.addFunc("fileManagerDesktopGetString", ["dump", "path"]) { (_, args) in
+            let dump = i.nowhite(args[0])
+            let path = i.nowhite(args[1])
             do {
                 let url = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
                 let string = try String(contentsOf: url)
-                let assign = AssignStatement(decl: Token(type: .setDecl, lexme: "set", literal: nil, line: nil), name: self.asToken(dump), expression: Expression(rep: .literal(string)))
-                self.visit(assign)
+                let assign = AssignStatement(decl: Token(type: .setDecl, lexme: "set", literal: nil, line: nil), name: i.asToken(dump), expression: Expression(rep: .literal(string)))
+                i.visit(assign)
             }
             catch {
-                self.reportError(String(describing: error))
+                i.reportError(String(describing: error))
             }
         }
-        addFunc("fileManagerDocumentGetString", ["dump", "path"]) { (_, args) in
-            let dump = self.nowhite(args[0])
-            let path = self.nowhite(args[1])
+        i.addFunc("fileManagerDocumentGetString", ["dump", "path"]) { (_, args) in
+            let dump = i.nowhite(args[0])
+            let path = i.nowhite(args[1])
             do {
                 let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
                 let string = try String(contentsOf: url)
-                let assign = AssignStatement(decl: Token(type: .setDecl, lexme: "set", literal: nil, line: nil), name: self.asToken(dump), expression: Expression(rep: .literal(string)))
-                self.visit(assign)
+                let assign = AssignStatement(decl: Token(type: .setDecl, lexme: "set", literal: nil, line: nil), name: i.asToken(dump), expression: Expression(rep: .literal(string)))
+                i.visit(assign)
             }
             catch {
-                self.reportError(String(describing: error))
+                i.reportError(String(describing: error))
             }
         }
-        addFunc("fileManagerDocumentWriteString", ["text", "path"]) { (_, args) in
-            let text = self.nowhite(args[0])
-            let path = self.nowhite(args[1])
+        i.addFunc("fileManagerDocumentWriteString", ["text", "path"]) { (_, args) in
+            let text = i.nowhite(args[0])
+            let path = i.nowhite(args[1])
             do {
                 let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(path)
                 try text.write(to: url, atomically: false, encoding: .utf8)
             }
             catch {
-                self.reportError(String(describing: error))
+                i.reportError(String(describing: error))
+            }
+        }
+        
+        // MARK: Vector Functions
+        i.addFunc("swizzle4", ["vector", "newLayout"]) { (_, args) in
+            let vector4Name = i.nowhite(args[0])
+            let newLayout = i.nowhite(args[1])
+            guard let vector = i.objects[vector4Name], vector.name == StdLib.Vector4.name.lexme else {
+                i.reportError("Cannot convert value of type *Any to type Vector4 in call to 'swizzle4(vector: \(vector4Name), newLayout: \(newLayout)'")
+                return
+            }
+            let layout = newLayout.prefix(4)
+            guard layout.count == 4 else {
+                i.reportError("Expected a string with a length of 4 characters in call to 'swizzle4(vector: \(vector4Name), newLayout: \(newLayout)'")
+                return
+            }
+            let originalValues = vector.values
+            for character in layout {
+                switch character {
+                case "w":
+                    vector.values["w"] = originalValues["w"]
+                case "x":
+                    vector.values["x"] = originalValues["x"]
+                case "y":
+                    vector.values["y"] = originalValues["y"]
+                case "z":
+                    vector.values["z"] = originalValues["z"]
+                default:
+                    i.reportError("Unexpcted character in layout string, please only use 'w', 'x', 'y', or 'z'")
+                    return
+                }
             }
         }
     }
 }
 
 
-public class Interpreter: Visitor {
+public final class Interpreter: Visitor {
     // MARK: Visitor result
     public typealias Result = [String]?
     
@@ -536,8 +582,6 @@ public class Interpreter: Visitor {
                     return acc
                 }
                 }.reduce(into: [String]()) { (r, n) in
-                    r
-                    n
                     if n == "#" {
                         sep = false
                         if !r.isEmpty {
@@ -573,10 +617,15 @@ public class Interpreter: Visitor {
     }
     
     // MARK: An object
-    public struct Object: CustomStringConvertible {
-        public let name: String
+    public final class Object: CustomStringConvertible {
+        public var name: String
         public var values: [String:String]
-        let stmt: InitStatement
+        public init(name: String, values: [String:String], stmt: ObjectStatement) {
+            self.name = name
+            self.values = values
+            self.stmt = stmt
+        }
+        let stmt: ObjectStatement
         public var description: String {
             return "\(name)(\(values.map({ "\($0.key): \($0.value)" }).joined(separator: ", ")))"
         }
@@ -595,7 +644,7 @@ public class Interpreter: Visitor {
         }
         
         public var printInfo = false
-        public func printToConsole() {
+        public func printToConsole() -> String {
             var des = "Debug("
             if let trigger = trigger {
                 des += "[caller = frame #\(trigger)] "
@@ -606,6 +655,7 @@ public class Interpreter: Visitor {
             }
             des.append(")")
             print(des)
+            return des
         }
     }
     
@@ -617,21 +667,29 @@ public class Interpreter: Visitor {
     var statements = [Statement]()
     public var stackTrace: Bool
     public var alwaysTraverseDebug: Bool = false
-    public var header: Header?
+    weak var stream: Streaming?
+    //    public var header: Header?
     
     // MARK: Init
-    public init(code: String, debug: Bool = false, stackTrace: Bool) throws {
+    public init(code: String, debug: Bool = false, stackTrace: Bool, stream: Streaming?) throws {
         self.code = code
         self.stackTrace = stackTrace
+        self.stream = stream
         configureDefaults()
         let lexer = Lexer(code)
         var tokens = [Token]()
+        let ls = CFAbsoluteTimeGetCurrent()
         lexer.formTokens(&tokens)
+        let le = CFAbsoluteTimeGetCurrent()
         if debug {
+            let tokenString = String(describing: tokens)
+            print("Tokens (\(le - ls) seconds):", tokenString)
+            stream?.write(tokenString)
             print("Tokens:", tokens)
         }
         let parser = Parser(stream: tokens)
         parser.isDebugging = debug
+        let ps = CFAbsoluteTimeGetCurrent()
         do {
             try parser.formStatements(&statements)
         }
@@ -641,13 +699,17 @@ public class Interpreter: Visitor {
                 throw Error(message: words, line: error.line)
             }
         }
+        let pe = CFAbsoluteTimeGetCurrent()
         if debug {
-            print("Statements:", statements)
+            let str = String(describing: statements)
+            print("Statements (\(pe - ps) seconds):", str)
+            stream?.write(str)
+            stream?.write("")
         }
     }
     
     
-    // MARK: Included Library
+    // MARK: Printing Constants
     let printSeperator = ""
     let printTerminator = "\n"
     
@@ -705,12 +767,21 @@ public class Interpreter: Visitor {
         objects[objcName] = object
     }
     
+    func makeFloat(val: Float, objcName: String) {
+        let constr = InitStatement(objectName: StdLib.StdFloat.name, args: [Expression(rep: .literal(val))])
+        makeObject(from: constr, objcName: objcName)
+    }
+    
     func nowhite(_ s: String) -> String {
         var trailing = s.drop(while: { $0 == " " })
         while trailing.last == " " {
             trailing.removeLast()
         }
         return String(trailing)
+    }
+    
+    func asToken(_ str: String) -> Token {
+        return Token(type: .identifier, lexme: str, literal: nil, line: nil)
     }
     
     // MARK: Storage
@@ -790,7 +861,7 @@ public class Interpreter: Visitor {
         let varName = assign.name.lexme
         logMsg("Setting value to the variable '\(varName)'.", ui: "Statement: \(assign)")
         if assign.decl.type == .varDecl && variables[varName] != nil {
-            logMsg("Cannot assign to already initilaized.", ui: "Already created value: \(variables[varName]!)")
+            logMsg("Cannot assign to already initialized.", ui: "Already created value: \(variables[varName]!)")
             reportError("Cannot create the variable \(varName) because it already exists, did you mean to use 'set' instead?")
             return nil
         } else if assign.decl.type == .setDecl && variables[varName] == nil {
@@ -809,8 +880,7 @@ public class Interpreter: Visitor {
             constr.accept(self)
         } else if let lit = rep.literal {
             if let num = lit as? Float {
-                let `init` = InitStatement(objectName: StdLib.StdFloat.name, args: [Expression(rep: .literal(num))])
-                let object = Object(name: "Float", values: ["*value":num.description], stmt: `init`)
+                let object = Object(name: "Float", values: ["*value":num.description], stmt: StdLib.StdFloat)
                 objects[varName] = object
             }
         } else if let access = rep.access {
@@ -819,8 +889,13 @@ public class Interpreter: Visitor {
         return nil
     }
     public func visit(_ set: SetStatement) -> Interpreter.Result {
-        logMsg("Setting and editing an object..")
-        objects[set.object.lexme]?.values[set.key.lexme] = visit(set.value)?.first
+        logMsg("Setting and editing an object.")
+        guard let object = objects[set.object.lexme] else {
+            reportError("Cannot assign to variable because variable does not exist.")
+            return nil
+        }
+        
+        object.values[set.key.lexme] = visit(set.value)?.first
         return nil
     }
     public func visit(_ binary: BinaryExpression) -> Interpreter.Result {
@@ -993,25 +1068,6 @@ public class Interpreter: Visitor {
     // MARK: Execution
     public func execute() throws -> CFAbsoluteTime {
         _resetST()
-        if let importStmts = self.header?.imports {
-            for stmt in importStmts {
-                logMsg("Importing \"\(stmt.file)\"")
-                if let code = stmt.code() {
-                    let l = Lexer(code)
-                    var t = [Token]()
-                    l.formTokens(&t)
-                    var p = Parser(stream: t)
-                    var s = [Statement]()
-                    try p.formStatements(&s)
-                    for stmt in s {
-                        self.visit(stmt: stmt)
-                        if error != nil {
-                            throw Error(message: "Error importing file", line: -2)
-                        }
-                    }
-                }
-            }
-        }
         error = nil
         let start = CFAbsoluteTimeGetCurrent()
         var i = 0
@@ -1043,4 +1099,8 @@ public class Interpreter: Visitor {
     public func clearDebug() {
         info.removeAll()
     }
+}
+
+public protocol Streaming: class, TextOutputStream {
+    func write(_ string: String)
 }
