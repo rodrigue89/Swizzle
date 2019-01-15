@@ -3,7 +3,7 @@
 In the last tutorial, we designed a function that can greet anyone. What if you wanted to extend the function so it also printed their age? Well, you would have to extend the function like this:
 
 ```
-func greet(name, age) {
+func greet(name: String, age: Float) {
     print("Hello,", name, #, "!");
     print("You are now", age, #, ".");
 }
@@ -30,7 +30,7 @@ In this case, the property `name` is referring to the name of the person. If the
 Objects are created using initializers. These look similar to function calls except they have the name of the object as the call name and the properties as parameters.
 
 ```
-var p = Person("Mary", 12)
+var p = Person("Mary", 12);
 ```
 
 You can access properties on an object using a dot ( `.`) followed by the property name.
@@ -44,6 +44,15 @@ With dot notation you can also set property values.
 ```
 p.name = "Norton";
 print("p's name is now", p.name);
+```
+
+Now we have enough knowledge to make our function:
+
+```
+func greet(person: Person) {
+    print("Hello,", person.name, #, "!");
+    print("You are now", person.age, #, ".");
+}
 ```
 
 ## Takeaway
