@@ -80,7 +80,7 @@ Swizzle is not perfect. Or rather only as perfect as the people who help. If you
 ## Versions
 
 The latest feature release is [v0.3](https://github.com/SafelySwift/Swizzle/releases/tag/v0.3.0).
-The latest small release is [v0.3.1](https://github.com/SafelySwift/Swizzle/releases/tag/v0.3.1).
+The latest small release is [v0.3.2](https://github.com/SafelySwift/Swizzle/releases/tag/v0.3.2).
 
 For more information on releases, go [here](https://github.com/SafelySwift/Swizzle/releases).
 
