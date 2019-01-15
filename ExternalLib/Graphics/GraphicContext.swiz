@@ -1,16 +1,20 @@
-objc GraphicCtx {}
-objc NewGraphicCix {}
-
-func selectColor(ctx, color) {
-  ast_objc_set(ctx, "_hue", color.hue);
-  ast_objc_set(ctx, "_sat", color.saturation);
-  ast_objc_set(ctx, "_bri", color.brightness);
-  ast_objc_set(ctx, "_alp", color.alpha);
+objc GraphicCtx {
+  method selectColor(color: Color) {
+    ast_objc_set(self, "_hue", color.hue);
+    ast_objc_set(self, "_sat", color.saturation);
+    ast_objc_set(self, "_bri", color.brightness);
+    ast_objc_set(self, "_alp", color.alpha);
+  }
+  func drawGraphic(graphic: Graphic, point: Point) {
+    ast_objc_set(self, "_text", graphic.text);
+    ast_objc_set(self, "_size", graphic.size);
+    ast_objc_set(self, "_x", point.x);
+    ast_objc_set(self, "_y", point.y);
+  }
 }
 
-func drawGraphic(ctx, graphic, point) {
-  ast_objc_set(ctx, "_text", graphic.text);
-  ast_objc_set(ctx, "_size", graphic.size);
-  ast_objc_set(ctx, "_x", point.x);
-  ast_objc_set(ctx, "_y", point.y);
-}
+typealias NewGraphicCtx = GraphicCtx;
+
+
+
+
