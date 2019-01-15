@@ -55,17 +55,15 @@ But wait, you say. What if I want to greet Bob? Well, we will have to change the
 
 ### Parameters
 
-Go back to the `greet` function. Inside the parentheses, put the word `name`, a colon, and the `String`. Then, change the inside code to look like this:
+Go back to the `greet` function. Inside the parentheses, put the word `name`. Then, change the inside code to look like this:
 
 ```
-func greet(name: String) {
+func greet(name) {
     print("Hello,", name, "!");
 }
 
 greet("Norah");
 ```
-
-The colon and `String` tells the compiler what the type of `name` is. 
 
 Now if we run it, something strange happpens. It prints "Hello, Norah !". Why that extra space? Look at the documentation for the `print` function:
 
