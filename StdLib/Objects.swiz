@@ -8,8 +8,8 @@
 // print(point.y);
 
 objc Point {
-  decl Float x;
-  decl Float y;
+  ref x: Float;
+  ref y: Float;
 }
 
 // Color represents a color in the HSVA color space
@@ -24,10 +24,10 @@ objc Point {
 // print(color.alpha);
 
 objc Color {
-  decl Float hue;
-  decl Float saturation;
-  decl Float brightness;
-  decl Float alpha
+  ref hue: Float;
+  ref saturation: Float;
+  ref brightness: Float;
+  ref alpha: Float;
 }
 
 // Vector4 represents a 4-vector
@@ -41,8 +41,8 @@ objc Color {
 // print(color.y);
 // print(color.z);
 objc Vector4 {
-  decl Float w;
-  decl Float x;
-  decl Float y;
-  decl Float z;
+  ref w: Float;
+  ref x: Float;
+  ref y: Float;
+  ref z: Float;
 }
