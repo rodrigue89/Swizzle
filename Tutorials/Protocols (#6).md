@@ -20,4 +20,4 @@ printName(p); // where `p` is a person
 ## Takeaway
 
 
-[Previous: Objects](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Objects%20(%235).md)
+[Previous: Objects](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Objects%20(%235).md)
