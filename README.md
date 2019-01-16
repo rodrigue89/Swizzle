@@ -2,14 +2,14 @@
 
 ```
 objc Person {
-    ref name: String;
-    red age: Float;
+    decl name;
+    decl age;
 }
 
 var vec = Vector4(1, 2, 3, 4);
 swizzle4(vec);
 
-func eat(person: Person) {
+func eat(person) {
     print("Eating", person.name, #, ". They were only", person.age, "years old.");
 }
 ```
@@ -17,10 +17,10 @@ func eat(person: Person) {
 
 #### Quick Links
 
-- [Overview](https://github.com/SafelySwift/Swizzle/blob/master/README.md#what-is-it)
-- [What is included](https://github.com/SafelySwift/Swizzle/blob/master/README.md#what-is-included)
-- [How to use it](https://github.com/SafelySwift/Swizzle/blob/master/README.md#how-can-i-use-it)
-- [Versions](https://github.com/SafelySwift/Swizzle/blob/master/README.md#versions)
+- [Overview](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/README.md#what-is-it)
+- [What is included](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/README.md#what-is-included)
+- [How to use it](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/README.md#how-can-i-use-it)
+- [Versions](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/README.md#versions)
 - [Documentation](https://github.com/SafelySwift/Swizzle/wiki)
 - [Analytics](https://codebeat.co/projects/github-com-safelyswift-swizzle-master)
 
@@ -45,17 +45,17 @@ Though Swizzle is still in development, I would say it is slightly functional.
 For more, visit the [documentation](https://github.com/SafelySwift/Swizzle/wiki).
 
 **Tutorials:**
-- [Hello World](https://github.com/SafelySwift/Swizzle/blob/gh-pages/Tutorials/Hello%20World%20(%231).md)
-- [Comments](https://github.com/SafelySwift/Swizzle/blob/gh-pages/Tutorials/Comments%20(%232).md)
-- [Variables](https://github.com/SafelySwift/Swizzle/blob/gh-pages/Tutorials/Variables%20(%233).md)
-- [Functions](https://github.com/SafelySwift/Swizzle/blob/gh-pages/Tutorials/Functions%20(%234).md)
-- [Objects](https://github.com/SafelySwift/Swizzle/blob/gh-pages/Tutorials/Objects%20(%235).md)
+- [Hello World](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Hello%20World%20(%231).md)
+- [Comments](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Comments%20(%232).md)
+- [Variables](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Variables%20(%233).md)
+- [Functions](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Functions%20(%234).md)
+- [Objects](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Objects%20(%235).md)
 
 Similar to many languages, Swizzle requires semicolons to terminate statements. Even though this may be annoying, it actually helps make the error messages better so you can write cleaner and safer code. See [this pull request](https://github.com/SafelySwift/Swizzle/pull/36) if you do not want to use semicolons.
 
 ## What is included?
 
-Swizzle comes with an interpreter and debugger, and compiler support should come sooner or later. You may have heard that interpreters are very slow and all that, but Swizzle is written in Swift so there is not much of a performance loss. The code example above takes 1 millisecond to execute, which although is slightly slow is one of the best speeds I have gotten in interpreters. Eventually a bytecode compiler will be built as I mentioned, and speeds are likely going to blow off the roof. Well, not literally.
+Swizzle comes with an interpreter and debugger, and compiler support [is in development](https://github.com/SafelySwift/Swizzle/tree/swizzle-1.0). You may have heard that interpreters are very slow and all that, but Swizzle is written in Swift so there is not much of a performance loss. The code example above takes 1 millisecond to execute, which although is slightly slow is one of the best speeds I have gotten in interpreters. Eventually a bytecode compiler will be built as I mentioned, and speeds are likely going to blow off the roof. Well, not literally.
 
 ## How can I use it?
 
@@ -75,12 +75,12 @@ Swizzle comes with an interpreter and debugger, and compiler support should come
 
 ## Contributing
 
-Swizzle is not perfect. Or rather only as perfect as the people who help. If you want to make Swizzle a better language or want to see a feature added/report a bug, see [the contributing guidelines](https://github.com/SafelySwift/Swizzle/blob/master/CONTRIBUTING.md)!
+Swizzle is not perfect. Or rather only as perfect as the people who help. If you want to make Swizzle a better language or want to see a feature added/report a bug, see [the contributing guidelines](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/CONTRIBUTING.md)!
 
 ## Versions
 
 The latest feature release is [v0.3](https://github.com/SafelySwift/Swizzle/releases/tag/v0.3.0).
-The latest small release is [v0.3.1](https://github.com/SafelySwift/Swizzle/releases/tag/v0.3.1).
+The latest small release is [v0.3.2](https://github.com/SafelySwift/Swizzle/releases/tag/v0.3.2).
 
 For more information on releases, go [here](https://github.com/SafelySwift/Swizzle/releases).
 
@@ -100,10 +100,10 @@ You will need Xcode 9 or higher, and Swift 4 or higher.
 
 ## License 
 
-Swizzle is released under the [MIT License](https://github.com/SafelySwift/Swizzle/blob/master/LICENSE)
+Swizzle is released under the [MIT License](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/LICENSE)
 
 ## Code of Conduct
 
 We will not tolerate unacceptable behavior. If you feel that someone has made an action that is not appropreiate, be sure to contact me at [safelyswift@gmail.com](mailto:safelyswift@gmail.com).
 
-Read the [full document](https://github.com/SafelySwift/Swizzle/blob/master/CODE_OF_CONDUCT.md) for more details.
+Read the [full document](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/CODE_OF_CONDUCT.md) for more details.
