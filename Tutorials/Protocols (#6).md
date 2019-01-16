@@ -2,7 +2,7 @@
 
 In the last tutorial, we designed a `Person` object. This person had a name and an age.
 
-Let's create a simpel function that prints the name of a person
+Let's create a simple function that prints the name of a person
 
 ```
 func printName(x: Person) {
