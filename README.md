@@ -55,7 +55,7 @@ Similar to many languages, Swizzle requires semicolons to terminate statements. 
 
 ## What is included?
 
-Swizzle comes with an interpreter and debugger, and compiler support should come sooner or later. You may have heard that interpreters are very slow and all that, but Swizzle is written in Swift so there is not much of a performance loss. The code example above takes 1 millisecond to execute, which although is slightly slow is one of the best speeds I have gotten in interpreters. Eventually a bytecode compiler will be built as I mentioned, and speeds are likely going to blow off the roof. Well, not literally.
+Swizzle comes with an interpreter and debugger, and compiler support [is in development](https://github.com/SafelySwift/Swizzle/tree/swizzle-1.0). You may have heard that interpreters are very slow and all that, but Swizzle is written in Swift so there is not much of a performance loss. The code example above takes 1 millisecond to execute, which although is slightly slow is one of the best speeds I have gotten in interpreters. Eventually a bytecode compiler will be built as I mentioned, and speeds are likely going to blow off the roof. Well, not literally.
 
 ## How can I use it?
 
