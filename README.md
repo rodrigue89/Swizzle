@@ -2,14 +2,14 @@
 
 ```
 objc Person {
-    decl name;
-    decl age;
+    public ref name: String;
+    public ref age: Float;
 }
 
 var vec = Vector4(1, 2, 3, 4);
 swizzle4(vec);
 
-func eat(person) {
+func eat(person: Person) {
     print("Eating", person.name, #, ". They were only", person.age, "years old.");
 }
 ```
@@ -56,19 +56,7 @@ Swizzle comes with an interpreter and debugger, and compiler support [is in deve
 
 ## How can I use it?
 
-### There are 2 ways to use it
-
-1. Use the app to run, edit and make Swizzle files _[RECOMMENDED]_
-
-    URL: [https://github.com/SafelySwift/SwizzleApp](https://github.com/SafelySwift/SwizzleApp)
-
-    ![](https://github.com/SafelySwift/Swizzle/blob/master/Images/Screen%20Shot%202019-01-06%20at%2012.02.03%20AM.png)
-    
-    Though interpreters are slow, the app handles them with insanely fast speed.
-
-2. Clone or download the directory to your computer and add it to your Swift project.
-
-  ![](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Images/Screen%20Shot%202018-12-17%20at%209.20.42%20PM.png)
+You cannot uae it as of now because the aoitce xode is still in actuve developemnt.
 
 ## Contributing
 
@@ -84,7 +72,7 @@ For more information on releases, go [here](https://github.com/SafelySwift/Swizz
 ## Beyond Swizzle
 
 - My [reddit](https://www.reddit.com/user/SafelySwift) is a great place to chat about ideas or discuss coding
-- The [Crafting Interpreters](http://craftinginterpreters.com) book is really helpful
+- The [Crafting Interpreters](http://craftinginterpreters.com) book is a really helpful reference.
 
 ## Requirements
 
