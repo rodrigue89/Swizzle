@@ -24,6 +24,8 @@ func eat(person) {
 - [Documentation](https://github.com/SafelySwift/Swizzle/wiki)
 - [Analytics](https://codebeat.co/projects/github-com-safelyswift-swizzle-master)
 
+**IMPORTANT: We are hard at work [here](https://github.com/SafelySwift/Swizzle/tree/swizzle-1.0), so this branch is going to be discontinued**
+
 ## What is it?
 
 Swizzle is a programming language that is all new, yet all fun. Swizzle has a syntax that is similar to other popular programming languages. It is simple to write code and simpler to run it.
