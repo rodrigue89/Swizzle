@@ -403,8 +403,7 @@ public final class StdLib {
             let object = i.nowhite(args[0])
             let key = i.nowhite(args[1])
             let value = i.nowhite(args[2])
-            let set = SetStatement(object: i.asToken(object), key: i.asToken(key), value: Expression(rep: .anyToken(i.asToken(value))))
-            i.visit(set)
+            i.objects[object]?.values[key] = value
         }
         i.addFunc("ast_objc_set2", ["object", "key", "object2", "value2"]) { (_, args) in
             let object = i.nowhite(args[0])
