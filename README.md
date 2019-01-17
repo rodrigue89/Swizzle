@@ -109,3 +109,7 @@ Swizzle is released under the [MIT License](https://github.com/SafelySwift/Swizz
 We will not tolerate unacceptable behavior. If you feel that someone has made an action that is not appropreiate, be sure to contact me at [safelyswift@gmail.com](mailto:safelyswift@gmail.com).
 
 Read the [full document](https://github.com/SafelySwift/Swizzle/blob/master/CODE_OF_CONDUCT.md) for more details.
+
+## Notes
+
+- The interpreter is dynamically typed, while the compiler will be statically typed.
