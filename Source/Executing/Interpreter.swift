@@ -410,9 +410,7 @@ public final class StdLib {
             let key = i.nowhite(args[1])
             let object2 = i.nowhite(args[2])
             let value2 = i.nowhite(args[3])
-            let access = AccessStatement(object: i.asToken(object2), key: i.asToken(value2))
-            let set = SetStatement(object: i.asToken(object), key: i.asToken(key), value: Expression(rep: .access(access)))
-            i.visit(set)
+             i.objects[object]?.values[key] = i.objects[object2]?.values[key2]
         }
         
         // MARK: File Functions
