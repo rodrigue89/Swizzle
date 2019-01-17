@@ -26,21 +26,18 @@ func eat(person) {
 
 ## What is it?
 
-Swizzle is a programming language that is all new, yet all fun. Swizzle has a syntax that is similar to other popular programming languages. It is simple to write code and simpler to run it.
+Swizzle is a fast, static typed programming language that is all new and all fun. Swizzle has a syntax that is similar to other popular programming languages.
 
 Though Swizzle is still in development, I would say it is slightly functional.
 
-##### Swizzle allows:
-
-- Custom objects
+Here is a (small) list of Swizzle's functionality.
+- Variables and constants
 - User defined functions
-- Variables
-
-##### Still in development
-
 - Control flow (if, while, for)
 - Operators
-- Extending
+- Custom objects
+- Extension of objects
+- Protocols
 
 For more, visit the [documentation](https://github.com/SafelySwift/Swizzle/wiki).
 
@@ -71,7 +68,7 @@ Swizzle comes with an interpreter and debugger, and compiler support [is in deve
 
 2. Clone or download the directory to your computer and add it to your Swift project.
 
-  ![](https://github.com/SafelySwift/Swizzle/blob/master/Images/Screen%20Shot%202018-12-17%20at%209.20.42%20PM.png)
+  ![](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Images/Screen%20Shot%202018-12-17%20at%209.20.42%20PM.png)
 
 ## Contributing
 
