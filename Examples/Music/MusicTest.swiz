@@ -1,4 +1,6 @@
-objc Note {
+import Music;
+
+bjc Note {
   decl freq;
 }
 
