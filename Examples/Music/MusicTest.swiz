@@ -1,19 +1,16 @@
 import Music;
+var main = MusicManager();
 
-bjc Note {
-  decl freq;
+objc Note {
+  ref freq: Hertz; // typealias Hertz = Float;
+  static init(name: String, oct: Octave) -> Note {
+    return Note(main::frequencyFromLocalized(name, oct));
+  }
+  func play(duration: Time, delay: Time) {
+    main::defaultAttackAndDecay();
+    main::playFreq(self.freq, duration, delay);
+  }
 }
 
-func constrNote(note, name, oct) {
-  var f = "";
-  musicGetFrequencyFromLocalized("f", name, oct);
-  note.freq = f;
-}
-func play(note, duration, delay) {
-  musicSetAttackToDefaults();
-  musicPlayFreq(note.freq, duration, delay);
-}
-
-var note = Note("nil");
-constrNote(note, "C", 5);
-play(note, 1, 0);
+var note = Note.init("A", 4);
+note.play(1, 0);
