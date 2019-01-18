@@ -1,0 +1,15 @@
+protocol Named {
+  ref name: Float;
+}
+
+objc Person {
+  public ref name: String;
+  public ref age: Float;
+}
+
+func greet(p: Named) {
+  print("Hello,", p.name);
+}
+
+var person = Person("Tom", 99);
+greet(p);
