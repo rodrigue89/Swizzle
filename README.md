@@ -1,4 +1,6 @@
-![](https://github.com/SafelySwift/Swizzle/blob/master/Images/Swizzle%20Logo%20Wide.png)
+<p align="center">
+<img src="https://raw.githubusercontent.com/SafelySwift/Swizzle/master/Images/Swizzle%20Logo%20Wide%20New.png" alt="Swizzle Banner">
+</p>
 
 ```
 objc Person {
