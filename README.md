@@ -26,7 +26,7 @@ func eat(person) {
 - [Documentation](https://github.com/SafelySwift/Swizzle/wiki)
 - [Analytics](https://codebeat.co/projects/github-com-safelyswift-swizzle-master)
 
-**IMPORTANT: We are hard at work [here](https://github.com/SafelySwift/Swizzle/tree/swizzle-1.0), so this branch is going to be discontinued**
+**IMPORTANT: We are hard at work [here](https://github.com/SafelySwift/Swizzle/tree/swizzle-1.0), so this branch is going to be dormant for a while**
 
 ## What is it?
 
