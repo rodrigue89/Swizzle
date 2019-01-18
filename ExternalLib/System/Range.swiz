@@ -1,0 +1,24 @@
+objc Range: Sequence {
+  ref lowerBound: Int;
+  ref upperBound: Int;
+  func contains(value: Int) -> Bool {
+    return (value >= self.lowerBound) && (value < self.upperBound)
+  }
+  func iterator() -> _RangeIterator {
+    return _RangeIterator(self.lowerBound, self, false);
+  }
+}
+
+objc _RangeIterator: Iterator {
+  private ref val: Int;
+  private ref r: Range;
+  private ref finished: Bool;
+  func next() -> Any {
+    var temp = val;
+    val.next()
+    if val == self.r.upperBound {
+      self.finished = true;
+    }
+    return temp;
+  }
+}
