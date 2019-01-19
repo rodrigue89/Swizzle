@@ -1,5 +1,2 @@
 language: swift
 os: osx
-rvm:
- - 4.2
- - swift
