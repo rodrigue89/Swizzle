@@ -1,4 +1,4 @@
-objc GraphicCtx {
+struct GraphicCtx {
   method selectColor(color: Color) {
     ast_objc_set(self, "_hue", color.hue);
     ast_objc_set(self, "_sat", color.saturation);
