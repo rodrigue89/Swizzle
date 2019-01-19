@@ -85,4 +85,4 @@ Now, it should run as expected.
 
 Functions are very useful to enscapulate behavior. They can make code cleaner and easier to read. They also help break down tasks into smaller tasks.
 
-[Previous: Variables](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Variables%20(%233).md) | [Next: Structures](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Structure%20(%235).md)
+[Previous: Variables](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Variables%20(%233).md) | [Next: Structures](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Structures%20(%235).md)
