@@ -3,7 +3,7 @@
 </p>
 
 ```
-objc Person {
+struct Person {
     public ref name: String;
     public ref age: Float;
 }
@@ -38,8 +38,8 @@ Here is a (small) list of Swizzle's functionality.
 - User defined functions
 - Control flow (if, while, for)
 - Operators
-- Custom objects
-- Extension of objects
+- Custom structures
+- Extension of structures
 - Protocols
 
 For more, visit the [documentation](https://github.com/SafelySwift/Swizzle/wiki).
@@ -49,7 +49,7 @@ For more, visit the [documentation](https://github.com/SafelySwift/Swizzle/wiki)
 - [Comments](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Comments%20(%232).md)
 - [Variables](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Variables%20(%233).md)
 - [Functions](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Functions%20(%234).md)
-- [Objects](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Objects%20(%235).md)
+- [Structures](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Structures%20(%235).md)
 
 Similar to many languages, Swizzle requires semicolons to terminate statements. Even though this may be annoying, it actually helps make the error messages better so you can write cleaner and safer code. See [this pull request](https://github.com/SafelySwift/Swizzle/pull/36) if you do not want to use semicolons.
 
