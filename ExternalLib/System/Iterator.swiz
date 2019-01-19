@@ -1,4 +1,4 @@
-protocol Iterator {
+protocol Iterator<E> {
   ref finished: Bool;
-  func next() -> Any;
+  func next() -> E;
 }
