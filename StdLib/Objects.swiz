@@ -7,7 +7,7 @@
 // print(point.x);
 // print(point.y);
 
-objc Point {
+struct Point {
   ref x: Float;
   ref y: Float;
 }
@@ -23,7 +23,7 @@ objc Point {
 // print(color.brightness);
 // print(color.alpha);
 
-objc Color {
+struct Color {
   ref hue: Float;
   ref saturation: Float;
   ref brightness: Float;
@@ -40,7 +40,7 @@ objc Color {
 // print(color.x);
 // print(color.y);
 // print(color.z);
-objc Vector4 {
+struct Vector4 {
   ref w: Float;
   ref x: Float;
   ref y: Float;
