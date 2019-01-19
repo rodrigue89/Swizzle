@@ -1,4 +1,4 @@
-objc _GraphicStorage {
+struct _GraphicStorage {
   private ref font: String;
   method configure(_g: Graphic) {
     _g._meta = self;
@@ -19,7 +19,7 @@ objc _GraphicStorage {
   }
 }
 
-objc Graphic {
+struct Graphic {
   ref text: String;
   ref size: Float;
   internal _meta: _GraphicStorage;
