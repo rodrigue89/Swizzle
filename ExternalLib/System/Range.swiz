@@ -1,4 +1,4 @@
-objc Range: Sequence {
+struct Range: Sequence {
   ref lowerBound: Int;
   ref upperBound: Int;
   func contains(value: Int) -> Bool {
@@ -9,7 +9,7 @@ objc Range: Sequence {
   }
 }
 
-objc _RangeIterator: Iterator {
+struct _RangeIterator: Iterator {
   private ref val: Int;
   private ref r: Range;
   private ref finished: Bool;
