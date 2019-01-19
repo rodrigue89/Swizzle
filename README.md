@@ -1,6 +1,7 @@
 <p align="center">
 <img src="https://raw.githubusercontent.com/SafelySwift/Swizzle/master/Images/Swizzle%20Logo%20Wide%20New.png" alt="Swizzle Banner">
 </p>
+
 ```
 objc Person {
     public ref name: String;
@@ -14,6 +15,7 @@ func eat(person: Person) {
     print("Eating", person.name, #, ". They were only", person.age, "years old.");
 }
 ```
+
 > Some code in Swizzle
 
 #### Quick Links
@@ -72,8 +74,7 @@ For more information on releases, go [here](https://github.com/SafelySwift/Swizz
 
 ## Beyond Swizzle
 
-- My [reddit](https://www.reddit.com/user/SafelySwift) is a great place to chat about ideas or discuss coding
-- The [Crafting Interpreters](http://craftinginterpreters.com) book is a really helpful reference.
+- My [reddit](https://www.reddit.com/user/SafelySwift) is a great place to chat about ideas or discuss coding. There is also the dedicated [subreddit](https://www.reddit.com/r/swizzle_lang/).- The [Crafting Interpreters](http://craftinginterpreters.com) book is a really helpful reference.
 
 ## Requirements
 
