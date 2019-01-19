@@ -59,7 +59,7 @@ Swizzle comes with an interpreter and debugger, and compiler support [is in deve
 
 ## How can I use it?
 
-You cannot uae it as of now because the aoitce xode is still in actuve developemnt.
+You cannot use it as of now because the source code is still in active development.
 
 ## Contributing
 
