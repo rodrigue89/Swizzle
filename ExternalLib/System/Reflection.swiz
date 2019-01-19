@@ -1,3 +1,8 @@
 protocol Reflectable {
   ref mirror: Mirror;
 }
+
+struct Mirror {
+  ref value: Any;
+  ref children: Dict<String, Any>;
+}
