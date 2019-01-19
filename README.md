@@ -93,7 +93,7 @@ For more information on releases, go [here](https://github.com/SafelySwift/Swizz
 
 ## Beyond Swizzle
 
-- My [reddit](https://www.reddit.com/user/SafelySwift) is a great place to chat about ideas or discuss coding
+- My [reddit](https://www.reddit.com/user/SafelySwift) is a great place to chat about ideas or discuss coding. There is also the dedicated [subreddit](https://www.reddit.com/r/swizzle_lang/).
 - The [Crafting Interpreters](http://craftinginterpreters.com) book is really helpful
 
 ## Requirements
