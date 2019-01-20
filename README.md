@@ -37,6 +37,10 @@ Swizzle is a programming language that is all new, yet all fun. Swizzle has a sy
 
 Though Swizzle is still in development, I would say it is slightly functional.
 
+## The Goal
+
+Swizzle attempts to fill in a niche for graphics programming. There are not many simple, powerful and fast compiled langauges for this purpose. Swizzle hopes to succeed in all those categories. 
+
 ##### Swizzle allows:
 
 - Custom objects
