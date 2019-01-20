@@ -25,7 +25,7 @@ func eat(person: Person) {
 - [How to use it](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/README.md#how-can-i-use-it)
 - [Versions](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/README.md#versions)
 - [Documentation](https://github.com/SafelySwift/Swizzle/wiki)
-- [Analytics](https://codebeat.co/projects/github-com-safelyswift-swizzle-master)
+- [Analytics](https://codebeat.co/projects/github-com-safelyswift-swizzle-swizzle-1.0)
 
 ## What is it?
 
