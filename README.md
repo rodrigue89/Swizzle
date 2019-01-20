@@ -44,6 +44,10 @@ Here is a (small) list of Swizzle's functionality.
 
 For more, visit the [documentation](https://github.com/SafelySwift/Swizzle/wiki).
 
+## The Goal
+
+Swizzle attempts to fill in a niche for graphics programming. There are not many simple, powerful and fast compiled langauges for this purpose. Swizzle hopes to succeed in all those categories. 
+
 **Tutorials:**
 - [Hello World](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Hello%20World%20(%231).md)
 - [Comments](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Comments%20(%232).md)
