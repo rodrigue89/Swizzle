@@ -29,6 +29,7 @@ blockquote {
 web_content {
   max-width: 800px;
   margin: auto;
+  padding: 10px;
 }
 
 a {
