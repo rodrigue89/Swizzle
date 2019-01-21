@@ -26,6 +26,11 @@ blockquote {
   padding-left: 8px;
 }
 
+web_content {
+  max-width: 800px;
+  margin: auto;
+}
+
 a {
   text-color: #0000fd;
   text-decoration: none;
