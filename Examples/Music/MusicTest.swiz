@@ -1,7 +1,7 @@
 import Music;
 var main = MusicManager();
 
-objc Note {
+struct Note {
   ref freq: Hertz; // typealias Hertz = Float;
   static init(name: String, oct: Octave) -> Note {
     return Note(main::frequencyFromLocalized(name, oct));
@@ -13,4 +13,4 @@ objc Note {
 }
 
 var note = Note.init("A", 4);
-note.play(1, 0);
+note::play(1, 0);
