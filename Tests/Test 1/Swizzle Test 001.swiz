@@ -1,4 +1,0 @@
-// This tests variables
-
-var number = 1;
-print(number); // Should print "1.0"
