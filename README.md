@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://raw.githubusercontent.com/SafelySwift/Swizzle/master/Images/Swizzle%20Logo%20Wide%20New.png" alt="Swizzle Banner">
+<img src="https://raw.githubusercontent.com/SafelySwift/Swizzle/prerelease/Images/Swizzle%20Logo%20Wide%20New.png" alt="Swizzle Banner">
 </p>
 
 <!--![](https://travis-ci.com/SafelySwift/Swizzle.svg?branch=master)-->
@@ -22,12 +22,11 @@ func eat(person) {
 
 #### Quick Links
 
-- [Overview](https://github.com/SafelySwift/Swizzle/blob/master/README.md#what-is-it)
-- [What is included](https://github.com/SafelySwift/Swizzle/blob/master/README.md#what-is-included)
-- [How to use it](https://github.com/SafelySwift/Swizzle/blob/master/README.md#how-can-i-use-it)
-- [Versions](https://github.com/SafelySwift/Swizzle/blob/master/README.md#versions)
+- [Overview](https://github.com/SafelySwift/Swizzle/blob/prerelease/README.md#what-is-it)
+- [What is included](https://github.com/SafelySwift/Swizzle/blob/prerelease/README.md#what-is-included)
+- [How to use it](https://github.com/SafelySwift/Swizzle/blob/prerelease/README.md#how-can-i-use-it)
+- [Versions](https://github.com/SafelySwift/Swizzle/blob/prerelease/README.md#versions)
 - [Documentation](https://github.com/SafelySwift/Swizzle/wiki)
-- [Analytics](https://codebeat.co/projects/github-com-safelyswift-swizzle-master)
 
 **IMPORTANT: We are hard at work [here](https://github.com/SafelySwift/Swizzle/tree/swizzle-1.0), so this branch is going to be dormant for a while**
 
@@ -56,11 +55,11 @@ Swizzle attempts to fill in a niche for graphics programming. There are not many
 For more, visit the [documentation](https://github.com/SafelySwift/Swizzle/wiki).
 
 **Tutorials:**
-- [Hello World](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Hello%20World%20(%231).md)
-- [Comments](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Comments%20(%232).md)
-- [Variables](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Variables%20(%233).md)
-- [Functions](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Functions%20(%234).md)
-- [Objects](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Objects%20(%235).md)
+- [Hello World](https://github.com/SafelySwift/Swizzle/blob/prerelease/Tutorials/Hello%20World%20(%231).md)
+- [Comments](https://github.com/SafelySwift/Swizzle/blob/prerelease/Tutorials/Comments%20(%232).md)
+- [Variables](https://github.com/SafelySwift/Swizzle/blob/prerelease/Tutorials/Variables%20(%233).md)
+- [Functions](https://github.com/SafelySwift/Swizzle/blob/prerelease/Tutorials/Functions%20(%234).md)
+- [Objects](https://github.com/SafelySwift/Swizzle/blob/prerelease/Tutorials/Objects%20(%235).md)
 
 Similar to many languages, Swizzle requires semicolons to terminate statements. Even though this may be annoying, it actually helps make the error messages better so you can write cleaner and safer code. See [this pull request](https://github.com/SafelySwift/Swizzle/pull/36) if you do not want to use semicolons.
 
@@ -76,17 +75,17 @@ Swizzle comes with an interpreter and debugger, and compiler support [is in deve
 
     URL: [https://github.com/SafelySwift/SwizzleApp](https://github.com/SafelySwift/SwizzleApp)
 
-    ![](https://github.com/SafelySwift/Swizzle/blob/master/Images/Screen%20Shot%202019-01-06%20at%2012.02.03%20AM.png)
+    ![](https://github.com/SafelySwift/Swizzle/blob/prerelease/Images/Screen%20Shot%202019-01-06%20at%2012.02.03%20AM.png)
     
     Though interpreters are slow, the app handles them with insanely fast speed.
 
 2. Clone or download the directory to your computer and add it to your Swift project.
 
-  ![](https://github.com/SafelySwift/Swizzle/blob/master/Images/Screen%20Shot%202018-12-17%20at%209.20.42%20PM.png)
+  ![](https://github.com/SafelySwift/Swizzle/blob/prerelease/Images/Screen%20Shot%202018-12-17%20at%209.20.42%20PM.png)
 
 ## Contributing
 
-Swizzle is not perfect. Or rather only as perfect as the people who help. If you want to make Swizzle a better language or want to see a feature added/report a bug, see [the contributing guidelines](https://github.com/SafelySwift/Swizzle/blob/master/CONTRIBUTING.md)!
+Swizzle is not perfect. Or rather only as perfect as the people who help. If you want to make Swizzle a better language or want to see a feature added/report a bug, see [the contributing guidelines](https://github.com/SafelySwift/Swizzle/blob/prerelease/CONTRIBUTING.md)!
 
 ## Versions
 
@@ -111,13 +110,13 @@ You will need Xcode 9 or higher, and Swift 4 or higher.
 
 ## License 
 
-Swizzle is released under the [MIT License](https://github.com/SafelySwift/Swizzle/blob/master/LICENSE)
+Swizzle is released under the [MIT License](https://github.com/SafelySwift/Swizzle/blob/prerelease/LICENSE)
 
 ## Code of Conduct
 
 We will not tolerate unacceptable behavior. If you feel that someone has made an action that is not appropreiate, be sure to contact me at [safelyswift@gmail.com](mailto:safelyswift@gmail.com).
 
-Read the [full document](https://github.com/SafelySwift/Swizzle/blob/master/CODE_OF_CONDUCT.md) for more details.
+Read the [full document](https://github.com/SafelySwift/Swizzle/blob/prerelease/CODE_OF_CONDUCT.md) for more details.
 
 ## Notes
 
