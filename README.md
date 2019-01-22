@@ -12,7 +12,7 @@ objc Person {
 }
 
 var vec = Vector4(1, 2, 3, 4);
-swizzle4(vec);
+swizzle4(vec, "wxxy");
 
 func eat(person) {
     print("Eating", person.name, #, ". They were only", person.age, "years old.");
