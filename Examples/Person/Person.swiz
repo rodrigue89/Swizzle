@@ -2,7 +2,7 @@ protocol Named {
   ref name: Float;
 }
 
-objc Person {
+struct Person {
   public ref name: String;
   public ref age: Float;
 }
