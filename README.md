@@ -27,6 +27,21 @@ func eat(person: Person) {
 - [Documentation](https://github.com/SafelySwift/Swizzle/wiki)
 - [Analytics](https://codebeat.co/projects/github-com-safelyswift-swizzle-swizzle-1.0)
 
+## Roadmap
+- Basic
+  - [x] Implement lexer
+    - [ ] Speed up lexer
+  - [x] Parsing 
+  - [x] Basic scope resolution
+- Analysis
+  - [ ] Static type checking
+- Compiling
+  - [ ] Compile time custom phases
+  - [ ] Building the IR
+- Executing
+  - [x] Stage 2 Compiler
+  - [x] Virtual Machine
+
 ## What is it?
 
 Swizzle is a fast, static typed programming language that is all new and all fun. Swizzle has a syntax that is similar to other popular programming languages.
@@ -84,11 +99,6 @@ For more information on releases, go [here](https://github.com/SafelySwift/Swizz
 ## Requirements
 
 You will need Xcode 9 or higher, and Swift 4 or higher.
-
-## Analytics
-
-- GPA: 2.87
-- Lines: 1745
 
 ## License 
 
