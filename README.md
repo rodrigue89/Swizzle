@@ -76,10 +76,9 @@ Similar to many languages, Swizzle requires semicolons to terminate statements. 
 
 Swizzle comes with an compiler and virtual machine. It uses 2 stages in compiling. One stage is for turning the AST into an IR. This is where Swizzle checka to make sure you did not write anything wrong. The next stage is turning the IR into bytecode, which can be interpreted by the vm. Swizzle is written in Swift so there is not much of a performance loss in all these stages.
 
-
 ## How can I use it?
 
-You cannot use it as of now because the source code is still in active development.
+You cannot use it as of now because the source code is still in active development. The source code is not up here because of [this issue](https://github.com/desktop/desktop/issues/6624).
 
 ## Contributing
 
