@@ -1,5 +1,5 @@
 protocol Named {
-  ref name: Float;
+  ref name: String;
 }
 
 struct Person {
