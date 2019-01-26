@@ -1,0 +1,48 @@
+// Point represents a position on a two-dimensional plane
+//
+// Creating a point:
+// var point = Point(0, 0);
+//
+// Accessing the x and y coordinates of a point:
+// print(point.x);
+// print(point.y);
+
+objc Point {
+  decl Float x;
+  decl Float y;
+}
+
+// Color represents a color in the HSVA color space
+//
+// Creating a color:
+// var color = Color(1, 1, 1, 1);
+//
+// Accessing the hue, saturation, brightness and alpha properties of a color:
+// print(color.hue);
+// print(color.saturation);
+// print(color.brightness);
+// print(color.alpha);
+
+objc Color {
+  decl Float hue;
+  decl Float saturation;
+  decl Float brightness;
+  decl Float alpha
+}
+
+// Vector4 represents a 4-vector
+//
+// Creating a 4-vector:
+// var vector = Vector4(5, -9.4, 0.004, 199);
+//
+// Accessing the w, x, y and z scalars of a 4-vector:
+// print(color.w);
+// print(color.x);
+// print(color.y);
+// print(color.z);
+objc Vector4 {
+  decl Float w;
+  decl Float x;
+  decl Float y;
+  decl Float z;
+}

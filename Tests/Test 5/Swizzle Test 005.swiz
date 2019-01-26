@@ -1,0 +1,11 @@
+// This tests "before-declaration" access
+// The test should not work
+
+func do() {
+	set i = 0;
+}
+
+var i = 1;
+print(i);
+do();
+print(i)

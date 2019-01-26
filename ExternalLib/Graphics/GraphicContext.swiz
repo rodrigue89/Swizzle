@@ -1,0 +1,16 @@
+objc GraphicCtx {}
+objc NewGraphicCix {}
+
+func selectColor(ctx, color) {
+  ast_objc_set(ctx, "_hue", color.hue);
+  ast_objc_set(ctx, "_sat", color.saturation);
+  ast_objc_set(ctx, "_bri", color.brightness);
+  ast_objc_set(ctx, "_alp", color.alpha);
+}
+
+func drawGraphic(ctx, graphic, point) {
+  ast_objc_set(ctx, "_text", graphic.text);
+  ast_objc_set(ctx, "_size", graphic.size);
+  ast_objc_set(ctx, "_x", point.x);
+  ast_objc_set(ctx, "_y", point.y);
+}

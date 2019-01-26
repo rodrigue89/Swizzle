@@ -1,0 +1,17 @@
+objc Note {
+  decl freq;
+}
+
+func constrNote(note, name, oct) {
+  var f = "";
+  musicGetFrequencyFromLocalized("f", name, oct);
+  note.freq = f;
+}
+func play(note, duration, delay) {
+  musicSetAttackToDefaults();
+  musicPlayFreq(note.freq, duration, delay);
+}
+
+var note = Note("nil");
+constrNote(note, "C", 5);
+play(note, 1, 0);
