@@ -1,3 +1,0 @@
-# Tutorial #x: Y
-
-## Takeaway

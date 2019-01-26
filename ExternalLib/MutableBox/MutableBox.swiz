@@ -1,3 +1,0 @@
-objc MutableBox {
-  decl Any value;
-}

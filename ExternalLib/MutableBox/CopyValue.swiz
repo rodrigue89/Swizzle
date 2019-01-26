@@ -1,3 +1,0 @@
-func copyValue(dest, box) {
-  ast_objc_set2(dest, "value", box, "value");
-}
