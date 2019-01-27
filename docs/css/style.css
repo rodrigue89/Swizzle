@@ -1,3 +1,7 @@
+--root {
+ --code_backround: #F5F5F5;
+}
+
 html, body {
   background-color: #ffffff;
 }
@@ -15,6 +19,9 @@ code {
   color: #000000;
   font-family: "Menlo Regular", Menlo, Courier, Monaco;
   overflow: scroll;
+  border-style: solid;
+  border-width: 7.5px;
+  border-color: var(--code_background);
 }
 
 blockquote {
@@ -23,7 +30,7 @@ blockquote {
   margin-left: 32px;
   font-family:"Helvetica Heue", Helvetica;
   border-left: 4px solid #CCC;
-  padding-left: 8px;
+  padding-left: 2.5px;
 }
 
 web_content {
@@ -52,7 +59,7 @@ logo {
 }
   
 pre {
-  background-color: #F5F5F5;
+  background-color: var(--code_background);
   white-space: pre-wrap;
   word-wrap: break-word;
 }
