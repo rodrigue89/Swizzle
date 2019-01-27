@@ -1,3 +1,5 @@
+<!--
+
 # Tutorial #5: Objects
 
 In the last tutorial, we designed a function that can greet anyone. What if you wanted to extend the function so it also printed their age? Well, you would have to extend the function like this:
@@ -53,3 +55,5 @@ print("p's name is now", p.name);
 Objects are useful for grouping related things and make code easier to understand by providing context.
 
 [Previous: Functions](https://github.com/SafelySwift/Swizzle/blob/master/Tutorials/Functions%20(%234).md)
+
+-->
