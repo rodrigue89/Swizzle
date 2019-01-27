@@ -1,0 +1,672 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		581C5F4421F8095B00CDFFED /* SwizzleSrc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 581C5F4121F8095700CDFFED /* SwizzleSrc.framework */; };
+		581C5F4521F8095B00CDFFED /* SwizzleSrc.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 581C5F4121F8095700CDFFED /* SwizzleSrc.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		584821FD21FAC4D10020A06D /* Strings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 584821FC21FAC4D10020A06D /* Strings.strings */; };
+		58C8871A21EC0A1D00582755 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C8871921EC0A1D00582755 /* AppDelegate.swift */; };
+		58C8871C21EC0A1D00582755 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C8871B21EC0A1D00582755 /* ViewController.swift */; };
+		58C8871E21EC0A1E00582755 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58C8871D21EC0A1E00582755 /* Assets.xcassets */; };
+		58C8872121EC0A1E00582755 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58C8871F21EC0A1E00582755 /* Main.storyboard */; };
+		58C8872D21EC0A1E00582755 /* Swizzle___CompilingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C8872C21EC0A1E00582755 /* Swizzle___CompilingTests.swift */; };
+		58C8873821EC0A1E00582755 /* Swizzle___CompilingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C8873721EC0A1E00582755 /* Swizzle___CompilingUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		581C5F4021F8095700CDFFED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 581C5F3B21F8095700CDFFED /* SwizzleSrc.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 580F30B221F5292A00C34F3B;
+			remoteInfo = SwizzleSrc;
+		};
+		581C5F4221F8095700CDFFED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 581C5F3B21F8095700CDFFED /* SwizzleSrc.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 580F30BB21F5292A00C34F3B;
+			remoteInfo = SwizzleSrcTests;
+		};
+		581C5F4621F8095B00CDFFED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 581C5F3B21F8095700CDFFED /* SwizzleSrc.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 580F30B121F5292A00C34F3B;
+			remoteInfo = SwizzleSrc;
+		};
+		58C8872921EC0A1E00582755 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 58C8870E21EC0A1D00582755 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 58C8871521EC0A1D00582755;
+			remoteInfo = "Swizzle - Compiling";
+		};
+		58C8873421EC0A1E00582755 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 58C8870E21EC0A1D00582755 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 58C8871521EC0A1D00582755;
+			remoteInfo = "Swizzle - Compiling";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		581C5F3A21F8092E00CDFFED /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				581C5F4521F8095B00CDFFED /* SwizzleSrc.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		581C5F3B21F8095700CDFFED /* SwizzleSrc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwizzleSrc.xcodeproj; path = ../../Code/SwizzleSrc/SwizzleSrc.xcodeproj; sourceTree = "<group>"; };
+		584821FC21FAC4D10020A06D /* Strings.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Strings.strings; sourceTree = "<group>"; };
+		58C8871621EC0A1D00582755 /* Swizzle - Compiling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swizzle - Compiling.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		58C8871921EC0A1D00582755 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		58C8871B21EC0A1D00582755 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		58C8871D21EC0A1E00582755 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		58C8872021EC0A1E00582755 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		58C8872221EC0A1E00582755 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		58C8872321EC0A1E00582755 /* Swizzle___Compiling.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Swizzle___Compiling.entitlements"; sourceTree = "<group>"; };
+		58C8872821EC0A1E00582755 /* Swizzle - CompilingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Swizzle - CompilingTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		58C8872C21EC0A1E00582755 /* Swizzle___CompilingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Swizzle___CompilingTests.swift"; sourceTree = "<group>"; };
+		58C8872E21EC0A1E00582755 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		58C8873321EC0A1E00582755 /* Swizzle - CompilingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Swizzle - CompilingUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		58C8873721EC0A1E00582755 /* Swizzle___CompilingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Swizzle___CompilingUITests.swift"; sourceTree = "<group>"; };
+		58C8873921EC0A1E00582755 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		58C8871321EC0A1D00582755 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				581C5F4421F8095B00CDFFED /* SwizzleSrc.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58C8872521EC0A1E00582755 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58C8873021EC0A1E00582755 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		580F30F021F529CC00C34F3B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		581C5F3C21F8095700CDFFED /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				581C5F4121F8095700CDFFED /* SwizzleSrc.framework */,
+				581C5F4321F8095700CDFFED /* SwizzleSrcTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		58C8870D21EC0A1D00582755 = {
+			isa = PBXGroup;
+			children = (
+				584821FC21FAC4D10020A06D /* Strings.strings */,
+				581C5F3B21F8095700CDFFED /* SwizzleSrc.xcodeproj */,
+				58C8871821EC0A1D00582755 /* Swizzle - Compiling */,
+				58C8872B21EC0A1E00582755 /* Swizzle - CompilingTests */,
+				58C8873621EC0A1E00582755 /* Swizzle - CompilingUITests */,
+				58C8871721EC0A1D00582755 /* Products */,
+				580F30F021F529CC00C34F3B /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		58C8871721EC0A1D00582755 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				58C8871621EC0A1D00582755 /* Swizzle - Compiling.app */,
+				58C8872821EC0A1E00582755 /* Swizzle - CompilingTests.xctest */,
+				58C8873321EC0A1E00582755 /* Swizzle - CompilingUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		58C8871821EC0A1D00582755 /* Swizzle - Compiling */ = {
+			isa = PBXGroup;
+			children = (
+				58C8871921EC0A1D00582755 /* AppDelegate.swift */,
+				58C8871B21EC0A1D00582755 /* ViewController.swift */,
+				58C8871D21EC0A1E00582755 /* Assets.xcassets */,
+				58C8871F21EC0A1E00582755 /* Main.storyboard */,
+				58C8872221EC0A1E00582755 /* Info.plist */,
+				58C8872321EC0A1E00582755 /* Swizzle___Compiling.entitlements */,
+			);
+			path = "Swizzle - Compiling";
+			sourceTree = "<group>";
+		};
+		58C8872B21EC0A1E00582755 /* Swizzle - CompilingTests */ = {
+			isa = PBXGroup;
+			children = (
+				58C8872C21EC0A1E00582755 /* Swizzle___CompilingTests.swift */,
+				58C8872E21EC0A1E00582755 /* Info.plist */,
+			);
+			path = "Swizzle - CompilingTests";
+			sourceTree = "<group>";
+		};
+		58C8873621EC0A1E00582755 /* Swizzle - CompilingUITests */ = {
+			isa = PBXGroup;
+			children = (
+				58C8873721EC0A1E00582755 /* Swizzle___CompilingUITests.swift */,
+				58C8873921EC0A1E00582755 /* Info.plist */,
+			);
+			path = "Swizzle - CompilingUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		58C8871521EC0A1D00582755 /* Swizzle - Compiling */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 58C8873C21EC0A1E00582755 /* Build configuration list for PBXNativeTarget "Swizzle - Compiling" */;
+			buildPhases = (
+				58C8871221EC0A1D00582755 /* Sources */,
+				58C8871321EC0A1D00582755 /* Frameworks */,
+				58C8871421EC0A1D00582755 /* Resources */,
+				581C5F3A21F8092E00CDFFED /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				581C5F4721F8095B00CDFFED /* PBXTargetDependency */,
+			);
+			name = "Swizzle - Compiling";
+			productName = "Swizzle - Compiling";
+			productReference = 58C8871621EC0A1D00582755 /* Swizzle - Compiling.app */;
+			productType = "com.apple.product-type.application";
+		};
+		58C8872721EC0A1E00582755 /* Swizzle - CompilingTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 58C8873F21EC0A1E00582755 /* Build configuration list for PBXNativeTarget "Swizzle - CompilingTests" */;
+			buildPhases = (
+				58C8872421EC0A1E00582755 /* Sources */,
+				58C8872521EC0A1E00582755 /* Frameworks */,
+				58C8872621EC0A1E00582755 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				58C8872A21EC0A1E00582755 /* PBXTargetDependency */,
+			);
+			name = "Swizzle - CompilingTests";
+			productName = "Swizzle - CompilingTests";
+			productReference = 58C8872821EC0A1E00582755 /* Swizzle - CompilingTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		58C8873221EC0A1E00582755 /* Swizzle - CompilingUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 58C8874221EC0A1E00582755 /* Build configuration list for PBXNativeTarget "Swizzle - CompilingUITests" */;
+			buildPhases = (
+				58C8872F21EC0A1E00582755 /* Sources */,
+				58C8873021EC0A1E00582755 /* Frameworks */,
+				58C8873121EC0A1E00582755 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				58C8873521EC0A1E00582755 /* PBXTargetDependency */,
+			);
+			name = "Swizzle - CompilingUITests";
+			productName = "Swizzle - CompilingUITests";
+			productReference = 58C8873321EC0A1E00582755 /* Swizzle - CompilingUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		58C8870E21EC0A1D00582755 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = "Ethan Uppal";
+				TargetAttributes = {
+					58C8871521EC0A1D00582755 = {
+						CreatedOnToolsVersion = 10.1;
+					};
+					58C8872721EC0A1E00582755 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 58C8871521EC0A1D00582755;
+					};
+					58C8873221EC0A1E00582755 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 58C8871521EC0A1D00582755;
+					};
+				};
+			};
+			buildConfigurationList = 58C8871121EC0A1D00582755 /* Build configuration list for PBXProject "Swizzle - Compiling" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 58C8870D21EC0A1D00582755;
+			productRefGroup = 58C8871721EC0A1D00582755 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 581C5F3C21F8095700CDFFED /* Products */;
+					ProjectRef = 581C5F3B21F8095700CDFFED /* SwizzleSrc.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				58C8871521EC0A1D00582755 /* Swizzle - Compiling */,
+				58C8872721EC0A1E00582755 /* Swizzle - CompilingTests */,
+				58C8873221EC0A1E00582755 /* Swizzle - CompilingUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		581C5F4121F8095700CDFFED /* SwizzleSrc.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwizzleSrc.framework;
+			remoteRef = 581C5F4021F8095700CDFFED /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		581C5F4321F8095700CDFFED /* SwizzleSrcTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SwizzleSrcTests.xctest;
+			remoteRef = 581C5F4221F8095700CDFFED /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		58C8871421EC0A1D00582755 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58C8871E21EC0A1E00582755 /* Assets.xcassets in Resources */,
+				58C8872121EC0A1E00582755 /* Main.storyboard in Resources */,
+				584821FD21FAC4D10020A06D /* Strings.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58C8872621EC0A1E00582755 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58C8873121EC0A1E00582755 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		58C8871221EC0A1D00582755 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58C8871C21EC0A1D00582755 /* ViewController.swift in Sources */,
+				58C8871A21EC0A1D00582755 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58C8872421EC0A1E00582755 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58C8872D21EC0A1E00582755 /* Swizzle___CompilingTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58C8872F21EC0A1E00582755 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58C8873821EC0A1E00582755 /* Swizzle___CompilingUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		581C5F4721F8095B00CDFFED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwizzleSrc;
+			targetProxy = 581C5F4621F8095B00CDFFED /* PBXContainerItemProxy */;
+		};
+		58C8872A21EC0A1E00582755 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 58C8871521EC0A1D00582755 /* Swizzle - Compiling */;
+			targetProxy = 58C8872921EC0A1E00582755 /* PBXContainerItemProxy */;
+		};
+		58C8873521EC0A1E00582755 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 58C8871521EC0A1D00582755 /* Swizzle - Compiling */;
+			targetProxy = 58C8873421EC0A1E00582755 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		58C8871F21EC0A1E00582755 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				58C8872021EC0A1E00582755 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		58C8873A21EC0A1E00582755 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		58C8873B21EC0A1E00582755 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		58C8873D21EC0A1E00582755 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Swizzle - Compiling/Swizzle___Compiling.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Swizzle - Compiling/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ethanuppal.Swizzle---Compiling";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		58C8873E21EC0A1E00582755 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Swizzle - Compiling/Swizzle___Compiling.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Swizzle - Compiling/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ethanuppal.Swizzle---Compiling";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
+		58C8874021EC0A1E00582755 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Swizzle - CompilingTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ethanuppal.Swizzle---CompilingTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Swizzle - Compiling.app/Contents/MacOS/Swizzle - Compiling";
+			};
+			name = Debug;
+		};
+		58C8874121EC0A1E00582755 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Swizzle - CompilingTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ethanuppal.Swizzle---CompilingTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Swizzle - Compiling.app/Contents/MacOS/Swizzle - Compiling";
+			};
+			name = Release;
+		};
+		58C8874321EC0A1E00582755 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Swizzle - CompilingUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ethanuppal.Swizzle---CompilingUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_TARGET_NAME = "Swizzle - Compiling";
+			};
+			name = Debug;
+		};
+		58C8874421EC0A1E00582755 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Swizzle - CompilingUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ethanuppal.Swizzle---CompilingUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_TARGET_NAME = "Swizzle - Compiling";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		58C8871121EC0A1D00582755 /* Build configuration list for PBXProject "Swizzle - Compiling" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				58C8873A21EC0A1E00582755 /* Debug */,
+				58C8873B21EC0A1E00582755 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		58C8873C21EC0A1E00582755 /* Build configuration list for PBXNativeTarget "Swizzle - Compiling" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				58C8873D21EC0A1E00582755 /* Debug */,
+				58C8873E21EC0A1E00582755 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		58C8873F21EC0A1E00582755 /* Build configuration list for PBXNativeTarget "Swizzle - CompilingTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				58C8874021EC0A1E00582755 /* Debug */,
+				58C8874121EC0A1E00582755 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		58C8874221EC0A1E00582755 /* Build configuration list for PBXNativeTarget "Swizzle - CompilingUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				58C8874321EC0A1E00582755 /* Debug */,
+				58C8874421EC0A1E00582755 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 58C8870E21EC0A1D00582755 /* Project object */;
+}
