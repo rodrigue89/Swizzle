@@ -18,6 +18,8 @@ func eat(person: Person) {
 
 > Some code in Swizzle
 
+[![codebeat badge](https://codebeat.co/badges/63083528-f408-4b3f-8780-fefc4c6ab0cf)](https://codebeat.co/projects/github-com-safelyswift-swizzle-swizzle-1-0)
+
 #### Quick Links
 
 - [Overview](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/README.md#what-is-it)
