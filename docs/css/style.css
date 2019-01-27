@@ -1,4 +1,4 @@
---root {
+:root {
  --code_backround: #F5F5F5;
 }
 
@@ -19,9 +19,6 @@ code {
   color: #000000;
   font-family: "Menlo Regular", Menlo, Courier, Monaco;
   overflow: scroll;
-  border-style: solid;
-  border-width: 7.5px;
-  border-color: var(--code_background);
 }
 
 blockquote {
@@ -62,9 +59,13 @@ pre {
   background-color: var(--code_background);
   white-space: pre-wrap;
   word-wrap: break-word;
+  border-style: solid;
+  border-width: 7.5px;
+  border-color: var(--code_background);
 }
 
 img {
   max-width: 100%;
   height: auto;
 }
+
