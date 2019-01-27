@@ -1,4 +1,0 @@
-objc Graphic {
-  decl String text;
-  decl Float size;
-}
