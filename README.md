@@ -2,7 +2,7 @@
 <img src="https://raw.githubusercontent.com/SafelySwift/Swizzle/prerelease/Images/Swizzle%20Logo%20Wide%20New.png" alt="Swizzle Banner">
 </p>
 
-```
+```swift
 struct Person {
     public ref name: String;
     public ref age: Float;
