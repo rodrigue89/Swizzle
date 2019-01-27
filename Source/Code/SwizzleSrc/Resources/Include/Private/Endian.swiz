@@ -1,0 +1,5 @@
+func __flip(value: Int) -> Int {
+    var bytes = __getBytes(of: value);
+    bytes.forEach(byte) { byte.flip(); };
+    return Int.fromBytes(bytes);
+}

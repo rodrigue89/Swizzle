@@ -1,0 +1,14 @@
+{
+    "Private": [
+        "Endian.swiz"
+    ],
+    "Public": [
+        "Buffer.swiz",
+        "Sequence.swiz",
+        "String.swiz",
+        "Character.swiz"
+    ],
+    "Default": [
+        "DefaultInfo.plist"
+    ]
+}

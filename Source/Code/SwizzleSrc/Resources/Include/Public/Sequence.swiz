@@ -1,0 +1,33 @@
+// Sequence.swiz
+// SwizzleSrc
+//
+// Created by Ethan Uppal on 1/25/19.
+// Copyright © 2019 Ethan Uppal. All rights reserved.
+//
+
+protocol Iterator<E> {
+    func next() -> E
+}
+
+protocol Sequence<E> {
+    func iterator() -> Iterator<E>
+}
+
+extend Sequence {
+    func forEach<E>(body: E -> Void) {
+        var iterator = self.iterator();
+        var current = iterator.next();
+        while current != nil {
+            body(current);
+            current = iterator.next();
+        }
+    }
+
+    func map<E, R>(values: Sequence<E>, body: E -> R) -> Buffer<R> {
+        var buffer = Buffer<R>();
+        for value in self {
+            buffer.add(body(value));
+        }
+        return buffer;
+    }
+}

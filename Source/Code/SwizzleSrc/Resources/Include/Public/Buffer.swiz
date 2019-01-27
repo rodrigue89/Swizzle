@@ -1,0 +1,19 @@
+// Buffer.swiz
+// SwizzleSrc
+//
+// Created by Ethan Uppal on 1/25/19.
+// Copyright © 2019 Ethan Uppal. All rights reserved.
+//
+
+struct Buffer<E> {
+    ref _storage: Pointer;
+    ref count: Int;
+    static init() {
+        self.count = 0;
+        let alignment = __alignmentOf(E);
+        self._storage = Pointer.allocate(0, alignment);
+    }
+func add(value: E) {
+
+}
+}
