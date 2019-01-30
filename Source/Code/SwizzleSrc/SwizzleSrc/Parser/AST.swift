@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Array where Element: Statement, Element: CustomStringConvertible {
+extension Array where Element: CustomStringConvertible {
     public func joined() -> String {
         if isEmpty {
             return ""
@@ -61,13 +61,16 @@ public protocol Visitor {
     func visit(_ protoMeth: MethodPrototypeStatement) throws -> Result
 }
 
-public class Statement {
+public class Statement: CustomStringConvertible {
     public func accept<V: Visitor, R>(_ visitor: V) throws -> R where V.Result == R {
+        fatalError()
+    }
+    public var description: String {
         fatalError()
     }
 }
 
-public final class StructStatement: Statement, CustomStringConvertible {
+public final class StructStatement: Statement {
     public let name: Token
     public let conformances: [Token]
     public let declarations: [DeclarationStatement]
@@ -90,7 +93,7 @@ public final class StructStatement: Statement, CustomStringConvertible {
         self.internals = internals
         self.methods = methods
     }
-    public var description: String {
+    public override var description: String {
         let refStr = references.isEmpty ? "" : "\n\(references.lined(indent: "  "))\n"
         let conformStr = conformances.isEmpty ? " " : ": \(conformances.map { $0.lexme }.joined(separator: ", ")) "
         return "struct \(name.lexme)\(conformStr){\(refStr)}"
@@ -101,14 +104,14 @@ public final class StructStatement: Statement, CustomStringConvertible {
     }
 }
 
-public final class DeclarationStatement: Statement, CustomStringConvertible {
+public final class DeclarationStatement: Statement {
     public let name: Token
     public let type: DeclarationType
     public init(name: Token, type: DeclarationType) {
         self.name = name
         self.type = type
     }
-    public var description: String {
+    public override var description: String {
         return "decl \(type.rawValue) \(name.lexme)"
     }
     public override func accept<V, R>(_ visitor: V) throws -> R where V : Visitor, R == V.Result {
@@ -116,7 +119,7 @@ public final class DeclarationStatement: Statement, CustomStringConvertible {
     }
 }
 
-public final class ReferenceStatement: Statement, CustomStringConvertible {
+public final class ReferenceStatement: Statement {
     public let accessLevel: AccessLevel
     public let name: Token
     public let type: Token
@@ -125,7 +128,7 @@ public final class ReferenceStatement: Statement, CustomStringConvertible {
         self.name = name
         self.type = type
     }
-    public var description: String {
+    public override var description: String {
         return "\(accessLevel.rawValue) ref \(name.lexme): \(type.lexme)"
     }
     public override func accept<V, R>(_ visitor: V) throws -> R where V : Visitor, R == V.Result {
@@ -133,14 +136,14 @@ public final class ReferenceStatement: Statement, CustomStringConvertible {
     }
 }
 
-public final class AccessStatement: Statement, CustomStringConvertible {
+public final class AccessStatement: Statement {
     public let object: Token
     public let key: Token
     public init(object: Token, key: Token) {
         self.object = object
         self.key = key
     }
-    public var description: String {
+    public override var description: String {
         return "\(object.lexme).\(key.lexme))"
     }
     public override func accept<V, R>(_ visitor: V) throws -> R where V : Visitor, R == V.Result {
@@ -148,14 +151,14 @@ public final class AccessStatement: Statement, CustomStringConvertible {
     }
 }
 
-public final class CallStatement: Statement, CustomStringConvertible {
+public final class CallStatement: Statement {
     public let name: Token
     public let args: [Expression]
     public init(name: Token, args: [Expression]) {
         self.name = name
         self.args = args
     }
-    public var description: String {
+    public override var description: String {
         return "\(name.lexme)(\(args.joined()))"
     }
     public override func accept<V, R>(_ visitor: V) throws -> R where V : Visitor, R == V.Result {
@@ -163,7 +166,7 @@ public final class CallStatement: Statement, CustomStringConvertible {
     }
 }
 
-public final class BinaryExpression: Statement, CustomStringConvertible {
+public final class BinaryExpression: Statement {
     public let lhs: Expression
     public let op: Token
     public let rhs: Expression
@@ -172,7 +175,7 @@ public final class BinaryExpression: Statement, CustomStringConvertible {
         self.op = op
         self.rhs = rhs
     }
-    public var description: String {
+    public override var description: String {
         var lhsDes = ""
         switch lhs.rep {
         case .expr(let expr):
@@ -194,7 +197,7 @@ public final class BinaryExpression: Statement, CustomStringConvertible {
     }
 }
 
-public final class Expression: Statement, CustomStringConvertible {
+public final class Expression: Statement {
     public enum Rep: CustomStringConvertible {
         case token(Token)
         case string(String)
@@ -231,7 +234,7 @@ public final class Expression: Statement, CustomStringConvertible {
     public init(rep: Rep) {
         self.rep = rep
     }
-    public var description: String {
+    public override var description: String {
         return "\(rep)"
     }
     public override func accept<V, R>(_ visitor: V) throws -> R where V : Visitor, R == V.Result {
@@ -239,7 +242,7 @@ public final class Expression: Statement, CustomStringConvertible {
     }
 }
 
-public final class IfStatement: Statement, CustomStringConvertible {
+public final class IfStatement: Statement {
     public let condition: Expression
     public let ifTrue: [Statement]
     public let ifFalse: [Statement]
@@ -248,7 +251,7 @@ public final class IfStatement: Statement, CustomStringConvertible {
         self.ifTrue = then
         self.ifFalse = `else`
     }
-    public var description: String {
+    public override var description: String {
         return "if \(condition)"
     }
     public override func accept<V, R>(_ visitor: V) throws -> R where V : Visitor, R == V.Result {
@@ -256,14 +259,14 @@ public final class IfStatement: Statement, CustomStringConvertible {
     }
 }
 
-public final class InitStatement: Statement, CustomStringConvertible {
+public final class InitStatement: Statement {
     public let objectName: Token
     public let args: [Expression]
     public init(objectName: Token, args: [Expression]) {
         self.objectName = objectName
         self.args = args
     }
-    public var description: String {
+    public override var description: String {
         return "\(objectName.lexme).init(\(args.joined())"
     }
     public override func accept<V, R>(_ visitor: V) throws -> R where V : Visitor, R == V.Result {
@@ -271,7 +274,7 @@ public final class InitStatement: Statement, CustomStringConvertible {
     }
 }
 
-public final class AssignStatement: Statement, CustomStringConvertible {
+public final class AssignStatement: Statement {
     public let decl: Token
     public let name: Token
     public let value: Expression
@@ -280,7 +283,7 @@ public final class AssignStatement: Statement, CustomStringConvertible {
         self.name = name
         self.value = expression
     }
-    public var description: String {
+    public override var description: String {
         return "\(decl.lexme) \(name.lexme) = \(value)"
     }
     public override func accept<V, R>(_ visitor: V) throws -> R where V : Visitor, R == V.Result {
@@ -288,7 +291,7 @@ public final class AssignStatement: Statement, CustomStringConvertible {
     }
 }
 
-public final class SetStatement: Statement, CustomStringConvertible {
+public final class SetStatement: Statement {
     public let object: Token
     public let key: Token
     public let value: Expression
@@ -297,7 +300,7 @@ public final class SetStatement: Statement, CustomStringConvertible {
         self.key = key
         self.value = value
     }
-    public var description: String {
+    public override var description: String {
         return "\(object.lexme).\(key.lexme) = \(value))"
     }
     public override func accept<V, R>(_ visitor: V) throws -> R where V : Visitor, R == V.Result {
@@ -305,14 +308,14 @@ public final class SetStatement: Statement, CustomStringConvertible {
     }
 }
 
-public final class ParameterStatement: Statement, CustomStringConvertible {
+public final class ParameterStatement: Statement {
     public let name: Token
     public let type: Token
     public init(name: Token, type: Token) {
         self.name = name
         self.type = type
     }
-    public var description: String {
+    public override var description: String {
         return "\(name.lexme): \(type.lexme)"
     }
     public override func accept<V, R>(_ visitor: V) throws -> R where V : Visitor, R == V.Result {
@@ -320,7 +323,7 @@ public final class ParameterStatement: Statement, CustomStringConvertible {
     }
 }
 
-public final class FunctionStatement: Statement, CustomStringConvertible {
+public final class FunctionStatement: Statement {
     public let name: Token
     public let args: [ParameterStatement]
     public let body: [Statement]
@@ -331,7 +334,7 @@ public final class FunctionStatement: Statement, CustomStringConvertible {
         self.body = body
         self.returnType = returnType
     }
-    public var description: String {
+    public override var description: String {
         return "\(name.lexme)(\(args.joined())) -> \(returnType.lexme)"
     }
     public override func accept<V, R>(_ visitor: V) throws -> R where V : Visitor, R == V.Result {
@@ -339,14 +342,14 @@ public final class FunctionStatement: Statement, CustomStringConvertible {
     }
 }
 
-public final class TypeAliasStatement: Statement, CustomStringConvertible {
+public final class TypeAliasStatement: Statement {
     public let alias: Token
     public let type: Token
     public init(alias: Token, type: Token) {
         self.alias = alias
         self.type = type
     }
-    public var description: String {
+    public override var description: String {
         return "typealias \(alias.lexme) = \(type.lexme)"
     }
     public override func accept<V, R>(_ visitor: V) throws -> R where V : Visitor, R == V.Result {
@@ -354,14 +357,14 @@ public final class TypeAliasStatement: Statement, CustomStringConvertible {
     }
 }
 
-public final class ProtocolStatement: Statement, CustomStringConvertible {
+public final class ProtocolStatement: Statement {
     public let name: Token
     public let references: [ReferenceStatement]
     public init(name: Token, references: [ReferenceStatement]) {
         self.name = name
         self.references = references
     }
-    public var description: String {
+    public override var description: String {
         return "protocol \(name.lexme) {\n\(references.lined(indent: "  "))\n}"
     }
     
@@ -370,14 +373,14 @@ public final class ProtocolStatement: Statement, CustomStringConvertible {
     }
 }
 
-public final class ExtensionStatement: Statement, CustomStringConvertible {
+public final class ExtensionStatement: Statement {
     public let name: Token
     public let references: [ReferenceStatement]
     public init(name: Token, references: [ReferenceStatement]) {
         self.name = name
         self.references = references
     }
-    public var description: String {
+    public override var description: String {
         return "extend \(name.lexme) {\n\(references.lined(indent: "  "))\n}"
     }
     
@@ -386,14 +389,14 @@ public final class ExtensionStatement: Statement, CustomStringConvertible {
     }
 }
 
-public final class InternalReferenceStatement: Statement, CustomStringConvertible {
+public final class InternalReferenceStatement: Statement {
     public let name: Token
     public let type: Token
     public init(name: Token, type: Token) {
         self.name = name
         self.type = type
     }
-    public var description: String {
+    public override var description: String {
         return "internal \(type.lexme)"
     }
     public override func accept<V, R>(_ visitor: V) throws -> R where V : Visitor, R == V.Result {
@@ -401,7 +404,7 @@ public final class InternalReferenceStatement: Statement, CustomStringConvertibl
     }
 }
 
-public final class MethodPrototypeStatement: Statement, CustomStringConvertible {
+public final class MethodPrototypeStatement: Statement {
     public let name: Token
     public let args: [ParameterStatement]
     public let type: Token
@@ -410,7 +413,7 @@ public final class MethodPrototypeStatement: Statement, CustomStringConvertible 
         self.args = args
         self.type = type
     }
-    public var description: String {
+    public override var description: String {
         return "\(name.lexme)(\(args.joined())) -> \(type.lexme)"
     }
     public override func accept<V, R>(_ visitor: V) throws -> R where V : Visitor, R == V.Result {
@@ -418,12 +421,12 @@ public final class MethodPrototypeStatement: Statement, CustomStringConvertible 
     }
 }
 
-public final class ImportStatement: Statement, CustomStringConvertible {
+public final class ImportStatement: Statement {
     public let module: Token
     public init(module: Token) {
         self.module = module
     }
-    public var description: String {
+    public override var description: String {
         return "impoty \(module.lexme)"
     }
     public override func accept<V, R>(_ visitor: V) throws -> R where V : Visitor, R == V.Result {

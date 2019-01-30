@@ -40,6 +40,9 @@ public final class Generator: Visitor {
 public extension Generator {
     enum Error: Swift.Error {
         case notImplemented
+        public var localizedDescription: String {
+            return String(reflecting: self)
+        }
     }
     
     public func visit(_ strct: StructStatement) throws -> [Any] {
