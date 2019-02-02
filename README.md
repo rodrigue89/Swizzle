@@ -42,9 +42,9 @@ func eat(person: Person) {
   - [x] Implement lexer
     - [ ] Speed up lexer
   - [x] Parsing 
-  - [x] Basic scope resolution
 - Analysis
   - [ ] Static type checking
+  - [ ] Scope resolution
 - Compiling
   - [ ] Compile time custom phases
   - [ ] Building the IR
