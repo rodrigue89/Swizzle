@@ -18,6 +18,9 @@ func eat(person: Person) {
 
 > Some code in Swizzle
 
+<a href="https://travis-ci.com/SafelySwift/Swizzle">
+  <img src="https://travis-ci.com/SafelySwift/Swizzle.svg?branch=swizzle-1.0" alt="Build Status">
+</a>
 <a href="https://developer.apple.com/swift">
   <img src="https://img.shields.io/badge/Swift-4-F16D39.svg" alt="Swift Version" />
 </a>
