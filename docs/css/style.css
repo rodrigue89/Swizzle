@@ -30,8 +30,8 @@ blockquote {
   padding-left: 2.5px;
 }
 
-web_content {
-  max-width: 800px;
+.web_content {
+  max-width: 1000px;
   margin: auto;
   padding: 10px;
 }
