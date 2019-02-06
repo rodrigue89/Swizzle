@@ -2,5 +2,5 @@ language: objective-c
 os: osx
 osx_image: xcode10
 xcode_project: Source/Code/SwizzleSrc/SwizzleSrc.xcodeproj # path to your xcodeproj folder
-xcode_scheme: Source/Code/SwizzleSrc/SwizzleSrc
+xcode_scheme: SwizzleSrc
 xcode_sdk: macosx10.14
