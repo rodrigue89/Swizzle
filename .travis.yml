@@ -3,4 +3,4 @@ os: osx
 osx_image: xcode10
 xcode_project: Sources/Code/SwizzleSrc.xcodeproj # path to your xcodeproj folder
 xcode_scheme: Sources/Code/SwizzleSrc
-xcode_sdk: iphonesimulator12.1
+xcode_sdk: macosx10.14
