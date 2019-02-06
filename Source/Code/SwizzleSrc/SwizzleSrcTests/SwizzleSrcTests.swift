@@ -5,7 +5,7 @@
 //  Created by Ethan Uppal on 1/20/19.
 //  Copyright © 2019 Ethan Uppal. All rights reserved.
 //
-
+/*
 import XCTest
 @testable import SwizzleSrc
 
@@ -117,3 +117,4 @@ var x = 2;
     }
     
 }
+*/
