@@ -24,13 +24,14 @@ code {
 blockquote {
   font-style: normal;
   font-size: 16px;
+  margin-left: 0px;
   font-family:"Helvetica Heue", Helvetica;
   border-left: 4px solid #CCC;
-  padding-left: 2.5px;
+  padding-left: 5px;
 }
 
 .web_content {
-  max-width: 950px;
+  max-width: 1000px;
   margin: auto;
   padding: 10px;
 }
@@ -65,6 +66,3 @@ img {
   max-width: 100%;
   height: auto;
 }
-
-
-
