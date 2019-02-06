@@ -29,17 +29,6 @@ extension PlistDecodable {
     }
 }
 
-public struct InfoPlist: PlistDecodable {
-    public enum Keys: String, PlistKey, CaseIterable {
-        case automaticImports = "Automatic Imports"
-    }
-    public let automaticInputs: [String]
-    
-    public init(decoder: PlistDecoder<InfoPlist>) throws {
-        self.automaticInputs = try decoder.decode([String].self, forKey: .automaticImports)
-    }
-}
-
 public final class PlistParser<Result: PlistDecodable> {
     public enum Error: Swift.Error {
         case couldNotFormData
@@ -76,7 +65,7 @@ public final class PlistDecoder<Result: PlistDecodable> {
     public enum Error: Swift.Error {
         case valueDoesNotExist
     }
-    public let dictionary: [Result.Keys: Any]
+    internal let dictionary: [Result.Keys: Any]
     internal init(dict: [Result.Keys: Any]) {
         self.dictionary = dict
     }
@@ -85,5 +74,23 @@ public final class PlistDecoder<Result: PlistDecodable> {
             throw Error.valueDoesNotExist
         }
         return value
+    }
+}
+
+// Actual usage
+public struct InfoPlist: PlistDecodable {
+    public enum Keys: String, PlistKey, CaseIterable {
+        case automaticImports = "Automatic Imports"
+        case versionNumber = "Swizzle Version Number"
+        case mainFilePath = "Main File Path"
+    }
+    public let automaticInputs: [String]
+    public let versionNumber: String
+    public let mainFilePath: String
+    
+    public init(decoder: PlistDecoder<InfoPlist>) throws {
+        self.automaticInputs = try decoder.decode([String].self, forKey: .automaticImports)
+        self.versionNumber = try decoder.decode(String.self, forKey: .versionNumber)
+        self.mainFilePath = try decoder.decode(String.self, forKey: .mainFilePath)
     }
 }

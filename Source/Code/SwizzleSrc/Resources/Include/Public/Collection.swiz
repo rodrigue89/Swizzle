@@ -1,0 +1,18 @@
+// Collection.swiz
+// SwizzleSrc
+//
+// Created by Ethan Uppal on 2/5/19.
+// Copyright © 2019 Ethan Uppal. All rights reserved.
+//
+
+protocol Collection<E>: Sequence<E> {
+    func start() -> Int
+    func end() -> Int
+    func subcript(index: Int) -> E
+}
+protocol MutableCollection<E>: Collection<E> {
+    func store(value: E, index: Int)
+}
+protocol ApppendableCollection<E>: MutableCollection<E> {
+    func add(value: E)
+}

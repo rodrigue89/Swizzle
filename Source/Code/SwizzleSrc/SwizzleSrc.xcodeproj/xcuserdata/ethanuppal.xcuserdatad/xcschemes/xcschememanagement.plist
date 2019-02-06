@@ -7,7 +7,20 @@
 		<key>SwizzleSrc.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>580F30B121F5292A00C34F3B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>580F30BA21F5292A00C34F3B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

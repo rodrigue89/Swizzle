@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Main File Path</key>
+	<string>main.swiz</string>
+	<key>Swizzle Version</key>
+	<string>1.0.0</string>
 	<key>Automatic Imports</key>
 	<array>
 		<string>System</string>

@@ -5,15 +5,24 @@
 // Copyright © 2019 Ethan Uppal. All rights reserved.
 //
 
-struct Buffer<E> {
-    ref _storage: Pointer;
+struct Buffer<E>: AppendableCollection {
+    private ref _storage: Pointer;
     ref count: Int;
     static init() {
         self.count = 0;
         let alignment = __alignmentOf(E);
         self._storage = Pointer.allocate(0, alignment);
     }
+    // Sequence
+    func iterator() -> BufferIterator<E> {
+        return BufferIterator<E>(self, 0);
+    }
+    // Collection
+func subscript(index: Int) -> E {
+return 
+}
 func add(value: E) {
+self.count += 1;
 
 }
 }

@@ -1,5 +1,8 @@
 func __flip(value: Int) -> Int {
     var bytes = __getBytes(of: value);
-    bytes.forEach(byte) { byte.flip(); };
+    let count = bytes.count;
+for index in 0 ..< count {
+bytes
+}
     return Int.fromBytes(bytes);
 }

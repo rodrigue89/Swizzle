@@ -1,0 +1,16 @@
+// BufferIterator.swiz
+// SwizzleSrc
+//
+// Created by Ethan Uppal on 2/5/19.
+// Copyright © 2019 Ethan Uppal. All rights reserved.
+//
+
+struct __BufferIterator<E>: Iterator {
+ref buffer: Buffer<E>;
+ref offset: Int;
+func next() -> E {
+if offset < buffer.count {
+
+}
+}
+}

@@ -41,6 +41,8 @@
 		581E1AC621FBF8E700BEBF50 /* VM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581E1AB221FBF67800BEBF50 /* VM.swift */; };
 		584821F821FA7D120020A06D /* Endian.swiz in Resources */ = {isa = PBXBuildFile; fileRef = 584821F721FA7D120020A06D /* Endian.swiz */; };
 		58A5EF9521FA672700F50ECC /* precedence_climbing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A5EF9421FA672700F50ECC /* precedence_climbing.swift */; };
+		58FF1F9F2209F1BE00AF697A /* Collection.swiz in Resources */ = {isa = PBXBuildFile; fileRef = 58FF1F9E2209F1BE00AF697A /* Collection.swiz */; };
+		58FF1FA12209F2B400AF697A /* BufferIterator.swiz in Resources */ = {isa = PBXBuildFile; fileRef = 58FF1FA02209F2B400AF697A /* BufferIterator.swiz */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +93,8 @@
 		581E1AB621FBF6A700BEBF50 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		584821F721FA7D120020A06D /* Endian.swiz */ = {isa = PBXFileReference; lastKnownFileType = text; path = Endian.swiz; sourceTree = "<group>"; };
 		58A5EF9421FA672700F50ECC /* precedence_climbing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = precedence_climbing.swift; sourceTree = "<group>"; };
+		58FF1F9E2209F1BE00AF697A /* Collection.swiz */ = {isa = PBXFileReference; lastKnownFileType = text; path = Collection.swiz; sourceTree = "<group>"; };
+		58FF1FA02209F2B400AF697A /* BufferIterator.swiz */ = {isa = PBXFileReference; lastKnownFileType = text; path = BufferIterator.swiz; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,6 +235,7 @@
 				581E1A0221FBB68D00BEBF50 /* Character.swiz */,
 				581E1A0421FBB8B500BEBF50 /* String.swiz */,
 				581E1A0021FBB52000BEBF50 /* Sequence.swiz */,
+				58FF1F9E2209F1BE00AF697A /* Collection.swiz */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -239,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				584821F721FA7D120020A06D /* Endian.swiz */,
+				58FF1FA02209F2B400AF697A /* BufferIterator.swiz */,
 			);
 			path = Private;
 			sourceTree = "<group>";
@@ -341,7 +347,9 @@
 				581E1A0321FBB68D00BEBF50 /* Character.swiz in Resources */,
 				581E1A0121FBB52000BEBF50 /* Sequence.swiz in Resources */,
 				584821F821FA7D120020A06D /* Endian.swiz in Resources */,
+				58FF1FA12209F2B400AF697A /* BufferIterator.swiz in Resources */,
 				581E1A0521FBB8B500BEBF50 /* String.swiz in Resources */,
+				58FF1F9F2209F1BE00AF697A /* Collection.swiz in Resources */,
 				581E19FC21FBB39800BEBF50 /* Buffer.swiz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
