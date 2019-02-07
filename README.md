@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://raw.githubusercontent.com/SafelySwift/Swizzle/prerelease/Images/Swizzle%20Logo%20Wide%20New.png" alt="Swizzle Banner">
+<img src="Images/Swizzle%20Logo%20Wide%.png" alt="Swizzle Banner">
 </p>
 
 <!--![](https://travis-ci.com/SafelySwift/Swizzle.svg?branch=master)-->
