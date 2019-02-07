@@ -24,8 +24,6 @@
 //
 
 import AppKit
-import Foundation
-import ObjectiveC
 
 var LineNumberViewAssocObjKey: UInt8 = 0
 

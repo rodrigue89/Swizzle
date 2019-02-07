@@ -7,7 +7,7 @@
 
 struct Character {
     private ref str: String;
-    init(str: String) {
+    static init(str: String) {
         assert(str.count == 1);
         self.str = str;
     }

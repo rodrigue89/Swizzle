@@ -1,0 +1,11 @@
+// MemoryHelpers.swiz
+// SwizzleSrc
+//
+// Created by Ethan Uppal on 2/6/19.
+// Copyright © 2019 Ethan Uppal. All rights reserved.
+//
+
+// Compiler magic right here
+@__add("__alignmentOf")
+@__add("addressOf")
+@__add("pointer_impl")

@@ -1,0 +1,12 @@
+// StringStorage.swiz
+// SwizzleSrc
+//
+// Created by Ethan Uppal on 2/6/19.
+// Copyright © 2019 Ethan Uppal. All rights reserved.
+//
+
+@__magic("string.storage")
+enum __StringStorage {
+    case cString(Buffer<UInt8>, Int)
+    case utf8(Pointer, Int)
+}

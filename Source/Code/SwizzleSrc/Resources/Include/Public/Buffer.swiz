@@ -5,7 +5,7 @@
 // Copyright © 2019 Ethan Uppal. All rights reserved.
 //
 
-struct Buffer<E>: AppendableCollection {
+class Buffer<E>: AppendableCollection {
     private ref _storage: Pointer;
     ref count: Int;
     static init() {
@@ -18,11 +18,27 @@ struct Buffer<E>: AppendableCollection {
         return BufferIterator<E>(self, 0);
     }
     // Collection
-func subscript(index: Int) -> E {
-return 
-}
-func add(value: E) {
-self.count += 1;
+    func subscript(index: Int) -> E {
+        _checkIndex(index);
+        return _storage::strided(index).pointee;
+    }
+    func store(value: E, index: Int) {
+        _checkIndex(index);
+        self._storage::strided(index).set(value);
+    }
+    func add(value: E) {
+        self.count += 1;
+        realloc(_storage, self.count);
+        self._storage::strided(self.count).initialize(value);
+    }
 
-}
+    // Trapping
+    func _checkIndex(index: Int) {
+        assert(index < self.count, "Index out of bounds");
+    }
+
+    // Deinit
+    func deinit() {
+        self._storage::dealloc();
+    }
 }

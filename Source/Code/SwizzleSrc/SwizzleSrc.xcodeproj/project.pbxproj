@@ -43,6 +43,8 @@
 		58A5EF9521FA672700F50ECC /* precedence_climbing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A5EF9421FA672700F50ECC /* precedence_climbing.swift */; };
 		58FF1F9F2209F1BE00AF697A /* Collection.swiz in Resources */ = {isa = PBXBuildFile; fileRef = 58FF1F9E2209F1BE00AF697A /* Collection.swiz */; };
 		58FF1FA12209F2B400AF697A /* BufferIterator.swiz in Resources */ = {isa = PBXBuildFile; fileRef = 58FF1FA02209F2B400AF697A /* BufferIterator.swiz */; };
+		58FF1FA3220BC62B00AF697A /* StringStorage.swiz in Resources */ = {isa = PBXBuildFile; fileRef = 58FF1FA2220BC62B00AF697A /* StringStorage.swiz */; };
+		58FF1FA5220BC6FE00AF697A /* MemoryHelpers.swiz in Resources */ = {isa = PBXBuildFile; fileRef = 58FF1FA4220BC6FE00AF697A /* MemoryHelpers.swiz */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +97,8 @@
 		58A5EF9421FA672700F50ECC /* precedence_climbing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = precedence_climbing.swift; sourceTree = "<group>"; };
 		58FF1F9E2209F1BE00AF697A /* Collection.swiz */ = {isa = PBXFileReference; lastKnownFileType = text; path = Collection.swiz; sourceTree = "<group>"; };
 		58FF1FA02209F2B400AF697A /* BufferIterator.swiz */ = {isa = PBXFileReference; lastKnownFileType = text; path = BufferIterator.swiz; sourceTree = "<group>"; };
+		58FF1FA2220BC62B00AF697A /* StringStorage.swiz */ = {isa = PBXFileReference; lastKnownFileType = text; path = StringStorage.swiz; sourceTree = "<group>"; };
+		58FF1FA4220BC6FE00AF697A /* MemoryHelpers.swiz */ = {isa = PBXFileReference; lastKnownFileType = text; path = MemoryHelpers.swiz; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,6 +249,8 @@
 			children = (
 				584821F721FA7D120020A06D /* Endian.swiz */,
 				58FF1FA02209F2B400AF697A /* BufferIterator.swiz */,
+				58FF1FA2220BC62B00AF697A /* StringStorage.swiz */,
+				58FF1FA4220BC6FE00AF697A /* MemoryHelpers.swiz */,
 			);
 			path = Private;
 			sourceTree = "<group>";
@@ -345,6 +351,8 @@
 				581E1A0921FBCE0A00BEBF50 /* DefaultInfo.plist in Resources */,
 				581E19FF21FBB4AA00BEBF50 /* Files.json in Resources */,
 				581E1A0321FBB68D00BEBF50 /* Character.swiz in Resources */,
+				58FF1FA5220BC6FE00AF697A /* MemoryHelpers.swiz in Resources */,
+				58FF1FA3220BC62B00AF697A /* StringStorage.swiz in Resources */,
 				581E1A0121FBB52000BEBF50 /* Sequence.swiz in Resources */,
 				584821F821FA7D120020A06D /* Endian.swiz in Resources */,
 				58FF1FA12209F2B400AF697A /* BufferIterator.swiz in Resources */,

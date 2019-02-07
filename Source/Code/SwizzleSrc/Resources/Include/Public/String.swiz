@@ -6,5 +6,12 @@
 //
 
 struct String {
-    private ref _bytes: Pointer;
+    private ref _storage: __StringStorage;
+    ref count: Int;
+
+    static init(cString: Pointer, count: Int) {
+        assert(cString::strided(count).pointee == 0, "cString must be null-terminated";
+        self._storage = __StringStorage.cString(cString);
+    }
+    static _stringLiteral(lit: String) -> String { return lit; }
 }
