@@ -1,1 +1,4 @@
 theme: jekyll-theme-cayman
+title: The Swizzle programming langauge
+description: A new, simple and fun programming language built in native Swift
+baseurl: /Swizzle
