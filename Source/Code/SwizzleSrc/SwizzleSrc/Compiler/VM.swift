@@ -29,6 +29,12 @@ public final class VM {
         }
         return int
     }
+    func boolify(_ val: Any) throws -> Bool {
+        guard let int = val as? Bool else {
+            throw CompilerError(description: "Could not form boolean from value", context: val)
+        }
+        return int
+    }
     public func evaluate(bytecodeInstructions code: [Instruction], env: Environment) throws -> Any? {
         var programCounter = 0
         let length = code.count
@@ -75,10 +81,10 @@ public final class VM {
             case .relativeJump:
                 programCounter += try intify(instruction.arg)
             case .relativeJumpIfTrue:
-                let cond = try intify(try popVal(&stack))
-                if cond == 1 {
+                let cond = try boolify(try popVal(&stack))
+                if cond == true {
                     programCounter += try intify(instruction.arg)
-                } else if cond != 0 {
+                } else if cond != false {
                     throw CompilerError(description: "Unknown boolean condition", context: cond)
                 }
             case .makeFunction:

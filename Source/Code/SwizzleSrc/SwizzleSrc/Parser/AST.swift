@@ -68,6 +68,12 @@ public class Statement: CustomStringConvertible {
     public var description: String {
         fatalError()
     }
+//    public func encode(to encoder: Encoder) throws {
+//        fatalError()
+//    }
+//    public init(from decoder: Decoder) throws {
+//        fatalError()
+//    }
 }
 
 public final class StructStatement: Statement {
@@ -93,6 +99,7 @@ public final class StructStatement: Statement {
         self.internals = internals
         self.methods = methods
     }
+    
     public override var description: String {
         let refStr = references.isEmpty ? "" : "\n\(references.lined(indent: "  "))\n"
         let conformStr = conformances.isEmpty ? " " : ": \(conformances.map { $0.lexme }.joined(separator: ", ")) "

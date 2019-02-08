@@ -12,6 +12,12 @@ public final class Compiler {
         switch exp {
         case let int as Int:
             return [loadConst(int)]
+        case let flt as Float:
+            return [loadConst(flt)]
+        case let str as String:
+            return [loadConst(str)]
+        case let bool as Bool:
+            return [loadConst(bool)]
         case let array as [Any]:
             if let arrays = array as? [[Any]] {
                 return try arrays.reduce(into: [Instruction]()) {
