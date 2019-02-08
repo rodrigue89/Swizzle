@@ -75,3 +75,8 @@ func textOfItem(item: String) throws -> String {
 
 
 
+public func _DefaultEnvironment() -> Environment {
+    let env = Environment(table: [:], parent: nil)
+    // TODO: Configure env
+    return env
+}
