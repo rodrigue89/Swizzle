@@ -3,17 +3,16 @@
 </p>
 
 ```swift
-struct Person {
-    public ref name: String;
-    public ref age: Float;
+extend Sequence {
+  func prefix(length: Int) -> PrefixSequence<E> {
+    return PrefixSequence<E>(self, length);
+  }
 }
 
-var vec = Vector4(1, 2, 3, 4);
-swizzle4(vec, "wxxy");
-
-func eat(person: Person) {
-    print("Eating", person.name, #, ". They were only", person.age, "years old.");
-}
+var array: Buffer<Int>;
+array = ...;
+print(array.reversed().prefix(5));
+print(&array.address());
 ```
 
 > Some code in Swizzle
@@ -37,7 +36,7 @@ func eat(person: Person) {
 - [What is included](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/README.md#what-is-included)
 - [How to use it](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/README.md#how-can-i-use-it)
 - [Versions](https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/README.md#versions)
-- [Documentation](https://github.com/SafelySwift/Docs-Swizzle/blob/master/docs/index.md)
+- [Documentation](https://github.com/SafelySwift/Docs-Swizzle/blob/master/src/docs/source/index.rst)
 - [Wiki](https://github.com/SafelySwift/Swizzle/wiki)
 - [Analytics](https://codebeat.co/projects/github-com-safelyswift-swizzle-swizzle-1.0)
 
