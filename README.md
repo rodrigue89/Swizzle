@@ -3,17 +3,16 @@
 </p>
 
 ```swift
-struct Person {
-    public ref name: String;
-    public ref age: Float;
+extend Sequence {
+  func prefix(length: Int) -> PrefixSequence<E> {
+    return PrefixSequence<E>(self, length);
+  }
 }
 
-var vec = Vector4(1, 2, 3, 4);
-swizzle4(vec, "wxxy");
-
-func eat(person: Person) {
-    print("Eating", person.name, #, ". They were only", person.age, "years old.");
-}
+var array: Buffer<Int>;
+array = ...;
+print(array.reversed().prefix(5));
+print(&array.address());
 ```
 
 > Some code in Swizzle
