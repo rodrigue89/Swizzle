@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Swizzle: The Programming Language</title>
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/sidebar.css">
-        <meta name="viewport" content="width = device-width, initial-scale = 1">
-    </head>
-    <body>
-        <!--<img src="https://raw.githubusercontent.com/SafelySwift/Swizzle/swizzle-1.0/Images/Swizzle%20Logo%20Wide%20New.png" alt="Swizzle Logo Wide 1" style="width: 50%; height: 50%;" class="center logo"></img>
+
+<head>
+    <title>Swizzle: The Programming Language</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+</head>
+
+<body>
+    <!--<img src="https://raw.githubusercontent.com/SafelySwift/Swizzle/swizzle-1.0/Images/Swizzle%20Logo%20Wide%20New.png" alt="Swizzle Logo Wide 1" style="width: 50%; height: 50%;" class="center logo"></img>
             -->
-        <div>
-            <p align="center">
-                <img src="https://raw.githubusercontent.com/SafelySwift/Swizzle/swizzle-1.0/Images/Swizzle%20Logo%20Wide%20New.png" alt="Swizzle Banner">
-            </p>
-        </div>
-        <div class="web_content">
+    <div>
+        <p align="center">
+            <img src="https://raw.githubusercontent.com/SafelySwift/Swizzle/swizzle-1.0/Images/Swizzle%20Logo%20Wide%20New.png" alt="Swizzle Banner">
+        </p>
+    </div>
+    <div class="web_content">
         <p style="font-size: 10px">Designed by Ethan Uppal and hosted by GitHub pages. <a href="https://github.com/SafelySwift/Swizzle"><strong>View on GitHub</strong></a></p>
         <!--
             <div id="mySidenav" class="sidenav">
@@ -24,42 +26,55 @@
                 <a href="#">Clients</a>
                 <a href="#">Contact</a>
             </div>
-            
+
             <span class="open_sidenav" style="font-size: 30px;cursor:pointer" onclick="openNav()">&#9776;</span>
             -->
-        <pre><code>struct Person {
-    ref name: String;
-    ref age: Float;
+        <pre><code class="swift language-swift">extend Sequence {
+  func prefix(length: Int) -&gt; PrefixSequence&lt;E&gt; {
+    return PrefixSequence&lt;E&gt;(self, length);
+  }
 }
 
-var vec = Vector4(1, 2, 3, 4);
-swizzle4(vec, "wxxy");
-
-func eat(person: Person) {
-    print("Eating", person.name, #, ". They were only", person.age, "years old.");
-}
+var array: Buffer&lt;Int&gt;;
+array = ...;
+print(array.reversed().prefix(5));
+print(&amp;array.address());
 </code></pre>
+
         <blockquote>
             <p>Some code in Swizzle</p>
         </blockquote>
+
+        <p>
+            <a href="https://travis-ci.com/SafelySwift/Swizzle">
+                <img src="https://travis-ci.com/SafelySwift/Swizzle.svg?branch=swizzle-1.0" alt="Build Status">
+            </a>
+            <a href="https://developer.apple.com/swift">
+                <img src="https://img.shields.io/badge/Swift-4-F16D39.svg" alt="Swift Version" />
+            </a>
+            <a href="./LICENSE">
+                <img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="license:MIT" />
+            </a>
+            <br />
+            <a href="https://codebeat.co/projects/github-com-safelyswift-swizzle-swizzle-1-0">
+                <img src="https://codebeat.co/badges/63083528-f408-4b3f-8780-fefc4c6ab0cf">
+            </a>
+        </p>
         <h2 id="whatisit">What is it?</h2>
         <p>Swizzle is a programming language that is all new, yet all fun. Swizzle has a syntax that is similar to other popular programming languages. It is simple to write code and simpler to run it.</p>
         <p>Though Swizzle is still in development, I would say it is slightly functional.</p>
-        <h4 id="swizzleallows">
-        Swizzle allows:</h5>
+        <p>Here is a (small) list of Swizzle's functionality.</p>
+
         <ul>
-            <li>Custom objects</li>
+            <li>Variables and constants</li>
             <li>User defined functions</li>
-            <li>Variables</li>
-        </ul>
-        <h4 id="stillindevelopment">
-        Still in development</h5>
-        <ul>
             <li>Control flow (if, while, for)</li>
             <li>Operators</li>
-            <li>Extending</li>
+            <li>Custom structures and classes</li>
+            <li>Extension of structures</li>
+            <li>Protocols</li>
         </ul>
-        <p>For more, visit the <a href="https://github.com/SafelySwift/Swizzle/wiki">documentation</a>.</p>
+        <p>For more, visit the <a href="https://github.com/SafelySwift/Swizzle/wiki">wiki</a>.</p>
         <p><strong>Tutorials:</strong></p>
         <ol>
             <li><a href="https://github.com/SafelySwift/Swizzle/blob/swizzle-1.0/Tutorials/Hello%20World%20(%231).md">Hello World</a></li>
@@ -77,9 +92,9 @@ func eat(person: Person) {
         <ul>
             <li>My <a href="https://www.reddit.com/user/SafelySwift">reddit</a> is a great place to chat about ideas or discuss coding</li>
             <li>The <a href="http://craftinginterpreters.com">Crafting Interpreters</a> book is really helpful</li>
-            <li>The <a href="https://safelyswift.github.io/SwizzleApp/">Swizzler app for running and debugging Swizzle code</a></li>
         </ul>
-        </div>
-        <script src="js/sidebar.js"></script>
-    </body>
+    </div>
+    <script src="js/sidebar.js"></script>
+</body>
+
 </html>
