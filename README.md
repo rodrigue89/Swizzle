@@ -99,8 +99,8 @@ Swizzle is not perfect. Or rather only as perfect as the people who help. If you
 
 ## Versions
 
-The latest feature release is [v0.3](https://github.com/SafelySwift/Swizzle/releases/tag/v0.3.0).
-The latest small release is [v0.3.3](https://github.com/SafelySwift/Swizzle/releases/tag/v0.3.3).
+The latest feature release is [v0.4](https://github.com/SafelySwift/Swizzle/releases/tag/v0.4.0).
+The latest small release is [v0.4.0](https://github.com/SafelySwift/Swizzle/releases/tag/v0.4.0).
 
 For more information on releases, go [here](https://github.com/SafelySwift/Swizzle/releases).
 
