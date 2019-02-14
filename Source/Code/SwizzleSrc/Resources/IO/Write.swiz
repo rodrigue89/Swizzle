@@ -1,0 +1,20 @@
+// Write.swiz
+// SwizzleSrc
+//
+// Created by Ethan Uppal on 2/13/19.
+// Copyright © 2019 Ethan Uppal. All rights reserved.
+//
+
+extend IO {
+    func print(args: Any...) {
+        let str = __description(args, " ");
+        let data = str::data(self._encoding);
+        __handle.write(data);
+    }
+    func printLn(args: Any...) {
+        var str = __description(args, " ");
+        str::add("\n");
+        let data = str::data(self._encoding);
+        __handle.write(data);
+    }
+}

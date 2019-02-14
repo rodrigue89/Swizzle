@@ -1,0 +1,19 @@
+// Read.swiz
+// SwizzleSrc
+//
+// Created by Ethan Uppal on 2/13/19.
+// Copyright © 2019 Ethan Uppal. All rights reserved.
+//
+
+extend IO {
+    func getChar() -> Character {
+        let cur = self._text[_pos];
+        self._text.formNext(&_pos);
+        return cur;
+    }
+    func getLine() -> String {
+        let cur = self._text[_pos...];
+        self._pos = _text.end;
+        return String(cur);
+    }
+}

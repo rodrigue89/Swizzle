@@ -4,7 +4,7 @@
 <dict>
 	<key>Main File Path</key>
 	<string>main.swiz</string>
-	<key>Swizzle Version</key>
+	<key>Full Swizzle Version</key>
 	<string>1.0.0</string>
 	<key>Automatic Imports</key>
 	<array>

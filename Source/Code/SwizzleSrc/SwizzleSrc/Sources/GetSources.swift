@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 public struct Sources {
     public struct Item {
         public enum DecodingError: Swift.Error {
@@ -45,10 +46,19 @@ public struct Sources {
     }
 }
 
+func _pathToResourcesFolder() -> URL {
+    return URL(fileURLWithPath: #file)
+        .deletingLastPathComponent()
+        .deletingLastPathComponent()
+        .deletingLastPathComponent()
+        .appendingPathComponent(
+            "Resources",
+            isDirectory: true
+    )
+}
+
 func _sources() throws -> JSON {
-    guard let url = Bundle.main.url(forResource: "Files", withExtension: "json") else {
-        return JSON.null
-    }
+    let url = _pathToResourcesFolder().appendingPathComponent("Files.json")
     let string = try String(contentsOf: url)
     return JSON(parseJSON: string)
 
@@ -66,10 +76,15 @@ extension String: LocalizedError {
 }
 
 func textOfItem(item: String) throws -> String {
-    guard let path = Bundle.main.path(forResource: item, ofType: "swiz") else {
-        throw "Could not locate the resource \(item)"
+    let url = _pathToResourcesFolder()
+        .appendingPathComponent("Core")
+        .appendingPathComponent(item)
+    if IS_DEBUG_ENABLED {
+        print("Attempts to get text of \(item)")
+        print("===============================")
+        print("Full path: \(url)")
+        print("")
     }
-    let url = URL(fileURLWithPath: path)
     return try String(contentsOf: url)
 }
 

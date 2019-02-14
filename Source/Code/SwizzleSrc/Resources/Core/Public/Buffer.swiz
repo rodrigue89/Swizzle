@@ -5,6 +5,7 @@
 // Copyright © 2019 Ethan Uppal. All rights reserved.
 //
 
+@__magic("core.buffer")
 class Buffer<E>: AppendableCollection {
     private ref _storage: Pointer;
     ref count: Int;

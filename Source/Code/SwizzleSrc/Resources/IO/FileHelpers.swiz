@@ -1,0 +1,11 @@
+// FileHelpers.swiz
+// SwizzleSrc
+//
+// Created by Ethan Uppal on 2/13/19.
+// Copyright © 2019 Ethan Uppal. All rights reserved.
+//
+
+@__add("__fileBytes")
+@__add("__filePut")
+@__add("__flush")
+@__add("__description")

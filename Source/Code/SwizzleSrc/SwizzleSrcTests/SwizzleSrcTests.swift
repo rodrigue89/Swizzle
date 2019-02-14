@@ -5,7 +5,7 @@
 //  Created by Ethan Uppal on 1/20/19.
 //  Copyright © 2019 Ethan Uppal. All rights reserved.
 //
-/*
+
 import XCTest
 @testable import SwizzleSrc
 
@@ -91,16 +91,17 @@ var x = 2;
     func testPlist() {
         self.measure {
             do {
-                if let path = Bundle.main.path(forResource: "DefaultInfo", ofType: "plist") {
-                    let url = URL(fileURLWithPath: path)
-                    let info = try InfoPlist.from(url: url)
-                    print(info)
-                } else {
-                    XCTFail()
-                }
+                let url = _pathToResourcesFolder()
+                    .appendingPathComponent(
+                        "ProjInfo.plist",
+                        isDirectory: false
+                    )
+                let info = try InfoPlist.from(url: url)
+                print(info)
+                
             }
             catch {
-                XCTFail(error.localizedDescription)
+                XCTFail(String(describing: error))
             }
         }        
     }
@@ -108,7 +109,7 @@ var x = 2;
     func testGetSources() {
         self.measure {
             do {
-                print(try textOfItem(item: "Buffer.swiz"))
+                print(try textOfItem(item: "Public/Buffer.swiz"))
             }
             catch {
                 XCTFail(error.localizedDescription)
@@ -116,5 +117,9 @@ var x = 2;
         }
     }
     
+    func testConfirmHelperPath() {
+        XCTAssertEqual(_pathToResourcesFolder().lastPathComponent, "Resources")
+    }
+    
 }
-*/
+

@@ -1,0 +1,9 @@
+// IO.swiz
+// SwizzleSrc
+//
+// Created by Ethan Uppal on 2/13/19.
+// Copyright © 2019 Ethan Uppal. All rights reserved.
+//
+
+@__magic("io.struct")
+struct IO {}

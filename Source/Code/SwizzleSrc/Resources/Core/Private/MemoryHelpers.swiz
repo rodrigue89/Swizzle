@@ -9,3 +9,5 @@
 @__add("__alignmentOf")
 @__add("addressOf")
 @__add("pointer_impl")
+@__add("__getBytes")
+@__add("Integer.__fromBytes")

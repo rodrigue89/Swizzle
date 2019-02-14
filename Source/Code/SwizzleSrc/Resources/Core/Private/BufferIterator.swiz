@@ -6,11 +6,13 @@
 //
 
 struct __BufferIterator<E>: Iterator {
-ref buffer: Buffer<E>;
-ref offset: Int;
-func next() -> E {
-if offset < buffer.count {
+    ref buffer: Buffer<E>;
+    ref offset: Int;
+    func next() -> E {
+        if offset < buffer.count {
 
-}
-}
+        } else {
+            return nil;
+        }
+    }
 }

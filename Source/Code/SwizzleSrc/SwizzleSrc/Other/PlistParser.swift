@@ -33,11 +33,16 @@ public final class PlistParser<Result: PlistDecodable> {
     public enum Error: Swift.Error {
         case couldNotFormData
         case corruptedData
-        case unknownKey
+        case unknownKey(String)
     }
     
     private let parser = PropertyListDecoder()
     public init(readingFrom url: URL) throws {
+        if IS_DEBUG_ENABLED {
+            print("PropertyListParser")
+            print("==================")
+            print("Out: \(Result.self)")
+        }
         guard let src = NSDictionary(contentsOf: url) else {
             throw Error.couldNotFormData
         }
@@ -46,11 +51,12 @@ public final class PlistParser<Result: PlistDecodable> {
         }
         var plist = [Result.Keys:Any]()
         for (key, value) in src {
+            print("KVPair [\(key): \(value)]")
             guard let string = key as? String else {
                 throw Error.corruptedData
             }
             guard let propertyName = Result.Keys(rawValue: string) else {
-                throw Error.unknownKey
+                throw Error.unknownKey(string)
             }
             plist[propertyName] = value
         }
@@ -81,7 +87,7 @@ public final class PlistDecoder<Result: PlistDecodable> {
 public struct InfoPlist: PlistDecodable {
     public enum Keys: String, PlistKey, CaseIterable {
         case automaticImports = "Automatic Imports"
-        case versionNumber = "Swizzle Version Number"
+        case versionNumber = "Full Swizzle Version"
         case mainFilePath = "Main File Path"
     }
     public let automaticInputs: [String]

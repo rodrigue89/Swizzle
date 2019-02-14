@@ -1,0 +1,8 @@
+func __flip<I>(value: I) -> I where I: Integer {
+    var bytes = __getBytes(of: value);
+    let count = bytes.count;
+    for index in 0 ..< count {
+        bytes[index]::toggle();
+    }
+    return Int.__fromBytes(bytes);
+}

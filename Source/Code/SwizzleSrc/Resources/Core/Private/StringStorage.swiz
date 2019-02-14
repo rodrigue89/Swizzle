@@ -5,7 +5,7 @@
 // Copyright © 2019 Ethan Uppal. All rights reserved.
 //
 
-@__magic("string.storage")
+@__magic("core.stringstorage")
 enum __StringStorage {
     case cString(Buffer<UInt8>, Int)
     case utf8(Pointer, Int)
