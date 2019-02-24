@@ -5,6 +5,7 @@
 // Copyright © 2019 Ethan Uppal. All rights reserved.
 //
 
+@__magic("core.string")
 struct String {
     private ref _storage: __StringStorage;
     ref count: Int;
