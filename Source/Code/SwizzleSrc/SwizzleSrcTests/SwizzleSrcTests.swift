@@ -21,6 +21,7 @@ class SwizzleSrcTests: XCTestCase {
     
     let code = """
 var x = 2;
+var y = 3;
 """
     
     func lex() -> [Token] {
@@ -119,6 +120,68 @@ var x = 2;
     
     func testConfirmHelperPath() {
         XCTAssertEqual(_pathToResourcesFolder().lastPathComponent, "Resources")
+    }
+    
+    func testProgram() {
+        // Get tokens
+        var tokens = [Token]()
+        let lexer = Lexer(code)
+        lexer.formTokens(&tokens)
+        // Parse
+        var statements = [Statement]()
+        let parser = Parser(stream: tokens, sourceFileName: "main")
+        parser.debug = true
+        do {
+            try parser.formStatements(&statements)
+        }
+        catch let error as Parser.Error {
+            XCTFail("\n" + error.detailedDescription(inCode: code))
+        }
+        catch {
+            XCTFail(error.localizedDescription)
+        }
+
+        // Make IR
+        var ir = [Any]()
+        do {
+            try SwizzleSrc.generate(from: statements, into: &ir)
+        }
+        catch {
+            XCTFail(error.localizedDescription)
+        }
+        // Compiler
+        let bytecode: [Instruction]
+        do {
+            bytecode = try Compiler.compile(exp: ir)
+        }
+        catch {
+            if let error = error as? CompilerError {
+                XCTFail(error.localizedDescription)
+            }
+            XCTFail(error.localizedDescription)
+            return
+        }
+        
+        // Run the bytecode
+        let vm = VM()
+        let env = _DefaultEnvironment()
+        let start, end: CFAbsoluteTime
+        do {
+            start = CFAbsoluteTimeGetCurrent()
+            _ = try vm.evaluate(bytecodeInstructions: bytecode, env: env)
+            end = CFAbsoluteTimeGetCurrent()
+        }
+        catch {
+            if let error = error as? CompilerError {
+                XCTFail(error.localizedDescription)
+            }
+            XCTFail(error.localizedDescription)
+            return
+        }
+        print("Executed in \(end - start) seconds")
+        print("==================================")
+        print("Environment:")
+        print(env.table)
     }
     
 }

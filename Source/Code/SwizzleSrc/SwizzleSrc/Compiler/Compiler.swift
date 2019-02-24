@@ -27,6 +27,7 @@ public final class Compiler {
             guard !array.isEmpty else {
                 throw CompilerError(description: "Cannot compile an empty expression", context: array)
             }
+            if array.count == 1 { return try compile(exp: array[0]) }
             if isEqual(array[0], rhs: "var") {
                 guard array.count == 3 else {
                     throw CompilerError(description: "Expected 3 elements in value expression", context: array)

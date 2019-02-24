@@ -20,7 +20,7 @@ public final class Generator: Visitor {
     
     func initialize(from stmts: [Statement]) {
         for index in 0 ..< count {
-            statements[index] = stmts[index]
+            (statements + index).initialize(to: stmts[index])
         }
     }
     
